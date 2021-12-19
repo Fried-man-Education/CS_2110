@@ -1,0 +1,823 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Quiz 3</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a74bbb38-884d-4ed7-8fa7-2c203c5dcdaf" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">‼️</span></div><h1 class="page-title">Quiz 3</h1><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>Column</th><td></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCheckbox"><path d="M0,3 C0,1.34314 1.34326,0 3,0 L11,0 C12.6567,0 14,1.34314 14,3 L14,11 C14,12.6569 12.6567,14 11,14 L3,14 C1.34326,14 0,12.6569 0,11 L0,3 Z M3,1.5 C2.17139,1.5 1.5,2.17157 1.5,3 L1.5,11 C1.5,11.8284 2.17139,12.5 3,12.5 L11,12.5 C11.8286,12.5 12.5,11.8284 12.5,11 L12.5,3 C12.5,2.17157 11.8286,1.5 11,1.5 L3,1.5 Z M2.83252,6.8161 L3.39893,6.27399 L3.57617,6.10425 L3.92334,5.77216 L4.26904,6.10559 L4.44531,6.27582 L5.58398,7.37402 L9.28271,3.81073 L9.45996,3.64008 L9.80664,3.3056 L10.1538,3.63989 L10.3311,3.81067 L10.8936,4.35303 L11.0708,4.52399 L11.4434,4.88379 L11.0708,5.24353 L10.8936,5.41437 L6.1084,10.0291 L5.93115,10.2 L5.58398,10.5344 L5.23682,10.2 L5.05957,10.0292 L2.83057,7.87946 L2.65283,7.70801 L2.27832,7.34674 L2.6543,6.98694 L2.83252,6.8161 Z"></path></svg></span>Complete</th><td><div class="checkbox checkbox-on"></div></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-purple">Assessment</span></td></tr></tbody></table></header><div class="page-body"><figure id="56e5aa2b-f340-4959-bc4a-2bf3cf73502d" class="image"><a href="Quiz%203%20a74bbb38884d4ed78fa72c203c5dcdaf/Screen_Shot_2021-12-13_at_05.48.56.png"><img style="width:694px" src="Quiz%203%20a74bbb38884d4ed78fa72c203c5dcdaf/Screen_Shot_2021-12-13_at_05.48.56.png"/></a></figure><ul id="f027572d-4565-488a-a756-fea6a84e8c3b" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="ee0f4a40-4a90-4176-8b57-3aef4caa8683" class="">The LD/ST instruction are incorrect and do not assemble</p><p id="93c49209-5134-4689-8a32-64c9f424ae94" class="">A is at x4000, B is at x4001. It is too large of an offset to fit into LD&#x27;s 9 2&#x27;s complement bit</p></details></li></ul><p id="b753ad8f-2475-40b3-9e96-145257b66cb0" class="">
+</p><ol type="1" id="7b91e790-1ab0-4a1a-8080-7a39649fb87a" class="numbered-list" start="2"><li>What is true about the FETCH macrostate?<ol type="a" id="c26dd46b-53a0-47f9-924d-479984f0c053" class="numbered-list" start="1"><li>Writes to memory, asserting both MEM.EN and MEM.WE Control Signals</li></ol><ol type="a" id="90cd59b6-9426-4fd2-9e5d-4a31391c1ab4" class="numbered-list" start="2"><li>Requires 3 clock cycles</li></ol><ol type="a" id="e6fd2d8d-8067-4852-9233-95045a18dad3" class="numbered-list" start="3"><li>Determines whether or not a branching instruction will occur based off of thee current conditional code registers</li></ol><ol type="a" id="a71ce42b-39f6-4c77-939e-3f649890c3ac" class="numbered-list" start="4"><li>Place the instruction to be executed into the IR</li></ol><ol type="a" id="e50e20a6-2fc9-49e4-b7e4-b4d8f79d4bc8" class="numbered-list" start="5"><li>Increments the PC by 1 to prepare for the next instruction</li></ol><ul id="c4ab57b4-e62a-4471-9aa8-d832e53a53ad" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="c0a36324-c31e-44b7-b42f-a6bec084d8cd" class="">b, d, e</p></details></li></ul></li></ol><ol type="1" id="ff45d641-ce41-4220-8107-d735bf306573" class="numbered-list" start="3"><li>Caller/Callee Responsibilities<ol type="a" id="4e7b82c6-5268-48a1-8c97-9f5363466a73" class="numbered-list" start="1"><li>Pushing arguments for the subroutine onto the stack is the responsibility of the ?</li></ol><ol type="a" id="56d4ced4-b64e-4ce6-91f0-9f5bb3a46a0f" class="numbered-list" start="2"><li>Restoring the general-purposed registers with the saved values is the responsibility of the ?</li></ol><ol type="a" id="0f4ee8ed-8c44-454c-8de5-f63ab5004f1e" class="numbered-list" start="3"><li>Restoring the old frame pointer and return address is the responsibility of the ?</li></ol><ol type="a" id="70b95a93-e76e-4146-8326-d3da92adb628" class="numbered-list" start="4"><li>Deallocating the space for thee return value is the responsibility of the ?</li></ol><ul id="1060a4aa-0ef1-41b2-81dd-87428f6c06b3" class="toggle"><li><details open=""><summary>Answer</summary><ol type="a" id="9c8d4886-7160-4f44-ad96-7597945ffb98" class="numbered-list" start="1"><li>Caller</li></ol><ol type="a" id="f6405332-0bd6-4be4-a899-46ceb3543b65" class="numbered-list" start="2"><li>Callee</li></ol><ol type="a" id="0531c74a-60b2-42a0-a681-2af0464f556d" class="numbered-list" start="3"><li>Callee</li></ol><ol type="a" id="8d76b428-3fe0-402b-947c-248d0931e7e3" class="numbered-list" start="4"><li>Caller</li></ol></details></li></ul></li></ol><p id="5aad0d6b-8e83-457f-b88d-15e79b0fd99b" class="">8. </p><p id="f1d13762-9fa7-4b03-bced-4ddaf0132b4c" class="">Vers. A</p><ol type="a" id="8e76faab-0253-4dee-8236-84dd700d9e9d" class="numbered-list" start="1"><li>Please convert the following hexadecimal value to assembly instruction it corresponds to: 0x1801</li></ol><ol type="a" id="c0fff4fb-34a5-4a52-ad24-0411eebc89f6" class="numbered-list" start="2"><li>Convert the instruction marked by ???? on line 2 to its corresponding hex value</li></ol><pre id="0bdba008-7e14-48f5-8f8c-3a028f57b5b9" class="code"><code>.ORIG x3000
+	LEA R3, A   ;????
+	ADD R3, R3, #1
+	HALT
+.END
+
+.ORIG x3010
+A .FILL x4000
+.END</code></pre><ul id="38ed37cf-ec87-46b6-8c71-a30bdbb8360c" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><ol type="a" id="0c8ce5c2-4c6c-4ec9-8829-bce8889b87ba" class="numbered-list" start="1"><li>1801 = 0001 100 000 0 00 001<p id="a97f7bd6-bb1d-4859-80a3-ccc22eae2523" class="">0001 = ADD</p><p id="d67bfc63-6517-48f7-a869-04b2918a4af6" class="">DR = R4</p><p id="094b91b2-adec-4d0d-919b-a167b8bd669d" class="">SR1 = R0</p><p id="8608153f-e95a-4689-8286-b529ef2e8947" class="">SR2 = R1</p><p id="983b3cfb-695c-4666-9e83-152bcfc3057f" class="">x1801 = ADD R4, R0, R1</p></li></ol><ol type="a" id="760e0c7a-5289-49df-8f03-cde343e3bb7f" class="numbered-list" start="2"><li>LEA = 1110<p id="c01cd3e7-d4cc-432e-ad10-cb5827dc66a2" class="">R3 = 011</p><p id="aff56736-653e-4e5a-bbd5-84b0a99fe3f1" class="">PCOffset = Address of A - Address of LEA execution = 3010 - 3001 = 0xF = 0b0001111</p><p id="d01acac9-3e25-4c36-bfbd-4c172e513208" class="">1110 011 0001111 = E60F</p><p id="138c711f-7710-4f9a-94c0-cafa740b2b6c" class="">
+</p></li></ol></details></li></ul><p id="f4cab40f-fce5-4fd9-a59f-cfb5eb1af5cf" class="">Vers. B</p><pre id="2f61e7d4-c3a6-4299-985e-dd6b6fbae619" class="code"><code>.ORIG x3000
+	LEA R0, ARRAY
+	LDR R1, R0, #5
+	ADD R1, R1, #4
+	ST R1, ARRAY  ;???? 
+	HALT
+.END
+
+.ORIG x3020
+ARRAY
+.fill 7
+.fill 2
+.fill 9
+.fill 10
+.fill 4
+.fill 11
+.END</code></pre><ul id="1e4691f8-03d8-4ecb-88e9-385144051306" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="55bc7587-7f8e-4e16-89e8-c2a5010ba8e7" class="">ST = 0011</p><p id="b82e7608-2280-4bed-bcbd-af6963338efe" class="">SR = R1 = 001</p><p id="02b6c7ad-c894-47c3-8363-e476c47bc4eb" class="">PCOffset9 = ARRAY</p><p id="b2cbbfea-968b-42c7-9f57-f75f44ecdb9c" class="">At line 4, PC = x3004. PCOffset9 x3020 - 0x3004 = 0x1C = 0b000011100</p><p id="9f046d0d-0916-44f6-9685-edb278825a1f" class="">0011 001 000011100 = 0x321C</p></details></li></ul><p id="e762ce56-784a-4b3c-bd12-2e301fa4325e" class="">
+</p><ol type="1" id="45efa918-fb3a-431b-b390-4788aca2e625" class="numbered-list" start="10"><li><figure id="f8bf99ba-bb2f-428a-ab06-ca17b8445fbd" class="image"><a href="Quiz%203%20a74bbb38884d4ed78fa72c203c5dcdaf/Screen_Shot_2021-12-13_at_06.21.09.png"><img style="width:1298px" src="Quiz%203%20a74bbb38884d4ed78fa72c203c5dcdaf/Screen_Shot_2021-12-13_at_06.21.09.png"/></a></figure><ul id="8a97cbc8-6407-4b02-89d5-65182a890fcf" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="51433b5c-c90e-46c4-a43d-04311685a779" class="">1005</p><p id="50bfdf10-76f1-4920-88f1-c83dd36e7a5d" class="">ST R2, VAL → SR = R2, PC = x3012, PCOffset = 0</p><p id="129d18fd-270a-4972-a03d-725c12224326" class="">VAL x3013 = R2 = 1005</p></details></li></ul></li></ol><p id="3fea43ee-2f81-4bac-a708-40765e1e48aa" class="">
+</p><ol type="1" id="a378522a-075b-4835-b0c3-1e0ae67f3362" class="numbered-list" start="11"><li>The following program should iterate over an array, find the largest value, and store it at the label RES.FILL in the 3 missing instructions denoted by &#x27;BLANK X&#x27; to make this code functional.<pre id="87c148da-2742-4cec-b6c5-5cf875bbb73e" class="code"><code>.orig x3000
+LD R0, SIZE
+LD R1, ARRAY
+LDR R3, R1, #0     ;;R3 = R1 = ARRAY, Value of ARR[0]
+
+BLOCK
+    ADD R0, R0, #-1   ;;R0 = size - 1, index number
+    BRn SKIP          ;;If R0 &lt; 0, SKIP
+    LDR R2, R1, #0    ;;R2 = R1 = value of ARRAY[I]
+
+    ; BLANK 1  ;;NOT R4, R2;
+    ADD R4, R4, #1    ;;R4 = R4 + 1
+    ADD R4, R3, R4    ;;R4 = R3 + R4 (R4 + 1 + R3)
+    ; BLANK 2    ;;BRzp KEEP
+    ADD R3, R2, #0    ;;R3 = R2 + 0, R3 holds the max val
+
+    KEEP
+        ADD R1, R1, #1    ;;R1 = R1 + 1
+    BRnzp BLOCK    ;;loop
+
+SKIP
+    ; BLANK 3    ;;ST R3 RES 
+    HALT
+
+ARRAY .fill x4000
+SIZE .fill 5
+RES .blkw 1
+.end
+
+.orig x4000
+.fill -1
+.fill 10
+.fill 6
+.fill -2
+.fill 6
+.end
+
+i = arr.length - 1 
+if (i &gt;= 0) {
+	R4 = ~arr[i]	  //NOT R4, R2
+	  R4 = R4 + 1;//2&#x27;s complement R4 = -arr[i]
+	R4 = R3 + R4;
+  //BR
+  ADD R3, R2 + 0; --&gt; 
+if (R4 &gt; R3) R4 - R3 &gt;= 0
+
+
+
+}
+
+</code></pre><p id="8f36c637-2ab2-459b-bd1d-af794945838b" class="">What is Blank 1, Blank 2 and Blank 3</p><ul id="a1245e75-cb17-4a9c-8871-0228af43a2a9" class="block-color-pink_background toggle"><li><details open=""><summary>Answers</summary><p id="72ee7704-e598-4b73-8652-67db2cfec83c" class="">Blank 1: NOT R4, R2</p><p id="d9e750a5-4905-43b3-ad46-53cea38566d6" class="">Blank 2: BRzp KEEP</p><p id="606b723c-98f8-4ec4-bfd8-222fee7032b0" class="">Blank 3: ST R3, RES</p></details></li></ul></li></ol><p id="0b4822e5-0247-4537-b64a-3c6c2fd27a1a" class="">
+</p><ol type="1" id="6d581137-6cf6-4380-9c59-8f1c734c73fb" class="numbered-list" start="12"><li>The developers of the LC-3 have decided that they want to add a new instruction to the existing instruction set: <em><strong>JMPA</strong></em> for &quot;<em>jump to registers added</em>&quot;. The instruction format is as follows:<p id="9fdcf392-f91c-473c-bb08-c7ed054bdf37" class="">JMPA SR1, SR2</p><p id="57dbbe6e-6ecb-4a92-8783-027339a61f1b" class="">JMPA is meant to use the sum of two registers as an address, <strong>look up the value at that address in memory,</strong> and use that value retrieved from memory as an address which the program&#x27;s execution will jump to. This new instruction will take three clock cycles to execute.</p><p id="1ff6b3d2-b687-4622-81da-2c3bb7d93559" class="">For each clock cycle, drag the proper signals that will need to be used in order to execute the JMPA instruction as described. Each clock cycle should contain all of the relevant signals, and not contain any unnecessary signals. You do not need to use all of the available options.</p><p id="20bb1a1f-cf67-4224-9f74-ebd66dbbdf86" class="">MEM.WE</p><p id="3b63ff98-f5bf-4f60-9409-8f08eb991920" class="">MEM.EN</p><p id="9664b864-e696-482b-86a0-847e0996c19c" class="">LD.MDR</p><p id="169bc0e9-c093-45f0-b0b3-5b61fa5e2a6b" class="">ALUK = PASSA</p><p id="69b3b417-a00c-40a0-a0ae-dd6ee6ffcdd2" class="">ALUK = ADD</p><p id="0149e7cb-8358-451f-ab13-77d3c9da9022" class="">SR2MUX = REGFILE</p><p id="2bbb33b1-1dd5-4620-b0db-83de22d43ffa" class="">LD.MAR</p><p id="5dbcac57-b88d-4086-9dc7-0a5f9438ffc2" class="">GateMDR</p><p id="c499ba13-4a57-44d5-8261-4cd8ca0cd410" class="">GateALU</p><p id="1e6010f9-ff36-4b54-9a8f-1e52bcad9083" class="">SR2MUX = SEXT</p><p id="2cc78ad9-8a18-4bef-b65b-d189135230a8" class="">PCMUX = ADDER</p><p id="def8d9c5-2a01-49c9-9e37-3288d95c198f" class="">LD.PC</p><p id="1bfab73b-84d3-44c2-9260-3bbfaa4697ac" class="">MARMUX = ADDER</p><p id="7acb86e7-efac-4f89-bc80-482a431508ad" class="">PCMUX = BUS</p><p id="fa437a1f-6e8b-409d-a84d-43e392b2ab3b" class="">GateMARMUX</p><ul id="52cf0b17-8c60-43a3-b969-5d104eec4f50" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="16626994-1f15-40a4-a7aa-d7a6b68a7012" class="">1st Clock Cycle<div class="indented"><p id="42ee0e43-66a4-4002-bb42-459e5eac48cd" class="">ALUK = ADD</p><p id="3138f058-b78e-47ab-b091-f8b628500200" class="">LD.MAR</p><p id="1f68e915-dded-4a26-9028-e9b2ac68e250" class="">GateALU</p><p id="b9900e0b-b93c-485e-a4dc-541c0569835c" class="">SR2MUX = REGFILE</p></div></p><p id="b50c24bc-5f98-431b-a1b9-0a22750b93e9" class="">2nd Clock Cycle<div class="indented"><p id="2f33141f-d138-430c-81d2-a5aa38e734d7" class="">MEM.EN</p><p id="dde47532-77ca-4a9c-99d0-2883a9541cc5" class="">LD.MDR</p></div></p><p id="a3b0f9cb-0344-4466-b936-5856589e1099" class="">3rd Clock Cycle<div class="indented"><p id="a80ba257-8938-4870-a07c-8e01f68fecd0" class="">GateMDR</p><p id="e03aaea7-7fda-4ee0-a6ae-449105532176" class="">PCMUX = BUS</p><p id="c641d9e3-30ae-463b-bd1a-cf7ef95df227" class="">LD.PC</p></div></p></details></li></ul></li></ol><ol type="1" id="e5763191-850d-4ed9-b60a-c9f2a03afa22" class="numbered-list" start="13"><li>In this question, you have to write a program with 5 instructions maximum. You cannot use pseudo-ops or TRAPs. The template code is shown in the image below. You can only use <strong>R4-R7</strong> as temporary registers. Do NOT touch R0-R3. If you go over 5 instructions, use pseudo-ops, TRAPs, or modify R0-R3, you will be given 0 points for this problem.<p id="f7f755ab-a613-4155-9215-6a062f6b7238" class="">Copy the value at array[3] to array[0].</p><pre id="d2162bad-8186-4dc2-9529-b45d0a23c883" class="code"><code>.ORIG x3000
+	;;YOUR CODE HERE
+	HALT
+.END
+
+.ORIG x3020
+ARRAY
+.fill 7
+.fill 2
+.fill 9
+.fill 10
+.fill 4
+.fill 11
+.END
+</code></pre><ul id="dce03615-8c20-4c38-b8b0-850fb303e49f" class="block-color-pink_background toggle"><li><details open=""><summary>Answer(not correct?)</summary><pre id="39ef0e40-337b-428b-a165-c0d4920f91a4" class="code"><code>LEA R4, ARRAY ;;Load array
+ADD R5, R4, #3 ;;get address arr[3]
+LDR R5, R5, #0 ;;get value arr[3]
+ADD R6, R4, #0 ;;get address arr[0]
+STR R5, R6, #0 ;;set R6 to R5</code></pre></details></li></ul></li></ol><ol type="1" id="558e1c07-42f1-4b45-a007-fcfb2c0bacac" class="numbered-list" start="14"><li>In this question, you have to write a program with 5 instructions maximum. The template code is shown in the image below. You cannot use any extra psuedo-ops, TRAPs. Also, you can use registers R0-R2, but not any other ones.<p id="31382994-c089-4e5b-a2da-96c282b75190" class="">Multiply the value in R2 by 6 and store it back in R2.</p><pre id="4da96515-9d35-4a8c-a981-2561fede4852" class="code"><code>.ORIG x3000R2
+	;;YOUR CODE HERE
+	HALT
+.END</code></pre><ul id="933e3034-6a71-47d2-8107-854522999ce2" class="block-color-pink_background toggle"><li><details open=""><summary>Answer(debugged on complex, should be right)</summary><pre id="47a1e9ef-99f3-42a8-9afc-5ae5dc24ace7" class="code"><code>ADD R2, R2, R2 ;;R2 = 2R2
+AND R0, R0, 0
+ADD R0, R2, #0 ;;R0 = 2R2
+ADD R2, R2, R2 ;;R2 = 2R2 + 2R2 = 4R2
+ADD R2, R2, R0 ;; R0 = 4R2 + 2R2 = 6R2</code></pre></details></li></ul></li></ol><ol type="1" id="465644fa-202b-4f38-b832-cc7c5574773b" class="numbered-list" start="15"><li>Write a program to iterate over a null-terminated string, incrementing every numeric character by one while ignoring all other characters. Incrementing the character &#x27;9&#x27; should result in it overflowing to &#x27;0&#x27;. You may assume that the string is non-empty and contains strictly alphanumeric characters.<p id="2f141c8d-a40c-4406-a067-c0629d3761f6" class="">For example, the string &quot;0123456789Test&quot; would become &quot;1234567890Test&quot;</p><p id="098fad01-1fd5-46cb-bc9f-a82540c7f0dd" class="">Rules:</p><ul id="0161bd77-e048-45b6-9da2-c44f5dc4bb75" class="bulleted-list"><li style="list-style-type:disc">Do not use more than 25 instructions</li></ul><ul id="583703ba-6d3e-459e-a5ae-dea0c1edee26" class="bulleted-list"><li style="list-style-type:disc">You can use all 8 registers R0 through R7</li></ul><ul id="7314177e-4ddc-4997-89d1-4a15a2fd5dc8" class="bulleted-list"><li style="list-style-type:disc">This can be done in ~15 lines</li></ul><ul id="b6518c53-39ac-44dc-8c48-c092256e950e" class="bulleted-list"><li style="list-style-type:disc">You cannot use pseudo-ops or traps</li></ul><p id="25b8c67e-1654-4ab6-958a-bedab6fb3e55" class="">Pseudocode:</p><pre id="d78db89c-401d-4571-a760-cb6eef9e5c35" class="code"><code>int i = 0;
+ while (str[i] != &#x27;\0&#x27;) {
+     if (str[i] == &#x27;9&#x27;) {
+         str[i] = &#x27;0&#x27;;
+     } else if (str[i] &lt; &#x27;9&#x27;) {
+         str[i] = str[i] + 1;
+     }
+     i++;
+ }</code></pre><p id="fbb05cde-7a49-4b8a-86c0-cd5ba4aa2f25" class="">A skeleton program is provided below:</p><pre id="36add477-b2b5-46aa-b552-7e7895526a60" class="code"><code>.ORIG X3000
+
+;;YOUR CODE HERE
+
+HALT
+
+ZERO .fill #48 ;; the ASCII value of &#x27;0&#x27;
+NINE .fill #57 ;; the ASCII value of &#x27;9&#x27;
+STRING .fill x6000 ;;thee start address of the input string
+
+.end
+
+.orig x6000
+.stringz &#x27;0123456789Test&#x27;
+.end</code></pre><ul id="4bb41cc5-0aee-432a-8558-2df9eb37a7f0" class="block-color-pink_background toggle"><li><details open=""><summary>Answer(debugged on complex, should be right idk)</summary><pre id="bac515d9-ac3a-4060-af2f-8d00de9fef3b" class="code"><code>.orig x3000
+
+AND R0, R0, #0 	;;R0 = i = 0
+LD R1, STRING 	;;address of STRING
+
+WHILE
+	AND R2, R2, 0
+	ADD R2, R2, R1 		;;R2 = address of STRING[i]
+	LDR R3, R2, #0 		;;R3 =  value of STRING[i]
+	BRz TERMINATE     	;;end loop if string[i] == &#x27;\0&#x27;
+
+  	NOT R4, R3
+	ADD R4, R4, #1 		;;R4 = -STRING[i]
+
+	LD R5, NINE 		;;Load ASCII value 9 to R5
+	ADD R5, R5, R4 		;;R5 = 9 - STRING[i]
+	BRz IF 				;;9 == STRING[i]
+	ADD R5, R5, #0
+	BRp ELSE 			;;9 &gt; STRING[i]
+
+	IF
+		LD R5, ZERO
+		STR R5, R2, #0 	;;store value of R5(zero) to address of STRING[i]
+	ELSE
+		ADD R6, R3, #1 	;;R6 = STRING[i] + 1
+		STR R6, R2, #0 	;;Store R6 at STRING[i]
+		
+  	ADD R0, R0, #1 		;;i = i + 1
+  	BR WHILE 			;;Loop
+
+TERMINATE
+HALT
+
+ZERO .fill #48 ;; the ASCII value of &#x27;0&#x27;
+NINE .fill #57 ;; the ASCII value of &#x27;9&#x27;
+STRING .fill x6000 ;;the start address of the input string
+
+.end
+
+.orig x6000
+.stringz &quot;0123456789Test&quot;
+.end</code></pre></details></li></ul></li></ol></div></article></body></html>

@@ -1,0 +1,770 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Quiz 4</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="513e124c-f005-41b7-b60b-f6bbeeac8852" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">‼️</span></div><h1 class="page-title">Quiz 4</h1><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>Column</th><td></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCheckbox"><path d="M0,3 C0,1.34314 1.34326,0 3,0 L11,0 C12.6567,0 14,1.34314 14,3 L14,11 C14,12.6569 12.6567,14 11,14 L3,14 C1.34326,14 0,12.6569 0,11 L0,3 Z M3,1.5 C2.17139,1.5 1.5,2.17157 1.5,3 L1.5,11 C1.5,11.8284 2.17139,12.5 3,12.5 L11,12.5 C11.8286,12.5 12.5,11.8284 12.5,11 L12.5,3 C12.5,2.17157 11.8286,1.5 11,1.5 L3,1.5 Z M2.83252,6.8161 L3.39893,6.27399 L3.57617,6.10425 L3.92334,5.77216 L4.26904,6.10559 L4.44531,6.27582 L5.58398,7.37402 L9.28271,3.81073 L9.45996,3.64008 L9.80664,3.3056 L10.1538,3.63989 L10.3311,3.81067 L10.8936,4.35303 L11.0708,4.52399 L11.4434,4.88379 L11.0708,5.24353 L10.8936,5.41437 L6.1084,10.0291 L5.93115,10.2 L5.58398,10.5344 L5.23682,10.2 L5.05957,10.0292 L2.83057,7.87946 L2.65283,7.70801 L2.27832,7.34674 L2.6543,6.98694 L2.83252,6.8161 Z"></path></svg></span>Complete</th><td><div class="checkbox checkbox-on"></div></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-purple">Assessment</span></td></tr></tbody></table></header><div class="page-body"><ol type="1" id="122ca4db-ae75-4638-80fe-10d12f7b64d6" class="numbered-list" start="1"><li>In C, #include statements are expanded during the ?? step of the compilation process<ul id="0a0e8c57-c01b-4e2a-99de-75d8abbf2efb" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="6a8f70d6-998a-4b29-a1a6-b4cbe42fcbd9" class="">preprocessing</p></details></li></ul></li></ol><ol type="1" id="a1ff9a7a-d5ea-4309-9e37-ccb847da5c4e" class="numbered-list" start="2"><li>Write a macro called <strong>FUN_DIVIDE</strong> that divides numbers A and B then adds 9 to the result. Make sure the result is a floating-point number.<ul id="cdb62054-5cef-43a0-a2d3-837a54713b7d" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="f6237faf-6dd4-410f-820e-20dd00a25596" class="">#define FUN_DIVIDE((a), (b)) (((a) / (b)) + 9.0)</p><p id="a9e0bba7-ed52-4448-a4f5-808936f64fe8" class="block-color-red">Necessary to include parenthesis around each &#x27;parameter&#x27; (recall <em>macro perils</em>).</p></details></li></ul></li></ol><ol type="1" id="fed05d90-bd2f-4649-8dd8-206cb00fdf5a" class="numbered-list" start="3"><li>In one of Jack&#x27;s files called foo1.c, he declares and defines a global static double called PI and a function main() like so:<pre id="aaeceaba-aab9-4295-ab3f-47854bbd5007" class="code"><code>#include &quot;foo1.h&quot;
+
+	static double PI = 3.1415;
+	
+	int void main() {
+	
+		printf(&quot;Hello Quiz 4&quot;);
+
+	}</code></pre><p id="f05618c7-3a5c-4f35-85a7-7f57d3387742" class="">Is this valid? Why or why not?</p><ul id="d864a4bd-4786-4550-898d-9ea06e75e3e2" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="04c14245-b545-4783-bd98-e0b5960cc2ea" class="">INVALID</p><p id="2d482494-ca96-441a-926c-8454ef853cb0" class="">main() is a function defined to have a return type of both int AND void, which is invalid</p></details></li></ul></li></ol><ol type="1" id="fdcc8629-e536-4f88-be7e-989b8873fcdc" class="numbered-list" start="4"><li>Consider the following code and determine where the following items are stored in memory. Then, determine the result of this program.<pre id="b0d64c21-891b-43bf-ac37-02fa1c6f561d" class="code"><code>#include &lt;stdio.h&gt;
+	int *getNthElement(int n) {
+		static int nums[] = {48, 45, 69, 02, 12, 61, 04, 58, 42, 82};
+		char letter = &#x27;U&#x27;;
+		int myNum = nums[n];
+		return &amp;myNum;
+	}
+	
+	int count = 8348;
+
+	int main(void) {
+		int *x = getNthElement(6);
+		printf(&quot;%d\n&quot;, *x);
+		return 0;
+	}</code></pre><p id="c51d1dd5-2eb5-4b6b-84a8-2b413fe79ac9" class="">getNthElement</p><p id="1d1753b7-20cf-4f1b-941f-16272ffb3a01" class="">nums</p><p id="e67c9b1a-f02b-41ee-a8be-d37e37315310" class="">count</p><p id="f79fcfe1-200e-4ee6-9266-f1a26de926d2" class="">x</p><p id="5bce23c9-a0d7-472e-b9ea-66fd933e8655" class="">n</p><ul id="fea7bb53-f13e-4688-9267-32f91d74ef44" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="99e258b9-9424-4ed6-aa6b-3fe12b704b25" class="">getNthElement: data segment</p><p id="854dfe2b-545e-40b0-a705-f7da2258fc04" class="">nums: data segment</p><p id="bf16e4d0-62c8-4da9-9aad-f76976cecc08" class="">count: data segment</p><p id="93023af6-e8f1-4166-915e-dbdb8437e991" class="">x: stack</p><p id="06c28620-6d1c-4753-af6a-f6af15bea202" class="">n: stack</p></details></li></ul></li></ol><ol type="1" id="1f9add71-3089-4817-abd4-be8f1d4f35d6" class="numbered-list" start="5"><li>Type the corresponding C declaration that matches the description given for each part<p id="34b6c243-222b-446d-803d-3715203573f5" class="">a) b is a pointer to a pointer to a long</p><p id="ae186e4b-1de7-4f6c-ab0d-805981638340" class="">b) f is a pointer to a function that takes in a pointer to an int and returns a pointer to a pointer to a char</p><p id="9271b588-c5bf-4aaa-904b-f1c253497950" class="">c) junk is a pointer to a function that takes in no parameters and returns a pointer to a pointer to a struct trash</p><p id="308db724-0d0d-4af4-b0c3-afeb6a5e0002" class="">d) h is an array of size 2110 that contains pointers to pointers to struct students</p><ul id="67b84bca-95fc-4838-a534-416e4d4b6906" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><ol type="a" id="ab717fa0-4798-42ec-bb8e-94eee1ad14ca" class="numbered-list" start="1"><li>long **b</li></ol><ol type="a" id="1fed5bc5-9c64-457c-884d-e8d8209a5025" class="numbered-list" start="2"><li>char **(*f)(*int);</li></ol><ol type="a" id="27ae974e-be6e-4640-85c1-200616f36e06" class="numbered-list" start="3"><li>struct trash **(*junk)(void)</li></ol><ol type="a" id="95e96edc-d6a7-4e81-bac6-5538e8ca790d" class="numbered-list" start="4"><li>struct student **h[2110]</li></ol></details></li></ul></li></ol><ol type="1" id="19375f7e-e326-4349-9507-5469ccc2e1d0" class="numbered-list" start="6"><li>Consider the following code and determine what the program will print. Then, use the dropdown to determine which arguments are pass by <strong>reference</strong>.<pre id="a7b4f4b0-afac-4628-8455-7671e3c267b7" class="code"><code>#include &lt;stdio.h&gt;
+
+void func(int a, int *b, int *c) {
+	a++;
+	c = b;
+	*b = a + 7;
+	(*c)++;
+}
+
+void main(void) {
+	int a = 12;
+	int b = 9;
+	int c = 36;
+	func(a, &amp;b, &amp;c);
+	printf(&quot;a: %d\n&quot;, a);
+	printf(&quot;b: %d\n&quot;, b);
+	printf(&quot;c: %d\n&quot;, c);
+}</code></pre><p id="aab772ee-d68b-4b27-ba16-bccb26fff17f" class="">a: </p><p id="178d3b46-3469-44ad-ba71-045d0abfac6a" class="">b:</p><p id="e5a0cd6d-1c7d-491a-beaf-f86286680b65" class="">c:</p><p id="6e907459-2c76-418e-b5e8-d34275d7a7e4" class="">Which of the arguments are passed by reference? </p><ul id="1eb47f31-c52a-4e2c-95f0-a353aa4b4084" class="block-color-pink_background toggle"><li><details open=""><summary>Answer:</summary><p id="d559186f-e26b-473e-8bee-4f2f03e08998" class="">a: 12</p><p id="78652891-5c10-43c4-92cf-cfa65a0632e1" class="">b: 21 ( 12 + 7 + 1)</p><p id="d5181953-6870-4e52-a75f-7dc24e3caef0" class="">c: 36</p><p id="741e5ca6-0270-4bca-9caa-ba83bf5c7d94" class="">Which of the arguments are passed by reference? None</p><figure id="3445a7e9-09fc-402a-b5c7-d7c3e16aefdd" class="image"><a href="Quiz%204%20513e124cf00541b7b60bf6bbeeac8852/Screen_Shot_2021-12-13_at_07.24.30.png"><img style="width:1276px" src="Quiz%204%20513e124cf00541b7b60bf6bbeeac8852/Screen_Shot_2021-12-13_at_07.24.30.png"/></a></figure><p id="56e44ae6-15b1-4005-9d1b-a413da32ffd3" class="">
+</p></details></li></ul></li></ol><ol type="1" id="41b1f4de-ad88-47e7-bcdc-1c2e94d6a350" class="numbered-list" start="7"><li>Will the following code run without error? If yes, what is the output? If not, explain the error and why it failed.<pre id="bdd50581-63d2-43ad-9636-1551e8aba6bc" class="code"><code>#include &lt;stdio.h&gt;
+
+char * returnSomeLetters(char *str) {
+	char result[4];
+	for (int i = 0; i &lt; 3; i++) {
+		result[i] = str[i];
+	}
+	result[3] = &#x27;\0&#x27;;
+	return result;
+}
+
+int main() {
+	char string[] = &quot;cs2110 is my favorite class&quot;;
+	char *result = returnSomeLetters(string);
+	printf(&quot;%s&quot;, result);
+}</code></pre><ul id="d92c6766-a0ba-40a3-b777-c011b3536ae4" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="f909e230-bd4c-498e-b6a1-fafd2f4f808c" class="">The code fails. The result is declared on the stack since it exists inside the function. When it is returned, the address of the result cannot be found since the stack is reset, and the pointer to the result will go somewhere bad.</p></details></li></ul></li></ol><ol type="1" id="815f5451-5c86-45cc-8041-a266f2f8dde7" class="numbered-list" start="8"><li>Will of the following function always run correctly? If not, explain when it would fail<pre id="718d42da-68de-4201-95f8-ff41ea11c233" class="code"><code>struct Doggo {
+	char * name;
+	int goodBoi;
+	long numMailmenScared;
+	int isChonker;
+};
+
+int isVeryGoodBoi() {
+	if (newDoggo-&gt;isChonker) {
+		return 1;
+	}
+	if (newDoggo-&gt;numMailmenScared &lt;= 0) {
+		return 0;
+	}
+	if (newDoggo-&gt;goodBoi) {
+		return 1;
+	} else {
+		return 0;
+	}
+}</code></pre><ul id="5f386eff-ca88-4d9c-aed5-abb4a621ef00" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="a4b749ca-5c2a-4e42-bc16-680240115cd4" class="">The answer is that newDoggo could be an invalid pointer such as NULL, if so, dereferencing it would cause a seg fault.</p></details></li></ul></li></ol><ol type="1" id="ddac9deb-fc3e-4236-9cc2-5764d27e030b" class="numbered-list" start="9"><li>Your head TA, Shawn Wahi, claims that both lines 4 and 5 in his code below are valid. Is it? If so, why? If not, where is the error and why not?<p id="e98990d8-a41a-4c91-9fa9-12403b4b2fa2" class="">char * OH = &quot;By Appointment Only&quot;;</p><p id="d2c4e123-cf33-44aa-9e29-c0900fc1a7e9" class="">char arr[20] = &quot;1 to 3&quot;;</p><p id="a1906250-510e-460d-aa85-f98ddc675eae" class="">char * temp = arr;</p><p id="f87e38d3-9d60-4dd7-bc02-763ac746d1c3" class="">arr = OH; //line 4</p><p id="6927c9fc-6539-4ff7-a306-9be5a777794e" class="">OH = temp; //line 5</p><ul id="149cd82b-3d7a-42ee-978a-db81739f3e44" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="5de9faa3-7f37-46fb-a2d5-915d59edb4cd" class="">line 4 is not valid since we cannot assign thee string OH to the array arr;</p></details></li></ul></li></ol><ol type="1" id="3cf2e52d-a65f-41d6-9545-aa7dc9440cc9" class="numbered-list" start="10"><li>Consider the code provided below. For the blank labeled [1], fill in the parameter list according to the implementation of doublePower provided in the code. For blank [2], write a single statement that will double the existing barkPower of the puppy. Assume that the structs have already been initialized with some initial values, and any parameter name may be used in blank [1], as long as it is consistent with blank [2].<pre id="c48d3560-3f08-4f10-a8d4-0d3a67f6cfb6" class="code"><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+//stats struct
+struct stats {
+	int age;
+	double barkPower;
+	double jumpHeight;
+}
+
+//puppy struct
+struct puppy {
+	char *name;
+	struct stats puppyStats;
+}
+
+int main() {
+	struct puppy p1;
+	doublePower(&amp;p1);
+	return 0;
+}
+
+int doublePower(//CODE HERE) {
+	//CODE HERE
+}</code></pre><ul id="c74d68cd-ea5d-48c6-ac3e-5f9cff059e67" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><pre id="4bbf2306-7634-46ad-b16d-3161394fa75e" class="code"><code>int doublePower(struct puppy *p) {
+	p-&gt;puppyStats.barkPower = (p-&gt;puppyStats.barkPower) * 2;
+}</code></pre></details></li></ul></li></ol><ol type="1" id="1f882a0a-3d61-45bc-ae4b-9cd74dd5fe98" class="numbered-list" start="11"><li>In the table below you’ll find a representation of memory in a computer. Each memory address is capable of storing 1 byte of information. For example, if I were to retrieve 2 bytes starting at address 0x123002, I would get 0xE058.<figure id="7feadf44-c4ca-4404-bf94-df8b10d0bb8a" class="image"><a href="Quiz%204%20513e124cf00541b7b60bf6bbeeac8852/Screen_Shot_2021-12-13_at_07.28.56.png"><img style="width:1112px" src="Quiz%204%20513e124cf00541b7b60bf6bbeeac8852/Screen_Shot_2021-12-13_at_07.28.56.png"/></a></figure><p id="a21f2c05-78fd-4280-82d7-fe8e4681362c" class="">You may assume long is 8 bytes, an int is 4 bytes, a short is 2 bytes, and a char is 1 byte.</p><p id="967aecc8-1dc7-4ea9-b4c4-2ae4a44847b0" class="">int * ptr1 = (int*)(0x123013);</p><p id="878f8ff0-38b1-4395-b127-bdae2c04db09" class="">short * ptr2 = (short*)(0x123008);</p><p id="5f7e1b0f-4f9b-4286-9818-18315fea3979" class="">long* ptr3 = (long*)(0x123000);</p><p id="3396ca0a-0619-4799-bb28-3dca5ac7effc" class="">Answer the following questions. Give your answer in hexadecimal.</p><p id="d8c69d9a-994d-414f-b914-b192c664b00e" class="">ptr3  = ?</p><p id="bb5ab878-8101-4417-830e-541aa83aaed3" class="">ptr3 + 1 = ?</p><p id="73bcb3c8-e841-4e3e-a9a2-e3508d1779a9" class="">*(ptr1 + 2) = ?</p><p id="acc804df-edcc-4488-acbf-63b896a824a9" class="">*(ptr2 +4) = ?</p><ul id="09401e15-e4d8-4e91-b072-2dc6cd5f8b8b" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><p id="0565dfd8-e738-4e65-841e-2cf35a1fb672" class="">ptr3 = 0x123000</p><p id="03e70301-ad5e-44ad-8372-5c2badb90d62" class="">ptr3 + 1 = 0x123008</p><p id="5e070c66-3a6e-4014-9f4b-7f60f37f4c68" class="">*(ptr1 + 2) = 0xC2D4E3A1.     123013 + 2*4 = 12301B</p><p id="cd2eb487-857b-482a-b070-e4137dd7e330" class="">*(ptr2 + 4) = 0xDB8E.              123008 + 8 = 123010</p></details></li></ul></li></ol><ol type="1" id="e5058c56-8be3-47a9-9d28-b3e7baafd819" class="numbered-list" start="12"><li>You will be allowed to use the following string functions:<ul id="e5fc4abb-eaf9-464a-ad19-edbad00561fa" class="bulleted-list"><li style="list-style-type:disc">strncmp</li></ul><ul id="941dfa27-1988-432b-b514-6ef6faa27a5d" class="bulleted-list"><li style="list-style-type:disc">strncpy</li></ul><ul id="cf9b03a2-ac4d-4361-9075-33773e86c079" class="bulleted-list"><li style="list-style-type:disc">strlen</li></ul><p id="551d5fd4-6d27-40b3-8cd4-a24e4b178877" class="">You can assume string.h has already been included.</p><p id="56fd7e98-e95a-4081-adb3-caca3d99ba6c" class="">Write a function replaceCharWithString that replaces a char with string. Do NOT modify the original string. You will be given 4 arguments:</p><ul id="9a2152fe-4c2a-4b00-b718-4fbb5fef3797" class="bulleted-list"><li style="list-style-type:disc">(char *originalString). null-terminated string to modify.</li></ul><ul id="affe812e-94ed-4d92-9d18-3e874fb69d38" class="bulleted-list"><li style="list-style-type:disc">(char charToReplace). char you are looking to replace</li></ul><ul id="3270d98f-bafb-4b3a-968a-c8083d90351c" class="bulleted-list"><li style="list-style-type:disc">(char *stringReplace). null-terminated string that will replace the char</li></ul><ul id="fcfd6dd1-a2a5-4b3a-b573-cd2a2eb3911e" class="bulleted-list"><li style="list-style-type:disc">(char *result). string to store the result. You can assume that it has been initialized with enough memory to hold the entire resulting null-terminated string.</li></ul><p id="11aac5a6-681a-4f91-91b3-9e7b5a4b597e" class="">Example 1: replaceCharWithString(&quot;hi&quot;, &#x27;i&#x27;, &quot;ello&quot;, res) should result in res containing the null-terminated string &quot;hello&quot;.</p><p id="e7ae987a-87c4-418e-ade9-e6f8747160cc" class="">Example 2: replaceCharWithString(&quot;beautiful&quot;, &#x27;u&#x27;, &quot;uwu&quot;, res) should result in res containing the null-terminated string &quot;beauwutifuwul&quot;.</p><p id="d18f0aab-9da7-49c6-a203-1f5977926270" class="">Copy the following function header into the box:</p><pre id="5e45bd86-0487-41f4-a21b-42ebb7283edd" class="code"><code>void replaceCharWithString(char * originalString, char charToReplace, char * stringReplace, char *result)</code></pre><ul id="fb33af65-07df-4aea-bf43-3ea3885047b0" class="block-color-pink_background toggle"><li><details open=""><summary>Answer</summary><pre id="59e3fff3-d456-4e53-badb-da987448e49e" class="code"><code>void replaceCharWithString(char *originalString, char charToReplace, char *stringReplace, char *result) {
+    const int replaceLen = strlen(stringReplace);
+    while (*originalString) { // until we reach a null terminator
+        if (*originalString == charToReplace) {
+            strncpy(result, stringReplace, replaceLen); // copy all replacement chars except the null terminator
+            result += replaceLen;
+        } else {
+            *result = *originalString; // copy the current character
+            result++;
+        }
+        originalString++; // look at the next character
+    }
+    *result = &#x27;\0&#x27;; // ensure the result is null-terminated
+}</code></pre></details></li></ul></li></ol><p id="6e8f4726-fc02-4706-829e-eb65a541cfe7" class="">
+</p></div></article></body></html>
