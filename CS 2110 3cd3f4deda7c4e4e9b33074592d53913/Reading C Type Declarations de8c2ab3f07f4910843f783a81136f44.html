@@ -1,0 +1,689 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Reading C Type Declarations</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="de8c2ab3-f07f-4910-843f-783a81136f44" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧧</span></div><h1 class="page-title">Reading C Type Declarations</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="3cef75f4-86f9-419e-8ea6-7bef1d3f46cf" class="block-color-teal_background">Notes</h1><p id="2afdddab-c12a-4eca-9e02-3fb5c0fdff60" class=""><a href="https://cdecl.org">C gibberish ↔ English Website</a></p><h2 id="eff836f2-d3bb-4640-b08d-bac468dd58c5" class="block-color-pink_background">C Data Types</h2><h3 id="c64895d2-b303-405d-a618-f846fd748067" class="">Base Types</h3><ul id="72ccc53c-31b1-495e-8bee-75d9e3114349" class="bulleted-list"><li style="list-style-type:disc">Integer types(Signed, add[unsigned] to unsigned)<ul id="7d36cf86-cc0b-4abe-9bde-98d1404f1872" class="bulleted-list"><li style="list-style-type:circle">[unsigned] char 8 bits</li></ul><ul id="100b518d-bd9d-40c5-bb64-acb76d351ed5" class="bulleted-list"><li style="list-style-type:circle">[unsigned] short [int] 16 bits</li></ul><ul id="fe78014f-f1ea-499a-be11-c391a9c03a5e" class="bulleted-list"><li style="list-style-type:circle">[unsigned] int 16/32 bits</li></ul><ul id="a6012c71-e969-417c-acdc-92238732ef40" class="bulleted-list"><li style="list-style-type:circle">[unsigned] long [int] 32/64 bits</li></ul><ul id="0907aaaa-4012-45b5-84c1-2aa56a470760" class="bulleted-list"><li style="list-style-type:circle">[unsigned] long long [int] 64 bits</li></ul></li></ul><ul id="1a7f23f2-723d-436a-b16b-ae7e9d7fa6cc" class="bulleted-list"><li style="list-style-type:disc">Floating-point types<ul id="06552e4e-c087-431c-8440-36ba51af635c" class="bulleted-list"><li style="list-style-type:circle">float 32 bits</li></ul><ul id="c72eb048-7ec7-4594-8d91-4e522280b13b" class="bulleted-list"><li style="list-style-type:circle">double 64 bits</li></ul><ul id="1cbf4b39-c857-4e6b-a05e-bf482a16dd50" class="bulleted-list"><li style="list-style-type:circle">long double 80/128 bits</li></ul></li></ul><ul id="5b1411a4-a4d7-4498-a88f-685ec041f82f" class="bulleted-list"><li style="list-style-type:disc">Aggregate types<ul id="932028eb-7dc3-4b8b-8d6c-23781877d04f" class="bulleted-list"><li style="list-style-type:circle">array</li></ul><ul id="f47ced33-15f5-4087-a20e-23aa6222373a" class="bulleted-list"><li style="list-style-type:circle">struct</li></ul><ul id="920b8853-8d81-4c62-aa1d-c9ea957e0cd8" class="bulleted-list"><li style="list-style-type:circle">union (later)</li></ul></li></ul><ul id="d21fde44-dbee-476e-99c8-b20caae57907" class="bulleted-list"><li style="list-style-type:disc">Pointers (a special kind of integer)</li></ul><h3 id="99a9bcca-18d2-4919-9886-b4453d7193fc" class="">Derived Types</h3><ul id="ea46ec16-fc88-45dd-88b6-772403cbb081" class="bulleted-list"><li style="list-style-type:disc">Every data has zero or more derived types:<ul id="9518c897-ca42-418a-98d7-d7d15414b01e" class="bulleted-list"><li style="list-style-type:circle">* — &quot;pointer to...&quot;</li></ul><ul id="49bbfd89-14b4-43ec-b363-507b034f29f6" class="bulleted-list"><li style="list-style-type:circle">[] — &quot;array of...&quot;</li></ul><ul id="cd88de37-5036-4de5-87d7-d89837bc6a39" class="bulleted-list"><li style="list-style-type:circle">[n] — &quot;array of n ...&quot;</li></ul><ul id="92fcce1d-e5d1-4489-9157-83be551d03d1" class="bulleted-list"><li style="list-style-type:circle">... (...)(args) — &quot;function taking args and returning ...&quot;</li></ul></li></ul><h2 id="c2c0ac0d-1a79-45f4-82c4-1d0585c214af" class="block-color-pink_background">Size</h2><p id="b9e7acca-21ff-453e-ba95-1ff9605edf54" class="">Depends on the platform. 16-bit and 64-bit computer has different size</p><p id="ccdb8948-2b34-4b42-898b-b307d02469c5" class="">Minimum size</p><ul id="987a70f8-1616-4acc-a997-6b95600b8152" class="bulleted-list"><li style="list-style-type:disc">char – exactly 8 bits</li></ul><ul id="3c551a87-cbf2-4ea8-a496-1ebcc3ab3402" class="bulleted-list"><li style="list-style-type:disc">short int – at least 16 bits</li></ul><ul id="53821d5e-0e8b-4880-b0d0-97dc00093057" class="bulleted-list"><li style="list-style-type:disc">int – at least 16 bits</li></ul><ul id="32633d7d-c6fe-4712-acb7-2ff4df861073" class="bulleted-list"><li style="list-style-type:disc">long int – at least 32 bits</li></ul><h3 id="46668843-2b59-4be9-bd33-c189eac1d2a4" class="">Sizeof()</h3><p id="6f8b58a0-d585-42a5-99f0-948fc992fe64" class="">sizeof is a compile-time constant reflecting the number of bytes held by a data type or instance</p><p id="0d9721fd-f799-4d1c-82c4-bba6a65018fc" class="">sizeof(char) &lt;= sizeof(short) &lt;= sizeof(int) &lt;= sizeof(long)</p><p id="b430d908-29c8-42b0-88ec-59cfd971420e" class="">sizeof char is 1</p><p id="3e6d4029-1078-4494-b5fa-f2e993fcdcc6" class="">
+</p><h2 id="1b112188-c7e2-4b0e-b6b7-3f2f631dc1e8" class="block-color-pink_background">Boolean</h2><p id="f71f40a2-dae0-4b39-87ad-596d9ed400c9" class="">C historically did not have a Boolean data type. Instead, we can <strong>use integers</strong> to represent Boolean values.</p><ul id="a6cdb44b-9ae4-4c69-b884-a5d63ccc4890" class="bulleted-list"><li style="list-style-type:disc">Any integer that is 0 is evaluated as False</li></ul><ul id="b08d7223-fb6f-4afb-af56-eed9bc54cb3d" class="bulleted-list"><li style="list-style-type:disc">Any non-zero integer evaluates as True</li></ul><ul id="7000222e-50aa-457d-98d9-64d2aae36e4d" class="bulleted-list"><li style="list-style-type:disc">Also applies to a char<ul id="c24bdd22-cffc-43cc-9a25-e4c65139d213" class="bulleted-list"><li style="list-style-type:circle">NUL character ‘\0’ evaluates to False</li></ul></li></ul><ul id="d5b5b842-ee15-424a-86f5-6b169de7d3ae" class="bulleted-list"><li style="list-style-type:disc">Also applies to a pointer<ul id="415c9a1c-4a01-4ea0-9d99-0ddec3b09008" class="bulleted-list"><li style="list-style-type:circle">A memory address that is 0x0 is evaluated as False</li></ul></li></ul><h2 id="3d487186-4474-4f78-bc62-4c7a93dc757a" class="block-color-pink_background">String</h2><ul id="eb1560e4-f58d-4b7e-9d41-191b3a1226d5" class="bulleted-list"><li style="list-style-type:disc">C does not include strings<ul id="08b7b0c0-608e-4059-878b-ac8c5f5da75c" class="bulleted-list"><li style="list-style-type:circle">Strings are arrays of characters, end with an ASCII NUL(0 or &#x27;\0&#x27;)</li></ul><ul id="0215ff69-16c6-45ce-814e-13830b5f41eb" class="bulleted-list"><li style="list-style-type:circle">And characters are 8-bit integers</li></ul></li></ul><ul id="52d39f83-4362-458d-bce2-1f8979b0b74a" class="bulleted-list"><li style="list-style-type:disc">You can define a String like <pre id="59dee12b-5d6c-49e1-b97f-d3e1c1c350e2" class="code"><code>char mystr[6];</code></pre></li></ul><ul id="b69c7c46-de3b-4346-836a-99b3abb72c96" class="bulleted-list"><li style="list-style-type:disc">Intialization:<ul id="0d2ea83e-4f09-4e73-83c9-248a48fe0a15" class="bulleted-list"><li style="list-style-type:circle">char mystr[6] = {&#x27;H&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27;, &#x27;\0&#x27;};</li></ul><ul id="35f2bd4e-af5a-4fd9-a4f3-00b5d684ad25" class="bulleted-list"><li style="list-style-type:circle">char mystr[] = {&#x27;H&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27;, &#x27;\0&#x27;};</li></ul><ul id="e3e7ab3c-cbfa-4b89-b607-178868ad74aa" class="bulleted-list"><li style="list-style-type:circle">char mystr[] = &quot;Hello&quot;;</li></ul><ul id="119a5784-e3ee-44ba-9030-425729c2cbbb" class="bulleted-list"><li style="list-style-type:circle">The latter two are <strong>special cases</strong>, the compiler determines the length of the array from the initializer</li></ul></li></ul><ul id="d9f5ec1c-daaa-4675-be34-97a0608e382f" class="bulleted-list"><li style="list-style-type:disc">There are a number of library functions for dealing with strings, including <strong>strlen()</strong>, <strong>strcpy()</strong>, and <strong>strdup()</strong></li></ul><pre id="bb28c591-959a-44cb-8fa1-f3c3423a8db1" class="code"><code>char s[6] = &quot;hello&quot;;   
+// same as  
+s.stringz &quot;hello&quot;; // 6 memory locations, end with 0
+//s is the memory address where the string starts</code></pre><ul id="bacfa6f9-d42a-426e-ad71-1904b17e550f" class="bulleted-list"><li style="list-style-type:disc"><strong>Never use </strong><em><strong>sizeof(s)</strong></em><strong> to determine string length. </strong><ul id="aa1b3237-53cb-476a-b1ea-280f20a14700" class="bulleted-list"><li style="list-style-type:circle">This tells the size of the array/pointer, not the actual length of the string. </li></ul><ul id="237d8d90-a76a-4b46-a512-57ac77810fc9" class="bulleted-list"><li style="list-style-type:circle">Use <em>strlen(s). </em>Must put: <em>#include &lt;string.h&gt;</em> —&gt; import library</li></ul></li></ul><h2 id="eec5bbde-c33d-49a6-885f-84277c743e14" class="block-color-pink_background">Declaration vs Definition</h2><p id="d411d74d-bd5e-498d-8926-2bebb9793ef4" class="">A <strong>declaration</strong> in C introduces an identifier and describes its type, be it a scalar, array, struct, or function. A declaration is what the compiler needs to accept references to that identifier (for type checking). You may have as many declarations of an identifier as you want within a scope as long as they are consistent.</p><p id="1cfb8d4b-0d6a-42c3-9fa7-ee6853e5de1d" class="">A <strong>definition</strong> in C actually instantiates/implements this identifier. For instance, a definition allocates storage for variables or defines the body of a function. You may only have one definition of an identifier within a scope.</p><h3 id="9c565135-df09-43c9-8ab9-56ee5a103dc7" class="">Declaration</h3><p id="f0ec8c7f-af2e-4765-82fc-68492b5c9aab" class="">There are two parts:</p><ol type="1" id="190cee77-a2d6-4063-a14f-3615ab9117c3" class="numbered-list" start="1"><li>Base Type<ul id="63565477-dea8-4646-a12f-01f839419949" class="bulleted-list"><li style="list-style-type:disc">This is the type (or struct s or a typedef), and optionally a storage class and/or a type qualifier</li></ul><ul id="54bf447b-2360-47f5-a32c-9a9bc1baea44" class="bulleted-list"><li style="list-style-type:disc">The Base Type applies to all names up until the semicolon</li></ul></li></ol><ol type="1" id="7b8e1edb-9c09-42db-a92a-22f86e406c20" class="numbered-list" start="2"><li>List of Declarations, separated by commas<ul id="b636cbf6-6401-4ed2-96be-b16e48001d90" class="bulleted-list"><li style="list-style-type:disc">Each of these declares a type fr each identifier(the variable name)</li></ul><ul id="f8f6a825-79e4-4d60-9d81-54628034af08" class="bulleted-list"><li style="list-style-type:disc">Each is based on the Base Type, but stands alone</li></ul><ul id="bf119c43-3e79-48fa-8339-0ae747fa3216" class="bulleted-list"><li style="list-style-type:disc">Consists of sensible combinations of &quot;pointer to&quot;, &quot;array of&quot;, or &quot;function returning&quot;, ending with the Base Type</li></ul></li></ol><ul id="1a1efe22-3684-4690-8916-afa9bdd7079d" class="block-color-pink_background toggle"><li><details open=""><summary>Declaration Example</summary><figure id="589d9302-efd9-4afe-89be-bb4212142583" class="image"><a href="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_14.56.32.png"><img style="width:930px" src="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_14.56.32.png"/></a></figure></details></li></ul><ul id="8cd1c644-8fd4-4acd-8aed-5555aadd5046" class="block-color-pink_background toggle"><li><details open=""><summary>Declaration Example 2(each declaration is separate)</summary><figure id="667d0815-a08b-4c57-b9f0-82073d27bbe2" class="image"><a href="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_14.58.17.png"><img style="width:864px" src="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_14.58.17.png"/></a></figure></details></li></ul><h3 id="b0a7597b-9cff-4ac8-98d3-4066a164f389" class="">Rules on Declaration</h3><ol type="1" id="4d8eb492-a053-454d-b775-170bfbdef1bc" class="numbered-list" start="1"><li>Remember the precedence of the declarators<ol type="a" id="8d35b08b-f59e-4787-b71b-049d10cb9697" class="numbered-list" start="1"><li>() and [] declarators get processed first</li></ol><ol type="a" id="6642fdd4-60ca-4885-979a-0ec4be86a91c" class="numbered-list" start="2"><li>gets processed last</li></ol><ol type="a" id="5c30471b-d78c-475b-916d-aab9fd8d7ba9" class="numbered-list" start="3"><li>Parentheses change the precedence order (just as in expressions)</li></ol></li></ol><ol type="1" id="b78dce4f-b63a-4f53-9cd1-f61b43168fce" class="numbered-list" start="2"><li>Read or form the declaration from the inside out<ol type="a" id="679c9c17-1fdb-4084-bf02-397d8035265a" class="numbered-list" start="1"><li>Example: int *(**f)() —&gt; f is a pointer to a pointer to a function returning a pointer to int.</li></ol><ul id="b888375d-23e9-42f5-9083-d68c9816f2eb" class="toggle"><li><details open=""><summary>More on the example above</summary><figure id="90cfa609-75c2-4c9c-8a09-eb55f6f70894" class="image"><a href="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_15.00.57.png"><img style="width:632px" src="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_15.00.57.png"/></a></figure></details></li></ul></li></ol><h3 id="0636cb9f-60fc-4790-b997-33a846f0ca27" class="">Parsing</h3><p id="7be086fb-7600-4eb8-aec3-b638dce6edd7" class="">determining which grammar productions (rules) were used to generate a sentence</p><ul id="e9d17228-eff5-4618-b239-b86f1e187c59" class="block-color-pink_background toggle"><li><details open=""><summary>Example</summary><figure id="a457ea9a-35a0-4e62-8238-d2e20929397b" class="image"><a href="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_15.12.31.png"><img style="width:724px" src="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_15.12.31.png"/></a></figure></details></li></ul><h3 id="26861c30-82a0-4796-b6c9-90d52471c4d9" class="">Declaring vs Using Pointers and Arrays</h3><p id="db439eca-d3f3-4306-bd0b-8da10564511e" class="">*, (), and [] have different meanings in declarations and executable statements. Therefore, their behavior allows you to “unwind” a type just as the declaration would wind it</p><ul id="03352158-17c6-48fe-bed6-233e99ca62b6" class="block-color-pink_background toggle"><li><details open=""><summary>Example 1</summary><figure id="3013f8a6-7987-4e66-8420-af6bb0d0132a" class="image"><a href="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_15.14.36.png"><img style="width:932px" src="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_15.14.36.png"/></a></figure></details></li></ul><ul id="6c3136db-cba0-40aa-b867-09dae8b762ef" class="block-color-pink_background toggle"><li><details open=""><summary>Example 2</summary><figure id="f2d125b1-0f7f-4542-8881-7ccd3bab0c33" class="image"><a href="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_15.24.50.png"><img style="width:680px" src="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-10_at_15.24.50.png"/></a></figure></details></li></ul><p id="09083fee-f862-4b93-a0f0-7b3185b4b83f" class="">
+</p><h2 id="fe8e9391-0825-46c4-9ae3-2b721797ea4d" class="block-color-pink_background">Typedef</h2><p id="c0a12fd7-607a-4270-a063-4a834a96fa48" class="">Typedef is a shortcut that creates a new alias for a type. It does NOT create a new type</p><ul id="9974dad6-1995-4f3f-bdb4-c77d2d84ed10" class="bulleted-list"><li style="list-style-type:disc">Creates a new type that is an alias for an existing one</li></ul><ul id="dd777a98-c156-4972-b612-b505ea19657c" class="bulleted-list"><li style="list-style-type:disc">Typedef is a shortcut that allows you to create a new alias for a type</li></ul><ul id="8db212ac-2e92-4f42-8803-26af4371f2ae" class="bulleted-list"><li style="list-style-type:disc">It does <strong>not</strong> create a new type</li></ul><ul id="46be9fbf-7b09-4426-923e-97997635c6b1" class="bulleted-list"><li style="list-style-type:disc">Start the declaration with “typedef” and put the alias name where you would put the variable name</li></ul><ul id="55ec1901-bdb8-4b6f-b5a9-351dc6a5f07a" class="bulleted-list"><li style="list-style-type:disc">Don’t let the syntax throw you: It just allows you to create another name for an existing type</li></ul><p id="2e547c48-3b0d-4ed6-ae6e-371eb2130827" class=""><em>Start the declaration with “typedef” and put the alias name where you would put the variable name</em></p><ul id="77b10334-f0e3-48fb-aa61-a47b83695075" class="toggle"><li><details open=""><summary>Examples</summary><pre id="280798f5-ebf8-4820-8097-bb328cd00cc5" class="code"><code>// Define an array of 5 struct a named b
+struct a b[5];
+// Create a type alias for an array of 5 struct a
+typedef struct a sa5[5];
+//Now we can use sa5 as a type name:
+sa5 c;
+// Note that b and c are the same type!
+
+// Another example
+typedef unsigned long size_t;
+size_t position;
+// What type is position?
+unsigned long</code></pre></details></li></ul><h2 id="94982969-1859-471e-8d5d-f242f9e5549e" class="block-color-pink_background">Reading and Forming Declarators</h2><ul id="d23ad28d-01a4-40d8-82d9-953989a18383" class="bulleted-list"><li style="list-style-type:disc">Rule 1: Remember the precedence of the declarators<ul id="4c32cbc0-b9c9-49c8-ab1c-724ecbfd8168" class="bulleted-list"><li style="list-style-type:circle">() and [] declarators get processed first</li></ul><ul id="6f4da6c6-101e-4d5b-9b4d-b77b846fc96e" class="bulleted-list"><li style="list-style-type:circle">gets processed last</li></ul><ul id="41fa4039-571d-405c-93b9-5f8e501dead4" class="bulleted-list"><li style="list-style-type:circle">Parentheses change the precedence order (just as in expressions)</li></ul></li></ul><ul id="21263c25-7e61-4006-9a39-61ecbea74e19" class="bulleted-list"><li style="list-style-type:disc">Rule 2: Read or form the declarations from the inside out</li></ul><ul id="fefc8692-117c-4095-8fc4-6c2fbb08e499" class="bulleted-list"><li style="list-style-type:disc">Example: int *(**f)()<ul id="5559a153-0173-4efa-a021-b93f194b2c29" class="bulleted-list"><li style="list-style-type:circle">f is a pointer to a pointer to a function returning a pointer to int.</li></ul></li></ul><ul id="4a34fb4c-1477-4b4a-8011-ed545f29be8c" class="toggle"><li><details open=""><summary>Example</summary><figure id="48ac1040-b019-448b-b007-e0e5e7df9108" class="image"><a href="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-17_at_2.38.05_PM.png"><img style="width:1290px" src="Reading%20C%20Type%20Declarations%20de8c2ab3f07f4910843f783a81136f44/Screen_Shot_2021-11-17_at_2.38.05_PM.png"/></a></figure><p id="dc382140-6acc-4a65-a626-287de81b2864" class="">
+</p></details></li></ul><ul id="76dc1667-7d21-4c8e-9ba8-aa8062f515d0" class="bulleted-list"><li style="list-style-type:disc"><strong>parsing:</strong> determining which grammar productions (rules) were used to generate a sentence</li></ul><h3 id="4be135b3-b05e-4bc9-b155-0502a26fd824" class="">How to read a declaration</h3><ol type="1" id="9229f304-a53b-4993-a71f-a6b4262c85eb" class="numbered-list" start="1"><li>Find the identifier name, e.g. &quot;x&quot; in &quot;int x;&quot;</li></ol><ol type="1" id="a5f643d1-abba-4d2d-978e-1fce98c7e65d" class="numbered-list" start="2"><li>Read as far right as you can until:<ol type="a" id="d003b907-a4a3-43d6-bb01-00060a041781" class="numbered-list" start="1"><li>You hit a close paren &#x27;)&#x27;, or</li></ol><ol type="a" id="89c2a501-b3a0-466c-a0a3-431edc473515" class="numbered-list" start="2"><li>You reach the end of the declaration</li></ol></li></ol><ol type="1" id="e8c2cb6e-6f84-4fd3-a298-c6ee93c14e0c" class="numbered-list" start="3"><li>Go back and read as far left as you can until:<ol type="a" id="2d3a6884-7692-4fb7-a2d9-7dda3288e387" class="numbered-list" start="1"><li>You hit an open paren &#x27;(&#x27;, or</li></ol><ol type="a" id="2819193d-74aa-4deb-8ee0-1b96eb4a67f6" class="numbered-list" start="2"><li>You reach the beginning of the declaration</li></ol></li></ol><ol type="1" id="a36cc9c2-42af-455f-be09-7670c2a5b9d3" class="numbered-list" start="4"><li>If you hit parentheses, exit the parentheses</li></ol><ol type="1" id="725ce72f-f034-4470-aafb-d4f589979c61" class="numbered-list" start="5"><li>Go to 2 and repeat until you read the whole declaration</li></ol><h1 id="5bbfc9e9-f2c4-47c5-8314-4a4a26f4113d" class="block-color-teal_background">Questions &amp; Answers</h1><ul id="3b97df62-9af4-43db-89a5-2ba8841e6a4d" class="bulleted-list"><li style="list-style-type:disc">Translate the following declarations into English descriptions:<ul id="0dd576ae-9d2e-4d78-9d09-38142dbca46f" class="bulleted-list"><li style="list-style-type:circle"><code>char **c[3];</code></li></ul><ul id="50cacd2f-f0e1-413b-b6b1-165599743eb1" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="74ce2ae6-529c-4ee7-8ff2-c2ad940eabef" class="">declare c as array 3 of pointers to pointers to char</p></details></li></ul><ul id="4f0d25ce-2e57-42ea-b363-0256d2e0a937" class="bulleted-list"><li style="list-style-type:circle"><code>char *(*d)[3];</code></li></ul><ul id="83344ae2-2e31-44a0-b749-a43ff6bb2074" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="66dccddc-c88a-462d-8080-d7490f9ac24b" class="">declare d as pointer to array 3 of pointers to char</p></details></li></ul><ul id="1396df9d-4214-43b9-be1a-64c0bfa1830f" class="bulleted-list"><li style="list-style-type:circle"><code>int (*cmp)(int, int);</code></li></ul><ul id="e6ea7d12-473f-4adc-b979-2ee4b9584056" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="7a6a2122-53fc-4539-af02-a19c2b47228d" class="">cmp is a pointer to a function taking in two int parameters and returning an int</p></details></li></ul><ul id="327dd75f-dd88-43bd-9e0a-192a11605d2d" class="bulleted-list"><li style="list-style-type:circle"><code>void (*f)(void);</code></li></ul><ul id="13004bf3-7d07-4ca6-94c7-f2f9bffefc3e" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="994a63a9-a46d-4ec5-bb66-32662c6bc457" class="">declare f as pointer to function taking no parameters and returning nothing</p></details></li></ul><ul id="7243ce32-2b1e-4a2b-a4ec-eefac167ffad" class="bulleted-list"><li style="list-style-type:circle"><code>void *(*g)();</code></li></ul><ul id="ea2c229f-720b-45be-a93f-2c6982afe657" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="41e9bfad-81d7-4f4e-a0b8-687abfca0b40" class="">declare g as pointer to function taking any parameters returning pointer to void</p></details></li></ul><ul id="a9ecc7c7-1376-4bfa-bce7-bed4c5f0aa3a" class="bulleted-list"><li style="list-style-type:circle"><code>void *(**h[][6])[5];</code></li></ul><ul id="b8cdb109-8b6a-4331-8329-75c4cb41cc2b" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="f0844236-e510-4a76-b4c1-419740b93de6" class="">declare h as array of array of 6 pointers to pointers to an array of 5 pointers to a void</p></details></li></ul><ul id="eca1110f-280a-474d-b7ac-a1e4c08d307b" class="bulleted-list"><li style="list-style-type:circle"><code>int (*(*q)(char **))[];</code></li></ul><ul id="b4c052a9-6d86-43f5-90c7-fdeacdea3b55" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="75e3bc60-2ef4-41b1-a6e1-9f9815bc6e1c" class="">q is a pointer to a function taking one pointer to a pointer to a char and returning a pointer to an array of int</p></details></li></ul><ul id="e619f5ce-86cd-4a09-ba94-db912baf4c17" class="bulleted-list"><li style="list-style-type:circle">Super duper mega challenge problem. This is <em><strong>way</strong></em> harder than anything on the quiz; if you can answer the above, you&#x27;ll be fine. Only look at this if you want a fun challenge!<ul id="4ee6f301-fa8a-4295-b9d8-d2e7b6f12fb3" class="bulleted-list"><li style="list-style-type:square"><code>int const * const (*(*c)(void *(*[2])(void *), const int (*)[2], const int *[2]))[3];</code></li></ul></li></ul><ul id="47fb45ae-3def-4e8f-929e-4b5e6d1654e3" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="d6172032-0de2-47d4-9a65-ee3e5450882b" class="">declare c as pointer to function (array 2 of pointer to function (pointer to void) returning pointer to void, pointer to array 2 of const int, array 2 of pointer to const int) returning pointer to array 3 of const pointer to const int</p></details></li></ul></li></ul><ul id="1353c273-d7a2-4e3f-bfee-a81abe229e13" class="bulleted-list"><li style="list-style-type:disc">Translate the following English descriptions to C types. The first one has been done for you.<ul id="5985d0c6-8d50-4579-b2a7-1aa8c964960a" class="bulleted-list"><li style="list-style-type:circle">Declare <code>c</code> to be a pointer to arrays, where the elements of the arrays are pointers to integers<ul id="33dba94e-454c-4a1b-81ad-f58319b5215c" class="bulleted-list"><li style="list-style-type:square"><code>int *(*c)[];</code></li></ul></li></ul><ul id="1536ff33-4344-49a4-a33d-2414808372ff" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="4343c00a-3939-4967-881d-bc710f8d482a" class="">int *(*c)[];</p></details></li></ul><ul id="b078557a-4b5f-4d3b-aa30-d7b8b5ce0ae4" class="bulleted-list"><li style="list-style-type:circle">Declare d to be an array of pointers to characters. The characters should not be able to be modified.</li></ul><ul id="10c4a5d7-fb57-4464-bb49-2ff9ccf936da" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="4e7644ef-e019-41d0-9017-8e625a785f45" class="">const char (*d[]);</p></details></li></ul><ul id="da3f3667-2927-405c-ae14-8d36035e4a5e" class="bulleted-list"><li style="list-style-type:circle">Assume that we have declared a <code>struct student</code>. Declare <code>lookup</code> to be a pointer to a function that takes an int and returns an array of student structs.</li></ul><ul id="f02066e5-8a17-4265-a74d-101502ecd8e1" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="8959ffb0-344c-4e91-a4e6-0ed5e6de264d" class="">struct student (*lookup)(int)[];</p></details></li></ul><ul id="f8187cdf-6400-43bb-a12c-df6226582bf5" class="bulleted-list"><li style="list-style-type:circle">Say you want to store multiple lookup functions. Declare <code>lookups</code> to be an array of size 5, where each of the elements has the same type as <code>lookup</code> above.</li></ul><ul id="55c869c2-be0e-48d7-b30f-4279439aa108" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="2362cee6-1a79-447d-90be-a0901106aaad" class="">struct student (*lookups[5])(int)[];</p></details></li></ul></li></ul><hr id="f6dab465-4f9c-4f0e-a07b-16dfc1472f47"/><ul id="24842d15-1ba7-4d8e-9f57-aa6da973530b" class="bulleted-list"><li style="list-style-type:disc">In C, how many bits are the types short, int, and long?<ol type="a" id="1f8284ac-d19c-4bb5-b4a2-59ab8a278ac2" class="numbered-list" start="1"><li>16, 32, 64</li></ol><ol type="a" id="3c0cdc92-d7b1-4305-808a-a759b5ee6598" class="numbered-list" start="2"><li>32, 64, 64</li></ol><ol type="a" id="800c4f1a-9426-47a0-8962-44b47d90b08f" class="numbered-list" start="3"><li>32, 32, 64</li></ol><ol type="a" id="a87beeb4-db8a-406d-8423-d5f45c45c149" class="numbered-list" start="4"><li>Any of the above</li></ol></li></ul><ul id="85f193f9-1653-447a-a68d-fec1f1b65573" class="toggle"><li><details open=""><summary>Prof Answer</summary><p id="eea228f1-69da-40e9-9ebd-93fa591dba8c" class=""><strong>D</strong></p></details></li></ul><ul id="517ec588-1178-4d59-a2c4-4858c8714742" class="bulleted-list"><li style="list-style-type:disc">In C, a boolean value occupies<ol type="a" id="831d544e-9ccd-4daa-98ae-87fe6d41dc96" class="numbered-list" start="1"><li>1 bit</li></ol><ol type="a" id="57b12731-98ac-4f34-8121-eced15eb1963" class="numbered-list" start="2"><li>8 bits</li></ol><ol type="a" id="1551abf0-094d-4adc-bac9-c698807de30d" class="numbered-list" start="3"><li>16 bits</li></ol><ol type="a" id="791fd25d-9a64-4f7d-b1a5-b5c547b6fdc6" class="numbered-list" start="4"><li>32 bits</li></ol><ol type="a" id="abc064e4-85a4-4377-9b76-459ab9f4aafb" class="numbered-list" start="5"><li>Any size an integer can be.</li></ol></li></ul><ul id="389fe06a-e0e3-431c-b92f-adb17463637a" class="toggle"><li><details open=""><summary>Prof Answer</summary><p id="c7aa100a-8428-48fd-aa90-01b1ed23f2a8" class=""><strong>E</strong></p><p id="eb7c8d50-0f7e-4716-8992-8260f3cf54a3" class="">
+</p></details></li></ul><ul id="ab3920dd-1bc9-4411-a701-0479f8f038d7" class="bulleted-list"><li style="list-style-type:disc">You are given the C definition below. What is its type?<pre id="a7db1ed8-154c-4e20-bb86-e45da4d41bf7" class="code"><code>double **m[][];</code></pre><ol type="a" id="8918ccab-3d91-49b8-a486-03aa38002928" class="numbered-list" start="1"><li>Pointer to pointer to array of array of doubles</li></ol><ol type="a" id="3c4d94ee-993f-4117-8a48-90cc4b5dcbb2" class="numbered-list" start="2"><li>Pointer to array of pointers to array of doubles</li></ol><ol type="a" id="24b3dc0d-9469-49f3-95fe-ce3f17bc0f66" class="numbered-list" start="3"><li>Array of array of pointers to pointers to doubles</li></ol><ol type="a" id="002c207c-ead0-47c9-9848-d2083b0b8a49" class="numbered-list" start="4"><li>Array of pointers to array of pointers to doubles</li></ol></li></ul><ul id="5c1b8ed3-304c-4c1c-8340-63b361494b6c" class="toggle"><li><details open=""><summary>Prof Solution</summary><p id="94fff10e-4f0f-4436-a9aa-9240a7047bf7" class=""><strong>C</strong></p></details></li></ul><p id="1ec5f095-2d8b-4b52-a9d9-16d9c552436b" class="">
+</p></div></article></body></html>

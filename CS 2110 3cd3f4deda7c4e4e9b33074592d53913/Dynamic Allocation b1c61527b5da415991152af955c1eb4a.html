@@ -1,0 +1,787 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Dynamic Allocation</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b1c61527-b5da-4159-9115-2af955c1eb4a" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🎳</span></div><h1 class="page-title">Dynamic Allocation</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><p id="3933b07d-9db3-486e-91b4-b72d10721b0c" class="">Pointer video: <a href="https://www.youtube.com/watch?v=5VnDaHBi8dM">https://www.youtube.com/watch?v=5VnDaHBi8dM</a></p><p id="72fee0eb-26db-497f-8be4-8f5227855e28" class="">Helpful reading: <a href="https://jraleman.medium.com/c-programming-language-functions-malloc-calloc-realloc-and-free-61cfc3e45da7">https://jraleman.medium.com/c-programming-language-functions-malloc-calloc-realloc-and-free-61cfc3e45da7</a></p><h1 id="08d9529b-f7e0-4ef3-9ea2-499036b723f2" class="block-color-purple_background">Three memory allocation functions</h1><pre id="3716a87b-85a9-404b-a49e-6e27d452a58d" class="code"><code>void *malloc(size_t n);
+//Allocates (at least) n bytes of memory on the heap, 
+//returns a pointer to it
+//Assume memory contains garbage values
+
+void *calloc(size_t num, size_t size);
+//Allocates (at least) num*size bytes of memory on the heap, 
+//returns a pointer to it
+//Memory will be zero’ed out.
+
+void *realloc(void *ptr, size_t n);
+//Reallocates (at least) n bytes of memory on the heap, 
+//returns a pointer to it
+//Copies the data starting at ptr that was previously allocated
+//Often used to expand the memory size for an existing object on the heap</code></pre><h1 id="b85b7507-ff52-41df-8aaf-a787de1d6282" class="block-color-purple_background">malloc()</h1><ul id="148429ef-d485-4768-96f6-b7aa2ab2c772" class="bulleted-list"><li style="list-style-type:disc">malloc() returns a pointer to at least as many bytes as we requested</li></ul><ul id="232c9284-dc28-4025-ac43-1c6a8fe286be" class="bulleted-list"><li style="list-style-type:disc">malloc() is declared as “void *malloc(unsigned long)”</li></ul><ul id="dbb093ba-8fd1-4277-a4e6-4c911373a8d4" class="bulleted-list"><li style="list-style-type:disc">C uses the idiom “pointer to void” for a generic pointer</li></ul><ul id="1b65bc43-8e88-4339-a339-adef0ad4167b" class="bulleted-list"><li style="list-style-type:disc">To be safe, you should cast this pointer into the correct type to type-check<pre id="85e8910a-0de8-41af-abb5-aeb1e97437b2" class="code"><code>int *ip;
+ip = (int *) malloc(sizeof int);</code></pre></li></ul><p id="7f264afa-18de-405e-a367-363c7d796ce1" class="">
+</p><pre id="5c1ad660-3a9b-4cfa-baf9-e2d6d91c387e" class="code"><code>struct r {
+	char name[40];
+	double gpa;
+	struct r *next;
+};
+struct r *rp;
+rp = malloc(sizeof(struct r));
+//Find memory in heap and returns a pointer
+if (rp == NULL) {
+		/*HANDLE ERROR*/
+}
+/*
+option for handling error
+- ABORT
+- ASK AGAIN
+- SAVE USER DATA
+- ASK FOR LESS
+- FREE UP SOMETHING
+*/
+
+
+//Idiomatic but safe way of implementing malloc
+if ((rp == malloc(sizeof struct r)) == NULL) {
+	/* HANDLE ERROR HERE*/
+}
+ALTERNATIVE SYNTAX
+if (!(rp = malloc(sizeof struct r))) {
+	/* HANDLE ERROR HERE*/
+}</code></pre><ul id="8829e720-a68a-48a6-bd50-16494af4aa16" class="toggle"><li><details open=""><summary>Stack graph:</summary><figure id="6be6f8ef-5ad3-42ea-8c54-2f51cef8a5f6" class="image"><a href="Dynamic%20Allocation%20b1c61527b5da415991152af955c1eb4a/Screen_Shot_2021-11-29_at_14.15.10.png"><img style="width:290px" src="Dynamic%20Allocation%20b1c61527b5da415991152af955c1eb4a/Screen_Shot_2021-11-29_at_14.15.10.png"/></a></figure><p id="86d12104-a099-4482-82a1-9f55a68bc2ef" class="">
+</p></details></li></ul><p id="73572b0a-d7cb-4875-9a74-d5f37848e7a2" class="block-color-red"><em><strong>NEVER USE RP BEFORE CHECKING FOR NULL</strong></em></p><h2 id="0cc5e791-bfab-49a7-934d-ed44cff83d58" class="block-color-pink_background">free()</h2><p id="30f08cec-f20c-4ab2-acc4-9f3adc58f51c" class="">Use free() to make storage available for reuse</p><pre id="686d7203-3429-4bdd-a0af-8f57ae16fd1d" class="code"><code>free(rp); 
+/*returns the memory back to the heap for re-use*/</code></pre><p id="01014faf-3553-41be-9e8d-17f5dec49f5e" class="block-color-red"><strong>MUST NOT use the value in rp after the call to free()</strong></p><p id="f0ab2954-2283-4685-907d-a11424021325" class="block-color-red"><strong>MUST NOT dereference the memory it points to</strong></p><p id="b79b56c0-3648-4899-8d97-0a98512ea673" class="block-color-red"><strong>free(NULL) does nothing but is not an error</strong></p><p id="906461da-68e6-4d0c-af51-72ea9960c680" class="block-color-red"><strong>Variable rp still exists (a pointer to struct r), but what it points to is now garbage data. Should never dereference rp(*rp), but we CAN assign a new value to rp(make it point somewhere else)</strong></p><h1 id="82fd739b-64a8-4c47-95ce-6f017eee0ed0" class="block-color-purple_background">Persistent Data</h1><pre id="1e9b04ee-5f2b-41e9-a59a-5b949bff0688" class="code"><code>char *foo(void)
+{
+	static char ca[10];
+	return ca;
+}
+//Anyone calling this function now has access to ca in this block. Could be dangerous.
+//Since ca was allocated on stack during function call 
+//pointer returned is now pointing to who-knows-what
+//this approach is not dynamic
+
+
+char *foo(void)
+{
+	char *ca = malloc(...);
+	/* error checking but no free */
+	return ca;
+}
+//This actually works, but the caller needs to know that they’re responsible for the free()</code></pre><p id="d0402eac-6c42-4a29-af4e-fd61bacfc3e9" class="">
+</p><pre id="1734ce59-7ca0-48ae-af31-f02d95a02da1" class="code"><code>char *strFromUnsigned(unsigned u)
+{
+	static char strDigits[] = “?????”;
+	char *pch;
+	pch = &amp;strDigits[5];
+	do
+	*--pch = (u % 10) + &#x27;0&#x27;;
+	while((u /= 10) &gt; 0);
+	return pch;
+}
+//Problems
+//strHighScore = strFromUnsigned(HighScore);
+//strThisScore = strFromUnsigned(ThisScore);</code></pre><h3 id="62ebec76-a149-4d92-ae7f-dd37434b1f34" class="">Memory Leaks</h3><p id="919d9e8d-f865-4a1b-a6d3-e378cc37c5f2" class="">Memory leaks occur when the programmer loses track of memory allocated by malloc or other functions that call malloc</p><pre id="078a2b3c-385e-4433-b06a-76e4b02985ba" class="code"><code>void foo(void)
+{
+	char *ca = malloc(...);
+	/* no free */
+	return;
+}</code></pre><p id="c43d6acc-0a91-4795-a083-5bb8c321dd89" class="">
+</p><h1 id="3b5cd76e-f22f-4689-8723-31eb182b8fb4" class="block-color-purple_background">Calloc</h1><pre id="4be1a5ff-7564-4d93-aec6-844069639113" class="code"><code>void *calloc(size_t num, size_t size);</code></pre><ul id="e374494f-780e-4368-b79b-5c7a65583024" class="bulleted-list"><li style="list-style-type:disc">Call malloc() to find space for num new allocations</li></ul><ul id="520ee422-7ff3-47da-88b2-8e211f30201f" class="bulleted-list"><li style="list-style-type:disc">Initialize the space to zero (0)</li></ul><p id="b4543ee1-f2d0-4cc8-938e-a1ab965f690f" class="">
+</p><h1 id="6c1ba9d5-0ecd-4616-9240-7d9022f5388f" class="block-color-purple_background">Realloc</h1><pre id="6e179941-0323-4f11-a90a-9ff4ed6c6aa1" class="code"><code>ptr = realloc(ptr, num_bytes);</code></pre><p id="b37facb4-4e90-40f2-8a92-84d29932102e" class="">Realloc does:</p><ul id="8f3a8dbd-0222-4345-a677-22b72ad2f7fd" class="bulleted-list"><li style="list-style-type:disc">Find space for new allocation</li></ul><ul id="ce236157-8efd-41ed-af4e-8ede6275d5fc" class="bulleted-list"><li style="list-style-type:disc">Copy original data into new space</li></ul><ul id="c5c396b3-a019-4206-94f8-18c581e4140c" class="bulleted-list"><li style="list-style-type:disc">Free old space</li></ul><ul id="eaae88c9-5b6d-43d1-86f0-74d36fda3092" class="bulleted-list"><li style="list-style-type:disc">Return pointer to new space</li></ul><p id="71bb024a-c88d-47a7-8d5b-667173f3ff9c" class="">Realloc may return:</p><ul id="0f3072cb-0d15-4fb0-9175-267f683ac89c" class="bulleted-list"><li style="list-style-type:disc">same pointer</li></ul><ul id="03d6d0a3-42ec-465c-8d82-e5909ceccfd0" class="bulleted-list"><li style="list-style-type:disc">different pointer</li></ul><ul id="a4e35234-285b-456e-80e9-1a2a87bd013c" class="bulleted-list"><li style="list-style-type:disc">NULL</li></ul><p id="0d7b2883-9ba7-4178-97aa-07c9aac488b2" class="block-color-red"><strong>Always assign the result of realloc to a new pointer!</strong></p><pre id="0fbed539-17c9-4e5d-8fb3-c978b7fdd818" class="code"><code>cp = realloc(cp, n);
+//If realloc returns NULL cp is lost --&gt; Memory Leak!
+
+//Correct way:
+void *tmp;
+if((tmp = realloc(cp,...)) == NULL)
+{
+	/* realloc error */
+} else {
+	cp = tmp;
+	//free(temp); NOOOO, cp and tmp points to the same mem
+}</code></pre><p id="3a720afd-2b75-4565-a35a-444fbb741cb7" class="">
+</p><ul id="7ab591ef-b2cb-46d4-bf26-5e297c8822fa" class="block-color-pink_background toggle"><li><details open=""><summary>Memory Visualization</summary><figure id="3bbd2648-0c9f-4c2c-940c-de639179a700" class="image"><a href="Dynamic%20Allocation%20b1c61527b5da415991152af955c1eb4a/Screen_Shot_2021-12-01_at_03.04.21.png"><img style="width:1538px" src="Dynamic%20Allocation%20b1c61527b5da415991152af955c1eb4a/Screen_Shot_2021-12-01_at_03.04.21.png"/></a></figure><figure id="85462a6b-5b54-4c21-96c1-3c4ef46bca2e" class="image"><a href="Dynamic%20Allocation%20b1c61527b5da415991152af955c1eb4a/Screen_Shot_2021-12-01_at_03.04.28.png"><img style="width:1636px" src="Dynamic%20Allocation%20b1c61527b5da415991152af955c1eb4a/Screen_Shot_2021-12-01_at_03.04.28.png"/></a></figure><p id="39b3add1-8c82-4723-9267-5a6e4a2d0164" class="">
+</p></details></li></ul><h3 id="8b5b3554-b1df-4d9e-8ad3-5e7dd39de372" class="">Edge cases</h3><ul id="38f52d18-891b-4497-8f33-6b7d635c99f1" class="bulleted-list"><li style="list-style-type:disc">realloc(NULL, n) = malloc(n);</li></ul><ul id="813b1a0e-3645-4852-9408-298293748bf7" class="bulleted-list"><li style="list-style-type:disc">realloc(cp, 0) = free(cp); // only on some compilers</li></ul><ul id="7d1d15c2-23c2-488d-bec1-f3fed6d1157c" class="bulleted-list"><li style="list-style-type:disc">These can be used to make realloc work in a single loop design
+to build a dynamic structure such as a linked list.</li></ul><pre id="637f64d9-1c68-4a2f-b759-16b7f95e3598" class="code"><code>int size = 0;     /* Size of &quot;array&quot; */
+int *ip = NULL;   /* Pointer to &quot;array&quot; */
+int *temp;
+int i;
+char buffer[80];
+while(fgets(buffer, 80, stdin) != NULL) {
+    size++; 
+    if((temp = realloc(ip, size*sizeof(*temp))) == NULL){
+        fprintf(stderr, &quot;Realloc failure\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    ip = temp;
+    ip[size-1] = strtol(buffer, NULL, 10);
+}</code></pre><h2 id="59ad2164-ff11-444e-8d43-cb1b9ecc69a4" class="">Dynamically Allocate a 2-D array</h2><pre id="05711b40-c855-47f5-a068-21f79c30a91e" class="code"><code>int grid[3][3]
+int *grid2 = (int*) malloc(3 * 3 * sizeof(int))</code></pre><h1 id="d41aef7a-95bb-45b8-a1ac-9461a1de86cd" class="block-color-purple_background">Dynamic Allocation: Pitfalls</h1><ul id="fdb565ec-6c6e-44b0-934f-c01c9b1c4b51" class="bulleted-list"><li style="list-style-type:disc">Allocate a block and lose it by losing the value of the
+pointer</li></ul><ul id="160dd855-8084-4060-8b3d-1bf3de6c5c7b" class="bulleted-list"><li style="list-style-type:disc">Allocate a block of memory and use the contents
+without initialization</li></ul><ul id="8fb3a050-8449-4852-814f-1c8f59147400" class="bulleted-list"><li style="list-style-type:disc">Read or write beyond the boundaries of the block</li></ul><ul id="a8292370-2a04-4413-b189-46b01d6b7e17" class="bulleted-list"><li style="list-style-type:disc">Free a block but continue to use the contents</li></ul><ul id="709a95a9-0a60-4b6b-993f-d0fcd4ff9c33" class="bulleted-list"><li style="list-style-type:disc">Call realloc to expand a block of memory and then –
+once moved – keep using the old address</li></ul><ul id="182ffc18-ba25-498f-91e7-9f0767859c20" class="bulleted-list"><li style="list-style-type:disc">FAIL TO NOTICE ERROR RETURNS</li></ul><p id="73b80634-29d3-4f49-8f29-75398d6b5205" class="">
+</p><ul id="c0caa637-dd4e-4c39-892e-8418a9ec120b" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz question 1</summary><figure id="91276f68-2743-421a-9701-204d5880fe4b" class="image"><a href="Dynamic%20Allocation%20b1c61527b5da415991152af955c1eb4a/Screen_Shot_2021-12-01_at_03.09.26.png"><img style="width:1968px" src="Dynamic%20Allocation%20b1c61527b5da415991152af955c1eb4a/Screen_Shot_2021-12-01_at_03.09.26.png"/></a></figure><p id="a9ba000c-d77f-4b70-bf48-ad7bcfc93e2d" class="">
+</p></details></li></ul><p id="6bb47568-ab2c-485f-bd3e-76e42b056843" class="">
+</p><h1 id="f4779958-4409-4ab5-80bf-22c3e9c4ac95" class="block-color-purple_background">Malloc Implementations</h1><h2 id="8446df2f-56ea-4db2-bbce-0ae6a33a952a" class="block-color-pink_background">Outline</h2><p id="67209b65-9dee-4508-ae08-749d36f27e23" class="">K&amp;R Malloc Implementation</p><ul id="97d06a69-c883-4464-9dff-4161762e13fd" class="bulleted-list"><li style="list-style-type:disc">Headers</li></ul><ul id="f173fa8c-0761-41b9-a6ff-c9281de11557" class="bulleted-list"><li style="list-style-type:disc">Heap Layout</li></ul><ul id="8fc0c8f4-7cef-4fa4-83b5-9518ed583447" class="bulleted-list"><li style="list-style-type:disc">Allocating the Correct Amount of Memory</li></ul><ul id="ae7f9548-39c8-4362-aef8-fdcfd9f43aef" class="bulleted-list"><li style="list-style-type:disc">malloc(): Getting the memory for work</li></ul><ul id="a6c2382f-9520-4f5f-9ecb-30f12700fbd3" class="bulleted-list"><li style="list-style-type:disc">free(): Recycling the memory when done</li></ul><ul id="348a0cd7-7f31-4cf3-8140-b9767141f2d4" class="bulleted-list"><li style="list-style-type:disc">morecore(): OS requests for real memory</li></ul><p id="72d78f47-4a19-42ff-8ba9-55dbadc4f496" class="">
+</p></div></article></body></html>

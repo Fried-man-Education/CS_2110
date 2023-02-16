@@ -1,0 +1,674 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Digital Logic</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="cda67628-bbe0-4531-8b10-22a9bf617a69" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">↔️</span></div><h1 class="page-title">Digital Logic</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-pink">Quiz 2 Material</span></td></tr></tbody></table></header><div class="page-body"><h2 id="bdc4d03b-6357-4fa7-9cb0-3b48bc6c16c5" class="block-color-teal_background">Transistors</h2><ul id="1e40e1fc-5cb8-4fee-a31a-4cda88ed59b7" class="block-color-purple_background toggle"><li><details open=""><summary>N-type vs P-type</summary><ul id="df20d89b-4c58-401a-a36b-9819895b3310" class="toggle"><li><details open=""><summary>N-type</summary><p id="291a1bbf-f130-42fa-aa9c-1fa265ae1d7d" class="">With the supply voltage applied to the device, the transistor acts like a closed or connected switch</p><figure id="d7da4097-1e8f-47ef-a6b6-c520e42a50d9" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_15.59.26.png"><img style="width:356px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_15.59.26.png"/></a></figure><figure id="c1d2458b-e08f-4627-8dbf-8a2eaa2b0149" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_15.59.40.png"><img style="width:326px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_15.59.40.png"/></a></figure></details></li></ul><ul id="6612660d-ccd0-4a58-92a5-a322516365de" class="toggle"><li><details open=""><summary>P-type</summary><p id="8cc35f23-61e0-4c4e-801b-872f91b595d1" class="">With the supply voltage applied to the device the transistor acts like a open or disconnected switch</p><figure id="59e88f09-eb58-436d-bd95-42733296d126" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_15.58.58.png"><img style="width:330px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_15.58.58.png"/></a></figure><figure id="bc4acd11-a64c-4e4f-846d-506518958bb9" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_15.58.36.png"><img style="width:364px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_15.58.36.png"/></a></figure><p id="fb6374cd-6ba0-4a4f-aef4-7608574c1df3" class="">
+</p></details></li></ul></details></li></ul><h2 id="371f5594-c001-4a1b-9662-b9d190c460bb" class="block-color-teal_background">Boolean Logical gates</h2><figure id="7e7455c1-6b4a-4388-899e-2798c2d994a6" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.02.06.png"><img style="width:1626px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.02.06.png"/></a></figure><p id="f60062bb-b7c4-4698-861b-0bef0df23936" class="">Check HW2 for gate designs</p><ul id="f9451348-b77e-4346-b46d-557feda0d581" class="block-color-purple_background toggle"><li><details open=""><summary>De Morgan&#x27;s Law</summary><figure id="8d455467-b785-468c-9592-e235e6e4fb59" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.05.20.png"><img style="width:1794px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.05.20.png"/></a></figure><figure id="e87658ce-d663-4954-8e7f-20c0ea46b553" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Untitled.png"><img style="width:308px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Untitled.png"/></a></figure></details></li></ul><ul id="1f0008f5-eb53-4fe9-8c28-085b60bd5daf" class="block-color-purple_background toggle"><li><details open=""><summary>Conte Bubble Theorem</summary><figure id="7f66e016-bde8-4cfa-9371-2f44fc4f6955" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.06.58.png"><img style="width:1410px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.06.58.png"/></a></figure></details></li></ul><ul id="ebdfb495-fa36-40ba-8414-f5c7b7b5f854" class="block-color-purple_background toggle"><li><details open=""><summary>Larger Gates</summary><figure id="0a68d7bf-fafc-410e-a30d-e915843263c4" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.07.38.png"><img style="width:1412px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.07.38.png"/></a></figure></details></li></ul><h2 id="a562f3e0-3a2e-432e-9a28-5b9ea4cecc65" class="block-color-teal_background">Combinational Logic</h2><p id="e75b3aeb-47d6-4294-997d-35da0af205f5" class="">A combination of AND, OR, NOT (plus NAND &amp; NOR), The same inputs always produce same output.</p><ul id="52771ebb-cc57-4212-9c10-6f1a2cdc5c31" class="block-color-purple_background toggle"><li><details open=""><summary>Decoder</summary><p id="d2163c89-c129-4b39-8662-c83229e6ba13" class="">For a decoder of n bit input, there is <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> output at most.</p><figure id="3ff28640-2c18-4bc1-95b5-09fee9f3dc7d" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.11.31.png"><img style="width:742px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.11.31.png"/></a></figure><p id="aa6c313f-0628-447e-98e3-5dec36007e76" class="">
+</p><p id="f5979a7e-36f3-4c59-9579-9a2de7faf490" class="">/t</p></details></li></ul><ul id="92bcc141-165e-4889-91c8-510078a66c42" class="block-color-purple_background toggle"><li><details open=""><summary>Multiplexer</summary><p id="d4c0d3b1-f959-4dd6-9e8c-a00636fc1297" class="">The basic multiplexer has 1 output, n control lines, and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> inputs. </p><p id="d42f4190-d1a0-4a83-91c3-9867ed25d3dc" class="">In truth table terms: output is on left, input is at bottom, case fulfills on right</p><figure id="50b8c987-1119-44dd-9c14-67199d7c9353" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.13.45.png"><img style="width:912px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-22_at_16.13.45.png"/></a></figure><p id="38e5b287-d2d2-4c14-a7c0-b7f8041def02" class="">
+</p></details></li></ul><ul id="9adea111-0024-46b2-b897-e3b8b89cf60a" class="block-color-purple_background toggle"><li><details open=""><summary>Full Adder</summary><figure id="a5377347-ce02-4c8b-9d33-d2638146e87c" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-27_at_03.48.38.png"><img style="width:1270px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-27_at_03.48.38.png"/></a></figure><p id="b2bcb7b4-7bb3-46a6-8f30-fb6c750e022a" class="">Truth table:</p><figure id="2988f523-3cfb-46cd-bf72-0a655ec72497" class="image"><a href="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-27_at_03.49.22.png"><img style="width:1650px" src="Digital%20Logic%20cda67628bbe045318b1022a9bf617a69/Screen_Shot_2021-09-27_at_03.49.22.png"/></a></figure></details></li></ul><p id="1c5eb03d-39be-421d-9252-2f6d674d20c8" class="">
+</p><h1 id="185757cd-9aaf-43ed-a47b-1bf353408bea" class="block-color-purple_background">Questions and Answers</h1><ul id="d09eaf08-014d-4fcc-a359-51a1cbaf8829" class="bulleted-list"><li style="list-style-type:disc">Basics<ul id="c23a5ad4-170b-4baf-aa5f-1b393cb74626" class="bulleted-list"><li style="list-style-type:circle">Be able to read basic circuits (as presented in CircuitSim) and understand the symbols used for common logic gates and other components<ul id="425c8b1b-87e1-4158-87e3-c365203f30ab" class="bulleted-list"><li style="list-style-type:square">Common gates ([N]AND, [N]OR, X[N]OR, NOT, etc.)</li></ul><ul id="e9f1e397-5265-4e0e-8dec-af3463fa0c40" class="bulleted-list"><li style="list-style-type:square">Splitters</li></ul><ul id="5fb859a8-7cfe-44ec-9d03-8aa33c292943" class="bulleted-list"><li style="list-style-type:square">Multiplexers, decoders</li></ul><ul id="532e5c8c-1ab0-434a-9dc4-0c53a29b3582" class="bulleted-list"><li style="list-style-type:square">Adders, registers</li></ul></li></ul><ul id="02266698-3932-4dac-991f-20fe3010a9ef" class="bulleted-list"><li style="list-style-type:circle">Converting boolean expressions to and from logic gates</li></ul></li></ul><ul id="885e4ebd-fa23-4b72-8fce-ed3d961ec04f" class="bulleted-list"><li style="list-style-type:disc">Decoders<ul id="a0c31a2b-31fc-451e-9c88-cbd9ca9491bd" class="bulleted-list"><li style="list-style-type:circle">What is the high-level purpose of a decoder? What are some circumstances where a decoder is useful?<ul id="6eea82d0-feb0-48b5-beed-88a2bde6900c" class="bulleted-list"><li style="list-style-type:square">Decoders set exactly one output based on which of the input bits are set.</li></ul><ul id="7790ff10-a416-4f2a-81bc-2d19512a9666" class="bulleted-list"><li style="list-style-type:square">A decoder has the property that exactly one of its outputs is 1 and all the rest are 0s. The one output that is logically 1 is the output corresponding to the input pattern that it is expected to detect.</li></ul><ul id="a9e27942-db29-4486-9b98-8fb9f7fe6aa7" class="bulleted-list"><li style="list-style-type:square">Circumstances where a decoder is useful<ul id="abf57d7b-91ff-4e34-9552-03babd0475d7" class="bulleted-list"><li style="list-style-type:disc">The <a href="https://en.wikipedia.org/wiki/Decoder">Decoders</a> were used in analog to digital ==conversion in analog decoders.</li></ul><ul id="b001c8bc-303e-4fde-926c-4040173539ec" class="bulleted-list"><li style="list-style-type:disc">Used in electronic circuits to convert instructions into CPU control signals.</li></ul><ul id="075b95ac-b4cb-487b-bce4-054239c5f77a" class="bulleted-list"><li style="list-style-type:disc">They are mainly used in <a href="https://www.elprocus.com/basic-logic-gates-with-truth-tables/">logical circuits</a>, data transfer.</li></ul></li></ul></li></ul><ul id="816d070c-b60c-4450-a178-ad26d8c26027" class="bulleted-list"><li style="list-style-type:circle">If a decoder has a 5-bit input/selector, what is the maximum number of outputs it can have?<ul id="dfbc43e3-f90f-4dcf-9260-3580b82aae2e" class="bulleted-list"><li style="list-style-type:square"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>5</mn></msup><mo>=</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">2^5=32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">32</span></span></span></span></span><span>﻿</span></span></li></ul></li></ul><ul id="14d7d321-2354-472b-8fee-651f587f2254" class="bulleted-list"><li style="list-style-type:circle">If a decoder has an n-bit input/selector, what is the maximum number of outputs it can have?<ul id="507d7da2-2589-4b85-bf65-82b80fc33b95" class="bulleted-list"><li style="list-style-type:square"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul></li></ul><ul id="5206b52a-3a09-4e39-ae33-51ea62a52db0" class="bulleted-list"><li style="list-style-type:circle">If you need a decoder with 23 outputs, how many input bits do you need?<ul id="b45c2fed-b138-4919-8423-8b6419e69bfa" class="bulleted-list"><li style="list-style-type:square">5 since 4 would only get you 16 outputs</li></ul></li></ul><ul id="dcb54f0d-07a9-4902-ae26-fc22594b966a" class="bulleted-list"><li style="list-style-type:circle">Know how to visually trace through circuits containing a decoder (e.g., determine what a combinational circuit using a decoder would output for a given input)</li></ul></li></ul><ul id="d17e2a07-e700-457b-9862-375fb5d0a79b" class="bulleted-list"><li style="list-style-type:disc">Multiplexer<ul id="dbd83ee9-4299-491a-9d18-bfd733adfc2a" class="bulleted-list"><li style="list-style-type:circle">What is the high-level purpose of a multiplexer? What are some common applications for multiplexers? Where did you need to use multiplexers in Homework 2?<ul id="db30f5c1-1bd2-4b97-bd57-eabc337dc8ec" class="bulleted-list"><li style="list-style-type:square">Selects between inputs using a selector</li></ul><ul id="2aaf0f68-ecb3-4efb-8920-f44a46c78470" class="bulleted-list"><li style="list-style-type:square">Multiplexers are used in various applications wherein multiple data need to be transmitted by using a single line (ex: communication system, computer memory, telephone network)</li></ul><ul id="37bbd9da-9060-4595-9634-0814c21cc31c" class="bulleted-list"><li style="list-style-type:square">In Hw2, muxes were used in the ALU, depending on the code, an arithmetic operation would be performed and outputted.</li></ul></li></ul><ul id="4c34580f-875d-466e-8187-694119dd4eff" class="bulleted-list"><li style="list-style-type:circle">If a multiplexer has an n-bit selector, how many inputs can it have?<ul id="1162406b-e160-4c4e-85cf-a95b150e8589" class="bulleted-list"><li style="list-style-type:square"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul></li></ul><ul id="48d0a01a-27fd-42b9-a3f7-ec7deb72597b" class="bulleted-list"><li style="list-style-type:circle">If a multiplexer has 23 inputs, how many selector bits do you need?<ul id="acc4244b-7bef-41bd-ac19-f41d7a9c8c31" class="bulleted-list"><li style="list-style-type:square">5 since next highest power of 2 after 23 is 32</li></ul></li></ul><ul id="2d9717b9-1b0d-4377-b8c9-1766bc1254d3" class="bulleted-list"><li style="list-style-type:circle">If a multiplexer has a 6-bit selector, how many outputs does it have?<ul id="3056618f-2fdf-4ed0-bb75-2ad46f799dd0" class="bulleted-list"><li style="list-style-type:square">There is only 1 output no matter the number of selector bits.</li></ul></li></ul><ul id="701f045d-b21e-4bd6-bffe-5d60b77abdd4" class="bulleted-list"><li style="list-style-type:circle">Know how to visually trace through circuits containing a multiplexer (e.g., determine what a combinational circuit using a multiplexer would output for a given input)</li></ul><p id="f7987cb2-86f9-4a54-9f56-49290b353c75" class="">
+</p></li></ul></div></article></body></html>

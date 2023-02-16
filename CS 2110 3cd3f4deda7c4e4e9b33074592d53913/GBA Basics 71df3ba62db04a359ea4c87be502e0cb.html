@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>GBA Basics</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="71df3ba6-2db0-4a35-9ea4-c87be502e0cb" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🎨</span></div><h1 class="page-title">GBA Basics</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="8abb0bdd-8381-4545-bafa-7ed0d6da6849" class="block-color-teal_background">Notes</h1><h1 id="bc0d4c4c-bb8b-4332-87d0-4204c8987b68" class="">GBA - Game Boy Advance emulator</h1><ul id="d27cc49a-85d2-4175-b430-e911e3948d50" class="toggle"><li><details open=""><summary>GBA fundamental diagrams</summary><figure id="3d1ee659-732a-4103-9ece-26092ea3b456" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-10_at_17.01.20.png"><img style="width:934px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-10_at_17.01.20.png"/></a></figure><figure id="5b2dc4b8-923c-463f-bb60-22b55b636be3" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-10_at_17.02.02.png"><img style="width:912px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-10_at_17.02.02.png"/></a></figure><p id="e28e321a-04c8-47c1-aeaf-b300d8b4b607" class="">
+</p><p id="7b869aa5-7386-4ab3-87d1-a9705c73b0d4" class="">
+</p></details></li></ul><p id="bd466844-163a-4f9d-bc5c-764515c1ae41" class="">
+</p><h1 id="74bce830-e36c-4429-a665-fe6b6a54d244" class="block-color-purple_background">GBA graphics</h1><p id="106a1ef4-e955-4037-8c8f-4212ed48a039" class="">Pixel: 16 bit value</p><p id="123e518e-2be8-4cbe-ac6f-18c221dabd85" class="">Each color is allotted 5 bits, intensity from 0 - 31</p><p id="b56ebdb0-cae4-444f-9a8d-32476f5f77d3" class="">Bit 15 is unused</p><figure id="5b06f043-2182-4a1c-aa2d-680e776dcb28" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_20.52.55.png"><img style="width:604px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_20.52.55.png"/></a></figure><ul id="b197120f-944f-484e-9bfa-868888e0f13b" class="block-color-pink_background toggle"><li><details open=""><summary>GBA colors</summary><figure id="74df97d5-a45b-4542-a71c-544d6e566579" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_20.53.37.png"><img style="width:920px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_20.53.37.png"/></a></figure><p id="5949ee73-d0e0-4285-87d7-0b40057c8110" class="">
+</p></details></li></ul><h2 id="981dd2ca-14e6-4b9e-869b-fa7e39542f13" class="block-color-pink_background">Video Buffer</h2><p id="316a95c6-73ff-415a-94bf-a45308a5cbe7" class="">Video buffer is a one dimensional array that tells GBA hardware the value to display on the screen</p><figure id="1d08fef9-8886-4330-bedc-fd3d6f07cad7" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_20.54.44.png"><img style="width:926px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_20.54.44.png"/></a></figure><p id="1f101a9c-4a48-466b-8042-1ec81ee47d7c" class="block-color-pink"><strong>Indexing into a specific (row, col) coordinate</strong></p><p id="00ab9ddd-654e-4e43-b5c1-f5ad1fa5b53d" class="">Offset Calculation:<div class="indented"><p id="b1e036f8-6dd8-456c-ad77-e2a8a335ef2e" class="">unit16_t videobuffer[];</p><p id="2530f278-83b4-4c73-9d93-80b176000403" class="">videoBuffer(row, col) = videobuffer + (row * WIDTH + col)</p></div></p><p id="4d4a1b9f-3844-4af8-8ed3-8996f9712af0" class="">WIDTH is the length of each row(the width of the screen)</p><p id="25163192-1c0c-4389-af30-b82a375371c4" class="">Can use Macro to simplify this calculation</p><figure id="94ef1eda-d4fd-4d90-8c7b-9918910a629c" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_21.02.15.png"><img style="width:848px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_21.02.15.png"/></a></figure><ul id="c8892f9f-b7e8-49c7-afca-f2e7ee0a7fdc" class="block-color-pink_background toggle"><li><details open=""><summary>Example</summary><figure id="63cc92c1-6b66-4460-b56d-e2e12bc8b484" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_21.02.46.png"><img style="width:1054px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_21.02.46.png"/></a></figure><p id="1a81b98b-0ccc-4c38-9897-86983104dfdd" class="">
+</p></details></li></ul><h2 id="bd8b7f90-89e6-4b51-a848-331f280c1b44" class="block-color-pink_background">GBA Draw Cycle</h2><p id="a6702142-dc33-41c5-93b7-d0d79fc37e13" class="">GBA alternates between: <strong>VDraw and VBlank</strong></p><p id="3a0f83b4-8236-42ca-b7e7-bc66a8ce82bd" class="">VDraw:<div class="indented"><ul id="04d1bffd-2f58-4032-a6f8-b4947e52c1dc" class="bulleted-list"><li style="list-style-type:disc">GBA copies one row of pixels at a time from the video buffer to the screen</li></ul><ul id="887b71cd-f61a-44a7-8bf3-41e3510b8b99" class="bulleted-list"><li style="list-style-type:disc">VDraw is not instantaneous. halfway through VDraw, only half the scanlines have been drawn</li></ul></div></p><p id="38634f43-ebfa-4008-8bd8-5a35de832354" class="">VBlank: Nothing Happens</p><figure id="64e50a20-b946-4c50-81dc-17240395ebb2" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_21.08.09.png"><img style="width:510px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_21.08.09.png"/></a></figure><h2 id="7ef079c6-b04d-4e74-bfa1-15b5959bd924" class="block-color-pink_background">Tearing</h2><p id="3c94e0e3-8e71-4688-a51b-29c8302f747a" class="">the video buffer is updated during VDraw, causing the top half of the screen to show the old image and the bottom half to show the new image.</p><p id="5783d6db-14ec-467e-913b-22b34bbe2af0" class="">If we update the video buffer during VBlank, no tearing will happen, because the screen is not updated during VBlank.</p><ul id="f5d71975-3fa2-40d1-bcb6-4ef13772583d" class="block-color-pink_background toggle"><li><details open=""><summary>Example</summary><figure id="7e396f33-d9fa-4844-8fce-ee7d63367d81" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_21.09.37.png"><img style="width:876px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_21.09.37.png"/></a></figure></details></li></ul><p id="a9c56101-94cd-4e86-8834-6544fd117bc6" class="">
+</p><h2 id="cff36c69-b853-411f-a75e-2fc726d980bd" class="block-color-pink_background">Synchronizing Drawing and Logic</h2><p id="f13d697d-1a04-4fe2-9b6c-f2b8a6960e00" class="">The GBA exposes the scanline counter as a memory- mapped device register; it can be read using the macro defined below.</p><p id="54e7dcd9-2864-4abe-bead-3399561611fd" class="">The scanline counter indicates the current row of pixels being drawn at the screen (screen height: 160)</p><ul id="85fbff0b-dce9-433b-a9c4-37a506ffbd65" class="bulleted-list"><li style="list-style-type:disc">0 ≤ SCANLINECOUNTER ≤ 159: VDraw</li></ul><ul id="684435e4-1b06-4562-9f60-0d5916816e00" class="bulleted-list"><li style="list-style-type:disc">160 ≤ SCANLINECOUNTER ≤ 227: VBlank</li></ul><p id="9f061c2c-d7a2-4c29-9e91-f0b2b254c61f" class="">#define SCANLINECOUNTER *(volatile unsigned short *)0x4000006</p><figure id="fc7d7ec2-9b23-4868-b5fb-82244d5f504d" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.21.42.png"><img style="width:302px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.21.42.png"/></a></figure><p id="d99e9579-284a-497a-87e7-828cee417a95" class="block-color-pink"><strong>Implementing waitForVBlank</strong></p><p id="37b3e096-5d08-4ac4-8ffe-71b9173a7398" class="">SCANLINECOUNTER &gt; 160 —&gt; thee GBA is in VBlank</p><p id="10b6fbe4-5222-47ec-ba3f-c8c6365816e8" class="">Two issues:</p><ul id="c2d82e82-1e2b-4a42-9d8b-7b0899c0db94" class="bulleted-list"><li style="list-style-type:disc">What if scanline is past 160, but almost at the end of VBlank? No enough time to change the video buffer before VDraw</li></ul><ul id="2e937cae-0797-49ca-b982-9f4d36d608a9" class="bulleted-list"><li style="list-style-type:disc">What if app logic runs too quickly and we draw two frames during the same VBlank?</li></ul><p id="b892c5f6-d766-4f07-8569-5490ded242d6" class=""><strong>Use waitForVBlank()</strong></p><ul id="7fb6b3d3-9350-4ce8-991b-d55b5d365338" class="bulleted-list"><li style="list-style-type:disc">wait for the next full VBlank period</li></ul><ul id="41e26c85-b2d9-40c5-9b03-a3d8b5643fd2" class="bulleted-list"><li style="list-style-type:disc">SCANLINECOUNTEER == 160 exactly</li></ul><ul id="4cdd7acf-9764-4785-aa05-ef4c74958d1d" class="bulleted-list"><li style="list-style-type:disc">Wait until scanline is past VBlank and then comes back to VBlank</li></ul><p id="ca8bcd0f-27a4-49ea-b876-96f30dc7a524" class="">
+</p><p id="1d89c807-38c6-43f4-91cb-076f91507877" class="">However, VBlank cannot fully eliminate tearing —  Only about 1600 pixels updates can be drawn during a single VBlank phase. Filling the entire screen (38400 pixels) takes several cycles, guaranteeing tearing.</p><h1 id="b52a9481-1fb6-469e-8698-80ef36e271a3" class="block-color-purple">Direct Memory Access(DMA)</h1><figure id="64ccb158-71fc-4c56-90c0-046d02c76fad" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.31.41.png"><img style="width:756px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.31.41.png"/></a></figure><p id="9895676e-9420-42d2-95e1-2f353a6eb8a7" class="">DMA optimizes large array copy, can drawing without tearing(drawing is array copy)</p><p id="cd4767f3-f0b7-4af5-8452-6e9ddbed1f57" class="">DMA is not connected to the CPU. However, when DMA operates, it takes cycles from the CPU and writes to specific memory locations, then returns control to the CPU once finished.</p><p id="94874ac0-8140-42fc-b7d2-ab44fac1cc94" class="">There are 12 DMA registers and 4 channels. Each channel has a source, destination, and control register.</p><p id="a2a7bb69-e759-484a-b5a4-92920d2c5fe0" class="">Channel 3 - General Purpose Register</p><h2 id="6cca52cd-118e-49f3-b2b3-1bf6ac6811af" class="block-color-pink_background">DMA Source and Destination Registers</h2><p id="fabc73b3-d603-403a-a38f-675936c65b9f" class="">Both Source and Destination Registers contain short pointers.</p><p id="d00ab669-cf8c-4c18-bd54-cabdb9d64172" class="">Destination Register:</p><ul id="e50cf7f1-e675-4a00-9c67-a18e718f152e" class="bulleted-list"><li style="list-style-type:disc">Given a pointer to videoBuffer, potentially with some offset added</li></ul><p id="858d41be-3718-44c5-8301-fc859f3edbfe" class="">Source Register:</p><ul id="249a7f9e-64c7-4199-8c89-56506bdac396" class="bulleted-list"><li style="list-style-type:disc">Source register is typically given a pointer to an array of pixel values, or a constant color</li></ul><p id="3cfb017f-ca7f-472f-92af-7631e06409dd" class="">
+</p><h2 id="10c68499-23f9-4f70-b9dd-182607a33887" class="block-color-pink_background">DMA Control Registers</h2><figure id="4a78256c-e228-43c7-a398-69902c59293f" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.40.25.png"><img style="width:1046px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.40.25.png"/></a></figure><p id="f0d987f2-b231-45ac-a276-3fbc4ebe45a8" class="">The control register sets:</p><ul id="4aaaa9bd-ee63-458f-ba87-fdce05059fac" class="bulleted-list"><li style="list-style-type:disc">Whether DMA is currently enabled(<strong>En</strong>)</li></ul><ul id="f8c691a3-a446-45d7-b225-3b3695a60391" class="bulleted-list"><li style="list-style-type:disc">How many elements to copy over(<strong>N</strong>)</li></ul><ul id="64305d64-668b-4a53-8231-88cf22b0c3e4" class="bulleted-list"><li style="list-style-type:disc">How to iterate through the destination(<strong>DA</strong>)</li></ul><ul id="878bd3f9-c3db-4e5d-b8f5-fd583c90bfed" class="bulleted-list"><li style="list-style-type:disc">How to iterate through the source(<strong>SA</strong>)</li></ul><ul id="fc1b31d4-3067-4c9b-bb6c-b536e3f438bf" class="bulleted-list"><li style="list-style-type:disc">Whether to copy halfwords(16-bits) or words(32-bits)(<strong>CS</strong>)</li></ul><p id="e1444e7c-d9b4-478e-8de0-64038372bf0d" class="">Iteratee through destination/source</p><ul id="2e54c327-4358-45a8-ba5e-0e8123599301" class="bulleted-list"><li style="list-style-type:disc">Increment the address with each element(low —&gt; high addresses)</li></ul><ul id="e4f54359-0af1-4c6f-93b6-aa6823c9750e" class="bulleted-list"><li style="list-style-type:disc">Decrement the address with each element(high —&gt; low addresses)</li></ul><ul id="34f6c05f-ba1c-4beb-84f7-cbd63ace0ee9" class="bulleted-list"><li style="list-style-type:disc">Fix the address with each element</li></ul><p id="7f185fe0-2417-4bc2-89bb-ef21ffafb77d" class="">
+</p><ul id="ba34043b-12c4-4947-9f3c-dd5d1e7a679d" class="block-color-pink_background toggle"><li><details open=""><summary>DMA example: Image to Screen</summary><figure id="d1897a4a-2cce-4cdf-a19a-b21aeaaf5c09" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.48.41.png"><img style="width:866px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.48.41.png"/></a></figure><p id="b27732b9-c77c-4781-a64c-2f6170309ac8" class="">
+</p></details></li></ul><ul id="a8f59ef8-6a45-4273-b1e8-4acb5e8b3363" class="block-color-pink_background toggle"><li><details open=""><summary>DMA example: Color on Screen</summary><figure id="fbb41544-314c-4240-b6e3-e5d26d932f17" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.49.05.png"><img style="width:830px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.49.05.png"/></a></figure><p id="5a7d80e0-3d6c-41f7-b143-104c609b132d" class="">
+</p></details></li></ul><ul id="f10824b1-86ef-474e-837c-a41da341e947" class="block-color-pink_background toggle"><li><details open=""><summary>DMA: Non-full Screen Images</summary><figure id="612c59cd-f53b-4fd6-9dff-90bb0dba3867" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.51.53.png"><img style="width:934px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_22.51.53.png"/></a></figure><p id="5dcc37c1-a91b-4b87-8229-16e7d2db7f08" class="">
+</p></details></li></ul><h2 id="7d2a33c6-abc3-4c7a-98a0-0219237f19b8" class="block-color-pink_background">Use DMA in code</h2><p id="41e7b1e8-b43d-4c59-aecb-f36999364a7a" class="">DMA_Controller struct with the 3 registers:</p><p id="af91a9c4-49a8-45a3-bb25-cb14101b4686" class="">typedef struct</p><p id="d2d4336d-0a32-4bab-8475-f21a3d752153" class="">{<div class="indented"><p id="f792796b-aa24-4467-a04f-279508f7422e" class="">const volatile void *src;</p><p id="af5e3ec7-bd2b-4050-bd06-59bc988456ce" class="">const volatile void *dst;</p><p id="bc889a5a-dbb3-4a01-96b9-b5416e983daf" class="">u32.                         cnt;</p></div></p><p id="07e04b5d-fe7e-4606-bbe8-6ec60d4bfc8d" class="">}</p><p id="97cde76c-39ee-44b2-a67e-b18cdae3c777" class="">DMA[3] is used to access channel 3</p><p id="e060430c-26a0-415c-9516-fb1b9b39cb4e" class="">#define DMA ((volatile DMA_CONTROLLER *) 0x040000B0)</p><p id="662782d6-9811-4b7d-bc41-f398711272f9" class="">
+</p><h1 id="aca45cb9-ba95-4f64-bb14-bc362d73dc16" class="block-color-purple">GBA Program as a State Machine</h1><ul id="1a7181ea-61bf-4d19-bed2-a44b83de5b7f" class="bulleted-list"><li style="list-style-type:disc">State 1: Start screen<ul id="07bbc6f4-65a4-4921-bb73-49c4e2411382" class="bulleted-list"><li style="list-style-type:circle">Draws an image. Transition to State 2 when &quot;start&quot; is pressed</li></ul></li></ul><ul id="6a860bdb-a16e-4fc4-941d-7c529e15c05f" class="bulleted-list"><li style="list-style-type:disc">State 2: Core application<ul id="3333b832-9b4e-4490-8908-02021c97c685" class="bulleted-list"><li style="list-style-type:circle">Contains the actual application - draws any necessary icons or images and transitions to State 3 if times expires</li></ul></li></ul><ul id="eee88c70-74cb-4033-a590-dd4808e528f4" class="bulleted-list"><li style="list-style-type:disc">State 3: The &quot;game over&quot; or &quot;exit&quot; screen<ul id="31041011-4d6d-48f4-93dc-5e1ffc6f99d4" class="bulleted-list"><li style="list-style-type:circle">Draws an image; transitions to State 1 when &quot;start&quot; is pressed</li></ul></li></ul><h2 id="8353bd94-0c5f-4658-a311-e8084a5b45ba" class="block-color-pink_background">Buttons</h2><figure id="369635c4-cd28-47b0-bbf2-93d39c9ed4c9" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_23.01.45.png"><img style="width:576px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_23.01.45.png"/></a></figure><p id="54cfdb4a-715f-41cb-9f59-8d5f775f4685" class="">In this register, bits 15–10 are unused, and each button is assigned a</p><p id="d2b4d3f3-e551-44fa-afb0-6bb9f221975a" class="">single bit. </p><p id="981be411-8259-47c9-b78d-89b382dac34e" class="">The key states are low-active, meaning their bit is cleared when the button is pressed and set when it is released.</p><ul id="601a25f3-0f48-4c18-933b-eb814e27cdc4" class="block-color-pink_background toggle"><li><details open=""><summary>Change states on button presses</summary><figure id="2f225b32-7fcc-43a1-9600-7620d03df6ee" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_23.02.56.png"><img style="width:876px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_23.02.56.png"/></a></figure><p id="69ded3f9-fb27-4206-b1c5-4a2fcaa79eb0" class="">
+</p></details></li></ul><ul id="9ce34cfc-94c9-45a7-86ab-a323a802fc38" class="block-color-pink_background toggle"><li><details open=""><summary>Edge-Triggered State Changes</summary><figure id="cf875748-12c8-4d1e-96dd-5a0500194e7c" class="image"><a href="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_23.03.24.png"><img style="width:866px" src="GBA%20Basics%2071df3ba62db04a359ea4c87be502e0cb/Screen_Shot_2021-11-11_at_23.03.24.png"/></a></figure><p id="1df54c03-5e98-4ede-bb63-ebbec75c11a4" class="">
+</p></details></li></ul><h1 id="4b81d21a-bfbc-4429-b93c-2778294e6fcf" class="block-color-teal_background">Questions &amp; Answers</h1><ul id="8d668eab-2a27-4ee7-b187-e9a7a3285379" class="bulleted-list"><li style="list-style-type:disc">What is the draw cycle? What does <code>waitForVBlank</code> do?</li></ul><ul id="0bbab6a1-8564-4d6a-a2a2-350d51494bd8" class="bulleted-list"><li style="list-style-type:disc">What is the <code>videoBuffer</code> is and how is it represented in C?</li></ul><ul id="b849bb29-a2b1-486e-afe0-77f474c49cb6" class="bulleted-list"><li style="list-style-type:disc">How are colors represented in the <code>videoBuffer</code>?</li></ul><ul id="2dfcf295-d592-4a60-b9e7-6b5e4dc2b6fb" class="bulleted-list"><li style="list-style-type:disc">How do you index the <code>videoBuffer</code> ?<ul id="5d3efe22-848c-48ba-a5c7-c3ec16b40d87" class="bulleted-list"><li style="list-style-type:circle">Write a line of code that sets the pixel in row 15 and column 12 (indexed from 0) to yellow</li></ul></li></ul><hr id="2af18edf-3d22-4f64-a699-f66f5aa062ef"/><ul id="c262bf08-37a0-43a0-8780-19d43e12ec04" class="bulleted-list"><li style="list-style-type:disc">Understand what the videoBuffer is and how it&#x27;s represented in C<ul id="24aa394f-6a92-4a3a-bdee-54b4fd4c9118" class="bulleted-list"><li style="list-style-type:circle"><em><strong>It is a one-dimensional array of pixels used to generate graphics. Each pixel is represented by a 16 bit value.</strong></em></li></ul></li></ul><ul id="93bdb09b-fe03-43de-bd68-fc2e837345b0" class="bulleted-list"><li style="list-style-type:disc">Understand how to index the videoBuffer<ul id="3534f42d-45d7-4f4c-becb-a6c7a2407173" class="bulleted-list"><li style="list-style-type:circle">Write a line of code that sets the pixel in row 15 and column 12 (indexed from 0) to black<ul id="bb2b7ccc-80c8-4228-8e10-7f99bb0cf4ff" class="bulleted-list"><li style="list-style-type:square"><em><strong>videoBuffer[15*WIDTH + 12] = 0x0000</strong></em></li></ul></li></ul></li></ul><hr id="c56353f7-ff53-428c-aa77-c074542e3540"/><p id="ee0ec10d-743b-4af1-a1a1-2bc5482447e0" class=""><strong>GBA Basics</strong></p><ul id="67999754-9afe-42f5-be7c-144a81567406" class="bulleted-list"><li style="list-style-type:disc">What is the draw cycle? What does waitForVBlank do?<ul id="85359293-2c8d-4086-b15d-47e0bfc1c60b" class="bulleted-list"><li style="list-style-type:circle">Draw Cycle<ul id="a9ff4b6b-91bb-4311-a058-95ce63b9c4eb" class="bulleted-list"><li style="list-style-type:square">The GBA alternates between two phases: VDraw and VBlank.</li></ul><ul id="42bc18bd-39d8-4ba4-90b9-b31e6f969a25" class="bulleted-list"><li style="list-style-type:square">VDraw : GBA copies one row of pixels at a time from the video</li></ul></li></ul></li></ul><p id="e73ae12a-dc68-4a37-9e8f-ebb5b5b290d5" class="">buffer to the screen.</p><ul id="bc8319ad-bfd6-44e0-89de-ecadb9afff8b" class="bulleted-list"><li style="list-style-type:disc">VDraw is not instantaneous : halfway through VDraw, only half</li></ul><p id="292b2c91-456b-49ea-82db-344793eaadce" class="">the scanlines have been drawn.</p><ul id="e92c9bc8-957a-4a15-b38d-5b1e277a8cb4" class="bulleted-list"><li style="list-style-type:disc">VBlank : nothing happens.</li></ul><ul id="732d0010-892a-47da-a8ff-0767b2110918" class="bulleted-list"><li style="list-style-type:disc">waitForVBlank<ul id="37bfa40f-42ed-49db-b786-f733ca979f6b" class="bulleted-list"><li style="list-style-type:circle">If we update the video buffer during VBlank, no tearing will happen,</li></ul></li></ul><p id="16ddda42-cf65-4a91-8f31-d8d4878641e7" class="">because the screen is not updated during VBlank</p><figure id="ddfaa3ee-ed4a-4b21-b1dd-f7351fea7985" class="image"><a href="https://lh5.googleusercontent.com/TXWj72dsXXMkFvdFH4fB3-P_CTTiHEN9ZgVMNWwIp07xEZGybAv54BgY9HcjEA5iJLrhb9jNnPq7KnA2S0l2vHxryqRzauqIJXdSF0AfZ74xZhwFV4R5at3KVGVYMPjaPbHS_Dp0"><img src="https://lh5.googleusercontent.com/TXWj72dsXXMkFvdFH4fB3-P_CTTiHEN9ZgVMNWwIp07xEZGybAv54BgY9HcjEA5iJLrhb9jNnPq7KnA2S0l2vHxryqRzauqIJXdSF0AfZ74xZhwFV4R5at3KVGVYMPjaPbHS_Dp0"/></a></figure><ul id="821830f0-edf9-482a-8c90-f38714e1fa56" class="bulleted-list"><li style="list-style-type:disc">Understand what the videoBuffer is and how it&#x27;s represented in C</li></ul><figure id="455a9d86-da04-40c9-9d61-0b99b798ea8d" class="image"><a href="https://lh5.googleusercontent.com/OpVu5TpawdPQJVgxLqZaht8Gs6aVctcoZZI8N-xjohapvP6JpW45fdNDbmXHW7bJohLxLtFb_ccxpRZUtAkyuP1Oe2RTE9veHqV6T6mqX3BUiWebpPuETdgdik64LFSY0aoJ6BSu"><img src="https://lh5.googleusercontent.com/OpVu5TpawdPQJVgxLqZaht8Gs6aVctcoZZI8N-xjohapvP6JpW45fdNDbmXHW7bJohLxLtFb_ccxpRZUtAkyuP1Oe2RTE9veHqV6T6mqX3BUiWebpPuETdgdik64LFSY0aoJ6BSu"/></a></figure><ul id="380bfd13-4f6e-4558-9774-26467a3564ff" class="bulleted-list"><li style="list-style-type:disc">How are colors represented in the videoBuffer?</li></ul><figure id="e2c37b94-a596-41e9-b0d0-32ff18c32d86" class="image"><a href="https://lh5.googleusercontent.com/bKxfzFF1x6v4w6lm2U51KUg_n7ZcGGBdkLseJl0SDk8wr35_qKOTuQAEvYH8hZDOU9RImonNcJFBSND36JQ3vmrRBYhRPFZzYyVIAwP3OIqmxwfGk1bbroD8lJYuOmlREXQ25_u9"><img src="https://lh5.googleusercontent.com/bKxfzFF1x6v4w6lm2U51KUg_n7ZcGGBdkLseJl0SDk8wr35_qKOTuQAEvYH8hZDOU9RImonNcJFBSND36JQ3vmrRBYhRPFZzYyVIAwP3OIqmxwfGk1bbroD8lJYuOmlREXQ25_u9"/></a></figure><ul id="0020ef65-d56b-40b3-8138-c91ac8df1147" class="bulleted-list"><li style="list-style-type:disc">Understand how to index the videoBuffer<ul id="682a7361-129b-4809-b9dc-f46e85a01ba7" class="bulleted-list"><li style="list-style-type:circle">Write a line of code that sets the pixel in row 15 and column 12 (indexed from 0) to yellow</li></ul><ul id="ddd66485-773d-48c1-b873-181cbae713b7" class="bulleted-list"><li style="list-style-type:circle"><strong>videoBuffer[15 * 240 + 12] = #</strong></li></ul></li></ul><figure id="c28850c1-c41c-450a-8f96-dc6d2ba582c8" class="image"><a href="https://lh3.googleusercontent.com/v7UfNkyHXF7GVDf84FnmVAZjtLoPwKnqTbJLgZsGjeY2uIr2ec3au_9MZi_kodHUyDaS8C154AVmz4C-fkDiUV-z0FqYD3n9gbxl7aVTBBWRlFbOpyo0wLOAPWUMP_A_-pNYh3Vn"><img src="https://lh3.googleusercontent.com/v7UfNkyHXF7GVDf84FnmVAZjtLoPwKnqTbJLgZsGjeY2uIr2ec3au_9MZi_kodHUyDaS8C154AVmz4C-fkDiUV-z0FqYD3n9gbxl7aVTBBWRlFbOpyo0wLOAPWUMP_A_-pNYh3Vn"/></a></figure></div></article></body></html>

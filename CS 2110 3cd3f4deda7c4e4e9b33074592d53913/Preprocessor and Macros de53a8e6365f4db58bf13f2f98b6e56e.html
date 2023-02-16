@@ -1,0 +1,724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Preprocessor and Macros</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="de53a8e6-365f-4db5-8bf1-3f2f98b6e56e" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌠</span></div><h1 class="page-title">Preprocessor and Macros</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="f61214e4-fc1d-4eec-8470-d8e6efc91b2c" class="block-color-teal_background">Notes</h1><h2 id="11a7bfce-b8ed-46c4-beaf-135c4636e367" class="block-color-pink_background">The C Preprocessor</h2><ul id="234ac060-bddb-44a0-b9f7-8441d8f693ad" class="bulleted-list"><li style="list-style-type:disc">Runs before the compiler</li></ul><ul id="383f7d80-a1f0-49f1-87c5-69d5f4905d59" class="bulleted-list"><li style="list-style-type:disc">C doesn&#x27;t check for <strong>runtime errors</strong></li></ul><p id="1a0b17eb-0264-4a34-80ed-53b4535316f0" class="">The C preprocessor does:</p><ul id="0cdc45bd-1198-4123-90e7-fdf780c458b7" class="bulleted-list"><li style="list-style-type:disc">File inclusion(#include)</li></ul><ul id="4ee2c351-d323-4b82-a468-8fe06ac5417f" class="bulleted-list"><li style="list-style-type:disc">Macro expansion(#define)</li></ul><p id="e3c6e21e-5fb3-4d38-90cf-910484002af6" class="">Syntax:</p><ul id="f14128ec-d4dc-4f92-b838-85b41e1642b6" class="bulleted-list"><li style="list-style-type:disc">Preprocessor always starts with <strong>#</strong></li></ul><ul id="347144f5-2f06-4037-8a60-e7a8848f591f" class="bulleted-list"><li style="list-style-type:disc">Preprocessors do <strong>not</strong> end in semicolons. </li></ul><p id="3f909d10-a760-4f6b-94d6-b933a35a8477" class="">Conventionally, we only include files that end in “.h” —&gt; consist of declarations (including function prototypes) and macro definitions but no executable code</p><h2 id="e083764a-7d3f-46d5-b952-0688ad93df3e" class="block-color-pink_background">Declare functions before you call them</h2><pre id="a071a9e9-4be6-4eb2-b72d-d57dcb0a4661" class="code"><code>int foo(int);        —&gt; function prototype(declaration)
+int bar(char *);  —&gt; function prototype(declaration)
+int main() {
+	foo(1);
+	bar(&quot;Bye&quot;)
+}
+
+int foo(int i) {
+	// stuff
+}
+
+int bar(char *s) {
+	// stuff
+}</code></pre><p id="81c49499-345a-4298-b16f-27c88f4a1417" class="">Add function declaration above main() since main needs to know about the functions it will call</p><h2 id="1617fce3-b91d-44b0-932c-a48719874e64" class="block-color-pink_background">#Include</h2><ul id="89f7009b-3a46-479f-8e5c-fa86da156786" class="bulleted-list"><li style="list-style-type:disc">C does not have an &quot;import&quot; system</li></ul><ul id="0d776399-6b81-4357-b9a3-4c743367c02b" class="bulleted-list"><li style="list-style-type:disc">The lines in an #included file are literally copied in place of the #include</li></ul><ul id="8efbd8c5-d31b-4978-890b-30b689e8e1be" class="bulleted-list"><li style="list-style-type:disc">Preprocessor copies all C code from filename and replaces the include statement with that code<ul id="73c41f22-1b02-4265-974b-e4382f14b55b" class="bulleted-list"><li style="list-style-type:circle">#include-ing a header file is like copy-pasting the declarations you need</li></ul></li></ul><ul id="51fd9dfe-56a9-4025-9f2f-d5b6c3038c56" class="bulleted-list"><li style="list-style-type:disc">#include &lt;filename&gt; for system header files</li></ul><ul id="f4cc25a4-1785-4e5b-bc74-6c04eae74c4d" class="bulleted-list"><li style="list-style-type:disc">#include &quot;filename&quot; for header files you write</li></ul><p id="61414832-5a54-4e32-a96f-f861bf569ea1" class="block-color-red_background">If you surround the file name with double quotes(&quot;&quot;):</p><ul id="68689223-5aa1-4744-bd38-5294633e374e" class="bulleted-list"><li style="list-style-type:disc">The preprocessor looks in the current directory and then the system directories for the file and then the system directories for the file</li></ul><p id="057241e8-a05c-44ae-b412-6fd91bc6bbaa" class="block-color-red_background">If you surround the file name with angle brackets(&lt;&gt;):</p><ul id="4b3b3380-9d7e-4e1b-a1f3-1f54865c54f0" class="bulleted-list"><li style="list-style-type:disc">It looks only in the system directory(e.g. /usr/include)</li></ul><ul id="2bc429d4-480a-4726-8830-f04a0679ce0d" class="toggle"><li><details open=""><summary>Example</summary><pre id="12bfecf5-6a0c-410d-967a-ea94c09e5d10" class="code"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include ”mylibrary.h&quot;</code></pre></details></li></ul><h2 id="6324521a-3da6-44f4-9338-47a1418a43df" class="block-color-pink_background">Macro Processing</h2><p id="eca005cc-9703-41c2-8a23-87c81a0a8db8" class="">Macro Processing is a text search-and-replace operation on your source code file</p><blockquote id="5dabc1db-06cc-4e70-b8d2-a3a54ff48334" class=""><em>Since macros are literal text substitution, this could be dangerous or lead to unexpected behavior because when directly replacing a macro with code you could run into arithmetic precedence issues (PEMDAS issues)</em></blockquote><p id="85af0e9f-bbe9-4eb2-a809-21ee385de1b9" class="">If you invoke the compiler with <strong>gcc –E</strong>, it will show you the pre-processed input file with all the includes and macros expanded</p><p id="2a3af614-ed5e-4494-908e-8300e173b182" class=""><strong>How to macros as constant:</strong></p><ul id="74d47716-94dd-4ea8-9cfc-aaed9c978455" class="bulleted-list"><li style="list-style-type:disc">#define MACRO_NAME TEXT_REPLACEMENT</li></ul><ul id="8f251888-797d-481d-b743-06cefd5aab18" class="block-color-red_background toggle"><li><details open=""><summary>Example of macros as constants</summary><pre id="ad579fd4-5df7-46d8-9e7b-d7164dfd64d3" class="code"><code>#define NUL_CHAR ‘\0’
+#define MAXWORDLEN 256
+
+char buf[MAXWORDLEN];
+...
+while (buf[i] != NUL_CHAR &amp;&amp; i &lt; MAXWORDLEN)
+    i++;
+
+/**After the C Preprocessor, the code becomes:**/
+
+char buf[256];
+...
+while (buf[i] != ‘\0’ &amp;&amp; i &lt; 256)
+i++;</code></pre></details></li></ul><p id="ffd6679e-8eda-4a9e-8f82-84c602fa20c0" class=""><strong>How to macros with argument:</strong></p><ul id="e6e60ad3-6de8-49e1-87cf-ba462c033d28" class="bulleted-list"><li style="list-style-type:disc">#define MACRO_NAME(ARGUMENTS) TEXT_REPLACEMENT</li></ul><ul id="149466b1-19cc-4041-977d-d39450e1f163" class="bulleted-list"><li style="list-style-type:disc">Text search-and-replace operation on your source code file</li></ul><ul id="f8dc8909-ede4-48f3-ab59-b69d6ccf72a7" class="block-color-red bulleted-list"><li style="list-style-type:disc">NEED TO WRAP EVERY VARIABLE IN PARENTHESIS </li></ul><ul id="f64748f0-cd7c-4ab5-abd4-d55c7c0e44e5" class="block-color-red_background toggle"><li><details open=""><summary>Example of macros with argument</summary><pre id="399f0e9d-93d3-4a54-9d93-4b55d603512f" class="code"><code>#include &lt;stdio.h&gt;
+#define MULT(a, b) (a)*(b)
+int main(void) {
+	printf(&quot;%d\n&quot;, MULT(2 + 3, 3));
+}</code></pre><pre id="a1c99dc8-1645-4fb2-af4a-1103d5643783" class="code"><code>#include &lt;stdio.h&gt;
+#define PRODUCT(a,b) ((a)*(b))
+
+int main(void) {
+	printf(&quot;%d\n&quot;, PRODUCT(2, 3));
+}</code></pre><pre id="41e4d27c-33fc-4707-87b8-13bb1185f1ed" class="code"><code>//Include outer parentheses when your macro produces an expression:
+#include &lt;stdio.h&gt;
+#define SUM(a, b) (a)+(b)
+int main(void) {
+	printf(&quot;%d\n&quot;, 4 * SUM(2, 3));
+}</code></pre><p id="e6b9ebeb-f1a5-4d81-b3b1-989ead9bdefa" class="">— PRODUCT(x+3,y+4) now expands to ((x+3)*(y+4))</p></details></li></ul><p id="faf61e7c-a9a4-4503-8952-08021abb02d1" class="">
+</p><h2 id="8cf5de96-713c-4622-ae8a-378dd8ee859a" class="block-color-pink_background">Guards</h2><p id="08bad388-467a-452e-a8ca-e41a829d7269" class=""><strong>In case of #include the same header file twice, use #ifndef</strong></p><pre id="843e4168-2b9d-4a3b-a992-e7417c49c9a7" class="code"><code>#ifndef &lt;HEADER_FILE_NAME&gt;_H
+#define &lt;HEADER_FILE_NAME&gt;_H
+//Contents of header file
+#endif</code></pre><ul id="5d576ff1-cb06-4929-95ad-a2e80349718f" class="block-color-pink_background toggle"><li><details open=""><summary>Example:</summary><pre id="341cd303-96a6-4f66-9762-f6661338a2f9" class="code"><code>#ifndef MAIN_H /*if MAIN_H is already defined, skip to #endif*/
+#define MAIN_H /*define MAIN_H*/
+// Declares that a function int square(int x) is defined somewhere
+int square(int x);
+#endif
+//This code ensures that square is only declared once even if there are multiple 
+//#include main.hstatements</code></pre></details></li></ul><h1 id="e099fc86-def1-441f-8bf4-3a1ac53d65ef" class="block-color-teal_background">Questions &amp; Answers</h1><ol type="1" id="e5c9f427-1f38-4d6c-9007-cc9a396dc4b1" class="numbered-list" start="1"><li>What is the preprocessor, and what is its role in C? At what stage does it run in the compilation pipeline?</li></ol><ul id="c2792de2-bba8-4951-b9d8-491917fc301b" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="6a6d863c-e20f-4755-99ed-af7ed7134a44" class="bulleted-list"><li style="list-style-type:disc">The C preprocessor does two main things<ul id="a7fb81fb-d5d6-4461-a0ee-92fb553799f3" class="bulleted-list"><li style="list-style-type:circle">File inclusion (#include)</li></ul><ul id="dc8876a3-f309-4981-ae7d-f18218ac75a7" class="bulleted-list"><li style="list-style-type:circle">Macro expansion (#define)</li></ul></li></ul><ul id="2a9f81d8-2b7d-484f-ae8a-d4f422c78f0b" class="bulleted-list"><li style="list-style-type:disc">Runs before the compiler</li></ul></details></li></ul><ul id="f309e623-aed6-4022-b8b6-b9629af31702" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><ul id="70603039-f24f-4872-9427-5fc4f554110a" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Preprocessor reads through all the code, finds the macros, and replaces the macros with their associated text. It also copies all the code from external files referenced using “#include”</em></strong></li></ul><ul id="5fe0232c-55f9-4a64-95e0-fbfc8ce2c79c" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Preprocessor runs at stage 1 in the compilation pipeline</em></strong></li></ul><ul id="0acda535-8498-40e0-a4c9-7e1e50d8ee26" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Stages: (1) Preprocessor (2) Compiler (3) Assembler (4) Linker</em></strong></li></ul></details></li></ul><ol type="1" id="20981eb0-5b47-41dd-8cd9-6976c8772b72" class="numbered-list" start="2"><li>What does the <code>#include</code> directive do in the preprocessor?<ul id="051e18d8-4f6d-44e2-b26e-c55e17ffd910" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="71f32a08-4f3a-4295-ad9b-daca1c4847ec" class="bulleted-list"><li style="list-style-type:disc">Conventionally, we only include files that end in “.h”</li></ul><ul id="ac6853f7-b30a-4f98-89fa-dfdae8c0bdc9" class="bulleted-list"><li style="list-style-type:disc">These consist of declarations (including function prototypes)</li></ul></details></li></ul><ul id="a4b33229-895d-4270-be3e-70cbb858f12c" class="bulleted-list"><li style="list-style-type:disc">What is a header file? List two reasons why we use header files in C</li></ul><ul id="2eded456-13aa-4893-85ef-0e0bee811cc1" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="f8526441-8b4c-4693-a32c-a5012334fc57" class="bulleted-list"><li style="list-style-type:disc">In C, you can&#x27;t use a function/variable before you declare it</li></ul><ul id="ae871ffc-8769-4dfc-8629-6e2aed730559" class="bulleted-list"><li style="list-style-type:disc">Header files contain function declarations and global variables<ul id="c33e4965-8f66-4597-93f4-3ddfc6fe24b2" class="bulleted-list"><li style="list-style-type:circle">They have a .h extension</li></ul><ul id="82fead69-e83a-4b3a-bc5d-d2b053bb8aa7" class="bulleted-list"><li style="list-style-type:circle">Like the &quot;interface&quot; of what a file exposes</li></ul></li></ul><ul id="a1717bc0-ca18-4477-93bb-513457708be9" class="bulleted-list"><li style="list-style-type:disc">Shouldn&#x27;t include function implementations</li></ul></details></li></ul><ul id="9dae9b89-3f6a-461a-9b0b-31e5b55fa6b6" class="bulleted-list"><li style="list-style-type:disc">What kind of code do we usually put in header files?</li></ul><ul id="866b6a19-5b4e-425c-9815-efb33e351723" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="609e4116-1e6c-4ee8-96c9-4faf85ebcb7d" class="bulleted-list"><li style="list-style-type:disc">Header files typically contain<ul id="f71859ff-da23-4527-9618-2bdac0534905" class="bulleted-list"><li style="list-style-type:circle">Macro definitions</li></ul><ul id="e5af614b-56d0-476f-97ff-dcce176dbd24" class="bulleted-list"><li style="list-style-type:circle">Type Declarations</li></ul><ul id="982883a6-43b4-4a46-8499-00f913195bb1" class="bulleted-list"><li style="list-style-type:circle">Function Prototypes</li></ul><ul id="3570576e-967b-4e49-bbe9-8ccc27d182c0" class="bulleted-list"><li style="list-style-type:circle">NOT Code!!!</li></ul></li></ul></details></li></ul><ul id="099e539b-ef02-4b9d-9051-ab09557aac8e" class="bulleted-list"><li style="list-style-type:disc">Why shouldn&#x27;t you <code>#include</code> a <code>.c</code> source file?</li></ul><ul id="39c0d4ba-906e-412f-9d8d-3e87d22619aa" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="1ea7909c-3ff3-4d73-8b20-a8c13ee3ab84" class="bulleted-list"><li style="list-style-type:disc">.c files include function implementations, not just declarations. While that may seem innocuous, if you included them, it can be extremely difficult to find if you accidentally included an implementation twice. Including a declaration twice is fine, as long as they&#x27;re the same. But including an implementation twice is a compiler error that&#x27;s hard to find.</li></ul><ul id="1d350902-6b60-4048-b5ec-cbb85dd45d1a" class="bulleted-list"><li style="list-style-type:disc">All this is to say that to include .h files, rather than .c files, decreases the likelihood of errors, and makes debugging easier.</li></ul></details></li></ul></li></ol><ol type="1" id="2e403919-8c07-421f-8a82-28baaafa4ac1" class="numbered-list" start="3"><li>What is a macro? What are some cases in which we might want to use a macro?</li></ol><ul id="2bfa3daa-0d0b-47f4-ae66-891d3207c73d" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="86b4773b-7efe-4ffc-ad32-802a1cf4faf5" class="bulleted-list"><li style="list-style-type:disc">Macro processing is just text substitution using some very specific rules</li></ul><ul id="a5e7bdde-0323-4e7b-ad2e-d6b5637ba4f9" class="bulleted-list"><li style="list-style-type:disc">Text replacement</li></ul><ul id="33bad110-5ec2-464e-bb0b-41ed3d71dc42" class="bulleted-list"><li style="list-style-type:disc">Use cases : constants, can use macros as functions kind of<ul id="42d60131-4b9c-432b-ae3b-11227945184b" class="bulleted-list"><li style="list-style-type:circle">#define PRODUCT(a,b) a*b</li></ul><ul id="dfe04377-0468-4046-b515-854dfeb11a0a" class="bulleted-list"><li style="list-style-type:circle">PRODUCT(4,5) would expand to 4*5</li></ul></li></ul></details></li></ul><ul id="68df8fe8-5bf9-4999-8c4e-ced8b566fdd8" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><ul id="95f14d66-157d-470d-8425-7e51a1323736" class="bulleted-list"><li style="list-style-type:disc"><em><strong>A macro is a defined text replacement for C coding</strong></em></li></ul><ul id="01a89eeb-f14d-4ee8-8eb1-ac78200bd80a" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Macros could be useful to define well known values like pi which is 3.1415 or to define an arithmetic expression that is repeatedly used in your code such as ((a) + (3*b))</strong></em></li></ul></details></li></ul><ul id="f141ff34-d315-40c8-9330-ea9e7a961052" class="bulleted-list"><li style="list-style-type:disc">Write a macro that will expand <code>PI</code> into the value <code>3.14159</code></li></ul><ul id="f5ed47e0-2327-4041-9577-fbc5a8afc5be" class="toggle"><li><details open=""><summary><strong>Student &amp; TA Solution</strong></summary><pre id="b8508133-2eed-4a45-99fd-03389d26b7bb" class="code"><code>#define PI 3.141593</code></pre></details></li></ul><ol type="1" id="4837ef6f-b2a0-440b-aba6-145be17ebd62" class="numbered-list" start="4"><li>C does not have particularly safe or powerful macros; its preprocessor macros essentially perform text substitution into your program! How could this be dangerous or lead to unexpected behavior?</li></ol><ul id="99f6dc66-834b-48ac-85be-58ed8e87199c" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="a5402a52-6fb7-4d81-87cb-6dcc1057223b" class="bulleted-list"><li style="list-style-type:disc">Incorrect use of parentheses -&gt; incorrect order of operations</li></ul><ul id="d0cb17b4-8047-4874-a396-1151cb27b17c" class="bulleted-list"><li style="list-style-type:disc">Macro Perils<ul id="a345e2ff-94ff-4bd6-86d8-c88352cc96e3" class="bulleted-list"><li style="list-style-type:circle">Wrap every variable you use in parentheses</li></ul><ul id="d968626f-09ba-4b66-868f-f829335fcae3" class="bulleted-list"><li style="list-style-type:circle">Include outer parentheses when your macro produces an expression</li></ul></li></ul></details></li></ul><ul id="df5067c7-d135-42a7-983e-f586ed136102" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><p id="d14462c3-ef2f-4a57-89d3-09c14a217558" class=""><em><strong>Since macros are literal text substitution, this could be dangerous or lead to unexpected behavior because when directly replacing a macro with code you could run into arithmetic precedence issues (PEMDAS issues)</strong></em></p></details></li></ul><ol type="1" id="03b91852-ac15-4385-831c-cf0d78bbd5dc" class="numbered-list" start="5"><li>Write a macro <code>AVG3</code> that computes the average of three numbers, evaluating to a double. For example, <code>AVG3(4, 5, 6)</code> should evaluate to <code>5.0</code>.<ul id="e7421bd9-47db-45e4-841a-1a6d0844f512" class="bulleted-list"><li style="list-style-type:disc">Watch out for the danger from the point above! Write your macros safely so it doesn&#x27;t lead to unexpected results</li></ul><ul id="f99d31ee-c1cc-41b9-b080-1831f02a578c" class="bulleted-list"><li style="list-style-type:disc">Watch out for integer division</li></ul></li></ol><ul id="acdd619f-5746-4340-839e-83a89e6dcc64" class="toggle"><li><details open=""><summary><strong>Student &amp; TA Solution</strong></summary><pre id="00811e64-c43b-475a-be29-57e4d5765902" class="code"><code>#define AVG3(a,b,c) (((a) + (b) + (c))/3.0)</code></pre></details></li></ul><ol type="1" id="387bc3aa-a4b6-4ac9-aad8-a737350b1632" class="numbered-list" start="6"><li>Challenge practice question (conceptual, just to test your understanding, harder than what you&#x27;ll see on the quiz):<p id="1c6ff2d7-d063-462a-b2d4-65171d0635f3" class="">Let&#x27;s say I define the following macro and the following function:</p></li></ol><pre id="7e0f5427-49f3-447f-a1f1-2c0d4e0ae780" class="code code-wrap"><code>#define SQUARE(x) ((x)*(x))
+double square(double x) { return x * x; }</code></pre><p id="100e89c7-9cbb-4a74-a6f4-3ca9480a1d4e" class="">Can you think of at least two different kinds of scenarios in which using the macro instead of the function leads to different behavior at runtime (i.e. changing <code>square</code> to <code>SQUARE</code> could change the output of the program)?</p><ul id="3a2ccc10-c802-4a79-9e60-1614d824a5c5" class="toggle"><li><details open=""><summary><strong>Student &amp; TA Solution</strong></summary><ul id="800bdb15-0ddf-4bb5-aa81-44721cc88a4a" class="bulleted-list"><li style="list-style-type:disc"><em>Calling a function builds on the stack.</em></li></ul><ul id="ee65d21b-5d4f-47a5-9050-0215269990e8" class="bulleted-list"><li style="list-style-type:disc"><em>Macro square can take in any type, so you can &#x27;pass in&#x27; ints to it whereas the function only takes and returns a double</em></li></ul></details></li></ul><p id="ec0d81a3-99e2-4319-b5ce-9708bb090a6f" class="">
+</p></div></article></body></html>

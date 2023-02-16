@@ -1,0 +1,759 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>STRUCT</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e1dfbc1d-aadc-4e84-9bcb-2c3157559a72" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🎯</span></div><h1 class="page-title">STRUCT</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="89e336d2-35d9-4d70-b3a8-7ff5f4b19ff9" class="block-color-purple_background">Structures</h1><p id="2c7703f1-6bc1-4924-9edd-981c3956e343" class="">Collection of items which may be of different types</p><p id="b7e656ee-90c5-44ba-b295-1a891b0087a1" class="">Same as classes in Java</p><p id="cda238d7-8f0b-41de-9503-6c35cb0a961d" class="">Structs</p><ul id="6aa13679-c4ed-4d74-b94b-f398f7e74b9a" class="bulleted-list"><li style="list-style-type:disc">Use named, not structural, type equivalence</li></ul><ul id="9d7558aa-b117-48a7-bd74-23add0b623b5" class="bulleted-list"><li style="list-style-type:disc">Untagged structs are each a different type</li></ul><p id="c18839a5-5ac5-41cb-a32b-7431ad69750d" class="block-color-red">If given a pointer to a struct, use the -&gt; operator to simultaneously dereference and access it</p><h2 id="e6307203-4c4a-40af-a2a6-c3864b5495c4" class="block-color-pink_background">Structs declaration</h2><pre id="cdf32d43-427a-43e4-ab01-277b861fdd6f" class="code"><code>struct [ &lt;optional tag&gt; ] [ {
+	&lt;type declaration&gt;;
+	&lt;type declaration&gt;;
+	...
+} ] [ &lt;optional variable list&gt; ];</code></pre><ul id="2cdf2f96-75f3-4766-94b2-b62690c41108" class="bulleted-list"><li style="list-style-type:disc">Struct declarations that have a member list in curly braces define a
+new type, specifically a struct type.</li></ul><ul id="81ffda24-1058-4a05-8732-44fe243f0dac" class="bulleted-list"><li style="list-style-type:disc">If the optional tag is omitted it creates an unnamed struct type
+that’s different from every other struct type.</li></ul><ul id="4911edf1-9364-483f-8e87-36f5f786bc1a" class="bulleted-list"><li style="list-style-type:disc">Filling in &lt;optional variable list&gt; often makes the declaration also a definition; the variables defined appear in the function’s name scope just like any other variable.</li></ul><ul id="22af8fc8-92b9-4489-94ef-8ce0c3f9cf96" class="bulleted-list"><li style="list-style-type:disc">Struct tags are in a separately-scoped name space from variables, i.e. a struct variable can have the same name as a struct tag without causing confusion</li></ul><ul id="79b28db0-b926-420d-9c93-1eea9a2944e9" class="bulleted-list"><li style="list-style-type:disc">Struct member names are in yet another name space local to the structure type, e.g. every structure type could have a member named “next”</li></ul><h2 id="2f50930f-03af-4c48-b21b-3f31d65ebdd0" class="block-color-pink_background">Struct Initialization</h2><pre id="0edbd42a-00b2-4ac4-84f3-945040ce1133" class="code"><code>struct mystruct_tag {
+	int myint;
+	char mychar;
+	char mystr[20];
+};
+struct mystruct_tag ms = {42, &#x27;f&#x27;, &quot;goofy&quot;};</code></pre><p id="56d16517-6940-4eae-a194-d7c0ec193cd0" class="block-color-red">Two same way of struct implementation</p><pre id="af28ae53-698f-402c-b3f6-6be7186b3996" class="code"><code>struct Dog {
+   char name[20];
+   int isGood;
+};
+
+int main(void) {
+   struct Dog dog = dogs[5];
+   strncpy(dog.name, &quot;Doggo&quot;, 6);
+   dog.isGood = 1; // true
+}
+is equivalent to
+int main(void) {
+   struct Dog *dog = &amp;dogs[5];
+   strncpy(dog-&gt;name, &quot;Doggo&quot;, 6);
+   dog-&gt;isGood = 1; // true
+}</code></pre><h2 id="a7125feb-ca7c-4b85-b7d8-b7223195ed86" class="block-color-pink_background">Struct in memory</h2><pre id="90131d1b-ead1-4a55-ace3-083188676a18" class="code"><code>struct Dog {
+   char name[20];
+   int isGood;
+   int age;
+};
+struct Dog my_dog;
+//Assume sizeof(int) == 4 and struct starts at x4000</code></pre><table id="42e6c935-0418-4976-a067-4339182f0a0f" class="simple-table"><tbody><tr id="e8a1b433-dbf3-472d-a4f2-c6bbac320f62"><td id="]zA=" class="">Address</td><td id="PF~Q" class="" style="width:186.015625px">At the Address</td><td id="EpHJ" class="">Data Type</td></tr><tr id="c0f29555-e155-4757-8183-9cce202408a1"><td id="]zA=" class="">x4000</td><td id="PF~Q" class="" style="width:186.015625px">name[0]</td><td id="EpHJ" class="">char</td></tr><tr id="d38d2928-491f-4e0c-85ab-02c99e9fcb83"><td id="]zA=" class="">x4001</td><td id="PF~Q" class="" style="width:186.015625px">name[1]</td><td id="EpHJ" class="">char</td></tr><tr id="24ab317e-0f1b-47da-a3c4-15e319b3e594"><td id="]zA=" class="">x4002</td><td id="PF~Q" class="" style="width:186.015625px">name[2]</td><td id="EpHJ" class="">char</td></tr><tr id="0e55a056-ad34-4ee3-96f0-707ea1a10e47"><td id="]zA=" class="">x4003..x4013</td><td id="PF~Q" class="" style="width:186.015625px">name[3] - name[19]</td><td id="EpHJ" class="">char</td></tr><tr id="48e6f95e-5a66-4cb6-82c7-dcb3ef11cd64"><td id="]zA=" class="">x4014</td><td id="PF~Q" class="" style="width:186.015625px">isGood</td><td id="EpHJ" class="">int</td></tr><tr id="ad8e3bcd-92e1-40f9-8d57-3062bed392b2"><td id="]zA=" class="">x4018</td><td id="PF~Q" class="" style="width:186.015625px">age</td><td id="EpHJ" class="">int</td></tr></tbody></table><h2 id="5d57f2ca-0437-4a88-a3b7-3c334a7610b4" class="block-color-pink_background">Copying Structs</h2><pre id="1f99c5c9-11de-4351-b6c9-4d3aad38eba3" class="code"><code>struct s {
+	int i;
+	char c;
+} s1, s2;
+s1.i = 42;
+s1.c = &#x27;a&#x27;;
+s2 = s1; //for loop copy of s1 to s2. Cloning
+s1.c = &#x27;b&#x27;;
+s2.i //42
+s2.c //a
+//Note that assigning the structure just copied the 
+//bytes from one memory block to another. There is 
+//no connection between them.</code></pre><pre id="82968d09-0b93-4dec-879b-7c3c09e70781" class="code"><code>struct s {
+	int i;
+	char c[8];
+} s1, s2;
+s1.i = 42;
+strcpy(s1.c, &quot;foobar&quot;); 
+s2 = s1; 
+//Since we assigned s1 to s2, s2.c is going to contain 
+//exactly the same characters as are in s1.c, even 
+//including the unspecified character at s1.c[7]!
+s2.i //42
+s2.c //&#x27;f&#x27;,&#x27;o&#x27;,&#x27;o&#x27;,&#x27;b&#x27;,&#x27;a&#x27;,&#x27;r&#x27;,&#x27;\0&#x27;</code></pre><p id="1ba17808-ac04-404f-a015-58eed4d1e3c2" class="">
+</p><h2 id="7bf635a3-acf7-4df5-8b74-29666488c964" class="block-color-pink_background">Memory Storage</h2><pre id="436601fa-8365-4c76-b25f-eb8cd76c7b46" class="code"><code>struct {
+	char mychar; 
+	int myint;
+	char mystr[19];
+} mystruct;</code></pre><ul id="a5e87b0a-748b-4e1d-a366-60b40486425f" class="block-color-pink_background toggle"><li><details open=""><summary>Example</summary><figure id="82d21c39-4ab5-4e67-8b94-a48dd66e9fe6" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.36.58.png"><img style="width:1326px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.36.58.png"/></a></figure><figure id="db4c9dbb-e1b0-4474-b4da-1ba7c30c2bd0" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.37.11.png"><img style="width:1680px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.37.11.png"/></a></figure><figure id="e9e01e8c-d04e-43bc-847f-25e4656f599d" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.37.30.png"><img style="width:1682px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.37.30.png"/></a></figure><p id="6330a873-ed44-4239-9633-4f99243e7d64" class="">Structs are usually filled out to meet the most stringent alignment of its members</p><p id="5c77f61f-b510-44df-9897-d455bdf3a76b" class="">sizeof(mystruct) =28</p><figure id="05844aa6-e05d-4276-aafe-ba0adaa30a4a" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.41.42.png"><img style="width:824px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.41.42.png"/></a></figure></details></li></ul><pre id="f867f517-f808-4411-b090-996fb5b1e23c" class="code"><code>#include &lt;stdio.h&gt;
+struct {
+	char mychar; 
+	int myint;
+	char mystr[19];
+} mystruct;
+int main() {
+	printf(&quot;Address of mystruct = %p\n&quot;, (void *)&amp;mystruct);
+	printf(&quot;Offset of mychar = %ld\n&quot;,
+	(void *)&amp;mystruct.mychar - (void *)&amp;mystruct);
+	printf(&quot;Offset of myint = %ld\n&quot;,
+	(void *)&amp;mystruct.myint - (void *)&amp;mystruct);
+	printf(&quot;Offset of mystr = %ld\n&quot;,
+	(void *)mystruct.mystr - (void *)&amp;mystruct);
+	printf(&quot;Size of mystruct = %ld\n&quot;, sizeof(mystruct));
+}
+/*
+$ gcc sizes.c
+$ ./a.out
+Address of mystruct = 0x10ae74018
+Offset of mychar = 0
+Offset of myint = 4
+Offset of mystr = 8
+Size of mystruct = 28
+*/</code></pre><h2 id="9fca97ca-294d-463f-b325-6938f80f70c7" class="block-color-pink_background">Indexing into a String</h2><figure id="4a052365-b029-4500-9e53-c630394c62fe" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.46.14.png"><img style="width:1636px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.46.14.png"/></a></figure><figure id="a08abcdb-5d6e-4e99-91b2-047ea3bfc634" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.46.24.png"><img style="width:1494px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.46.24.png"/></a></figure><p id="3747a8df-e040-43e2-b865-9e82afbf00cf" class="">
+</p><h2 id="f9f80cb1-5137-4403-b9bb-14cb1d3e831d" class="block-color-pink_background">Arrays of Structs</h2><figure id="04245d69-a695-4502-a8b6-85bb2162b073" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.47.00.png"><img style="width:1580px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.47.00.png"/></a></figure><figure id="313b949e-e566-47ca-b800-2ecce8d5bf0d" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.47.09.png"><img style="width:1464px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.47.09.png"/></a></figure><h2 id="82df7613-61ff-49e7-9469-97fb4f3ca673" class="block-color-pink_background">Summary</h2><p id="a880678f-643b-4dc9-8aa4-e9dd2e0d9e95" class="">Struct may</p><ul id="8df279ae-9e25-4817-8da6-23124c4295d9" class="bulleted-list"><li style="list-style-type:disc">be copied or assgined</li></ul><ul id="8729b7c8-ef6f-465c-bab9-e039104776e0" class="bulleted-list"><li style="list-style-type:disc">have their address taken with &amp;</li></ul><ul id="270098a0-caf8-45da-8d45-33a77e5a7283" class="bulleted-list"><li style="list-style-type:disc">have their members accessed</li></ul><ul id="96ec412d-5e67-41c4-9096-69ff005809ae" class="bulleted-list"><li style="list-style-type:disc">be passed as arguments to functions</li></ul><ul id="1c9968d0-85a1-4950-95c7-e7081471701d" class="bulleted-list"><li style="list-style-type:disc">be returned from functions</li></ul><p id="170a08ec-40a5-45ae-9e99-234c9eb8ccf7" class="">Struct may not</p><ul id="d0c909f0-1eb6-4343-8597-584c4940d40a" class="bulleted-list"><li style="list-style-type:disc">be compared</li></ul><p id="dd70be64-4ccf-4fcb-b412-debc44689d40" class="">
+</p><p id="c4f402a2-2e4f-4690-9a70-e62de59a4e4b" class="">
+</p><p id="8b9bf304-8fda-418a-856a-047e126a3654" class="">
+</p><ul id="afc96385-e993-4f7c-82df-5b8056171ea6" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz question 1</summary><figure id="205b15be-ec18-40b7-93c5-106dc15f3c15" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.25.49.png"><img style="width:1890px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.25.49.png"/></a></figure><ul id="5a769101-c1d2-4e22-98dd-2c9eed56f122" class="toggle"><li><details open=""><summary>Answer</summary><p id="264ef0d6-2ef8-4fab-aef6-f50d06a73c76" class="">D.   mystr is a constant pointer to an array, and mystr = &quot;any string&quot; is incorrect. strcpy is allowed</p></details></li></ul></details></li></ul><ul id="e21437c6-4ea2-4256-bf75-9890f426ed27" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz question 2</summary><figure id="ab34bb02-9363-4708-befa-44ecf022189e" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.30.33.png"><img style="width:864px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.30.33.png"/></a></figure><ul id="a4698df9-4236-41e6-8c04-4a129d34ffe9" class="toggle"><li><details open=""><summary>Answerr</summary><p id="a4368898-46f5-416a-961f-92759f1e3d42" class="">A</p></details></li></ul></details></li></ul><ul id="fb00c1ee-c282-4a7c-8e19-ba4510b61989" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz question 3</summary><figure id="d8495a00-62ed-471b-b1c4-af86e0fbf544" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.44.36.png"><img style="width:1162px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.44.36.png"/></a></figure><ul id="1477c449-3ed0-4423-96bd-840cce018b72" class="toggle"><li><details open=""><summary>Answrer</summary><p id="132b27d7-f3de-4dcd-b856-20b6d9b1796f" class="">Yes</p></details></li></ul></details></li></ul><ul id="a7ff6a56-255d-433c-a26b-fed6a5f8d5a0" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz question 4</summary><ul id="04fb56f5-f17d-4767-a698-a8436206c444" class="toggle"><li><details open=""><summary>Answer</summary><figure id="7ead4ddb-8d1e-4047-8613-1f49bbdff788" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.50.17.png"><img style="width:764px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.50.17.png"/></a></figure><ul id="08766519-cce2-49d8-b198-935b6b1b19f9" class="toggle"><li><details open=""><summary>Answer</summary><figure id="ac8250da-c6ab-4c7e-9614-368a06c35f30" class="image"><a href="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.50.42.png"><img style="width:1954px" src="STRUCT%20e1dfbc1daadc4e849bcb2c3157559a72/Screen_Shot_2021-12-01_at_02.50.42.png"/></a></figure><p id="613b7eec-8453-4aac-9a39-6e434f4a8977" class="">
+</p></details></li></ul></details></li></ul></details></li></ul><p id="a5e27f7c-4ec9-4756-b088-87954933ed0d" class="">
+</p></div></article></body></html>

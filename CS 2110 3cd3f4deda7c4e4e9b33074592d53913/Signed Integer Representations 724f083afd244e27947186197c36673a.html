@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Signed Integer Representations</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="724f083a-fd24-4e27-9471-86197c36673a" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🖊️</span></div><h1 class="page-title">Signed Integer Representations</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-blue">Quiz 1 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="9a2735d6-075f-4664-a7ef-37aa23492d47" class="block-color-teal_background">Notes</h1><p id="c728cd7f-1162-4d3d-bbfd-80d5cb083c93" class=""><strong>We will NOT ask you to do arithmetic or conversions on sign-magnitude or 1&#x27;s complement numbers</strong></p><h2 id="7ab55726-4ab8-4184-bea8-29090c8a215c" class="block-color-red">Unsigned Integer</h2><p id="04ac5ca2-0a35-4eb6-a86e-169b79d4a3b2" class="">Unsigned Integer is a 32-bit datum that encodes a nonnegative integer in the range [0 to 4294967295]. </p><h3 id="411c65e0-6d03-40ad-b212-89ba2d947ac8" class="">Binary to Decimal Conversion</h3><ul id="2b55b22b-ace7-4427-bbde-9db1b1f35d76" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0100010</mn><msub><mn>0</mn><mn>2</mn></msub><mo>=</mo><mn>6</mn><msub><mn>8</mn><mn>10</mn></msub></mrow><annotation encoding="application/x-tex">0100 0100_2 = 68_{10}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">0100010</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">6</span><span class="mord"><span class="mord">8</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><table id="cb882979-1c28-4a50-b45f-97e6b756c7b6" class="simple-table"><tbody><tr id="594b7621-ef6d-4dd9-aac6-d7e59f6e8f52"><td id="]YEv" class="">128</td><td id="Uu}U" class="">64</td><td id="cZP&lt;" class="">32</td><td id="^YaQ" class="">16</td><td id="vhMI" class="">8</td><td id="V&lt;Kd" class="">4</td><td id="l_G}" class="">2</td><td id="NhhR" class="">1</td></tr><tr id="ca1d4006-0600-4d73-8f78-8e59da80d6d6"><td id="]YEv" class="">0</td><td id="Uu}U" class="">1</td><td id="cZP&lt;" class="">0</td><td id="^YaQ" class="">0</td><td id="vhMI" class="">0</td><td id="V&lt;Kd" class="">1</td><td id="l_G}" class="">0</td><td id="NhhR" class="">0</td></tr></tbody></table></li></ul><ul id="d6fc59ca-746d-45a0-b47d-0265ab23cc97" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0011111</mn><msub><mn>1</mn><mn>2</mn></msub><mo>=</mo><mn>6</mn><msub><mn>3</mn><mn>10</mn></msub></mrow><annotation encoding="application/x-tex">0011 1111_2 = 63_{10}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">0011111</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">6</span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><table id="0ab4b8b3-84be-4711-93bb-af953a37aff8" class="simple-table"><tbody><tr id="c2c41028-3e33-4035-94ab-39259eb208b7"><td id="]YEv" class="">128</td><td id="Uu}U" class="">64</td><td id="cZP&lt;" class="">32</td><td id="^YaQ" class="">16</td><td id="vhMI" class="">8</td><td id="V&lt;Kd" class="">4</td><td id="l_G}" class="">2</td><td id="NhhR" class="">1</td></tr><tr id="952ff728-7f9b-47f4-942e-ed71c7aac59a"><td id="]YEv" class="">0</td><td id="Uu}U" class="">0</td><td id="cZP&lt;" class="">1</td><td id="^YaQ" class="">1</td><td id="vhMI" class="">1</td><td id="V&lt;Kd" class="">1</td><td id="l_G}" class="">1</td><td id="NhhR" class="">1</td></tr></tbody></table></li></ul><h3 id="8c25848d-b17f-46ba-b2df-6e65c58e23f9" class="">Binary Addition and Subtraction</h3><p id="4b92800c-f938-4ede-b667-b053e77bfe6a" class="">Carry in if the bit value is &gt; 1. Borrow if &lt; 0.</p><ul id="6ac6991a-ce5f-440c-91a4-fc733003f13d" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0000111</mn><msub><mn>1</mn><mn>2</mn></msub><mo>+</mo><mn>0001000</mn><msub><mn>1</mn><mn>2</mn></msub><mo>=</mo><mn>0010000</mn><msub><mn>0</mn><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">00001111_2+00010001_2=00100000_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">0000111</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">0001000</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">0010000</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><ul id="f6208ec9-6261-4d47-8874-6a05f9c646fc" class="bulleted-list"><li style="list-style-type:circle">15+17=32</li></ul></li></ul><ul id="d87ef6f7-3f38-461a-994c-3b1ad49d5de9" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>11000</mn><msub><mn>0</mn><mn>2</mn></msub><mo>−</mo><mn>00001</mn><msub><mn>1</mn><mn>2</mn></msub><mo>=</mo><mn>10110</mn><msub><mn>1</mn><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">110000_2-000011_2=101101_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">11000</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">00001</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">10110</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><ul id="cce3f6c1-8acd-42f6-93b8-8763d1308a81" class="bulleted-list"><li style="list-style-type:circle">48-3=45</li></ul></li></ul><h2 id="a64f31b0-8656-43f2-8a17-2a3e94198886" class="block-color-red">Signed Integer</h2><p id="7532a702-57eb-413a-9e1d-de70376adc94" class="">Signed Integer is a 32-bit datum that encodes an integer in the range [-2147483648 to 2147483647] —&gt; Can represent negative numbers.</p><ul id="7e0e357e-9adf-401e-b453-f7b792800188" class="block-color-blue_background bulleted-list"><li style="list-style-type:disc">Table representation of the three main methods<table id="eaac8056-7c74-4934-9227-77abe22e35b8" class="simple-table"><tbody><tr id="2f1d2690-9b1b-4672-8e66-63729f29c5a1"><td id="`ACZ" class="">Binary (N = 4)</td><td id="qGcC" class="">Unsigned</td><td id="mMAV" class="">Signed Mag</td><td id="wFuU" class="">1&#x27;s Comp</td><td id="EXcR" class="">2&#x27;s Comp</td></tr><tr id="88485cec-2d99-436d-9b4a-094863d2c08a"><td id="`ACZ" class="">0000</td><td id="qGcC" class="">0</td><td id="mMAV" class="">0</td><td id="wFuU" class="">0</td><td id="EXcR" class="">0</td></tr><tr id="f0ec0d4c-3950-4e38-88ce-a06db8092180"><td id="`ACZ" class="">0001</td><td id="qGcC" class="">1</td><td id="mMAV" class="">1</td><td id="wFuU" class="">1</td><td id="EXcR" class="">1</td></tr><tr id="2cab66d9-8330-4827-9c58-ac7f05f14d48"><td id="`ACZ" class="">0010</td><td id="qGcC" class="">2</td><td id="mMAV" class="">2</td><td id="wFuU" class="">2</td><td id="EXcR" class="">2</td></tr><tr id="e4455695-eeda-467a-9f26-63f759ed7578"><td id="`ACZ" class="">0011</td><td id="qGcC" class="">3</td><td id="mMAV" class="">3</td><td id="wFuU" class="">3</td><td id="EXcR" class="">3</td></tr><tr id="aea81f76-f145-470e-b420-fede3cd107e2"><td id="`ACZ" class="">0100</td><td id="qGcC" class="">4</td><td id="mMAV" class="">4</td><td id="wFuU" class="">4</td><td id="EXcR" class="">4</td></tr><tr id="a0ee80ce-8470-48d7-b461-ae65706555c9"><td id="`ACZ" class="">0101</td><td id="qGcC" class="">5</td><td id="mMAV" class="">5</td><td id="wFuU" class="">5</td><td id="EXcR" class="">5</td></tr><tr id="02c39214-3d7b-4118-ba07-db044e4cd8e0"><td id="`ACZ" class="">0110</td><td id="qGcC" class="">6</td><td id="mMAV" class="">6</td><td id="wFuU" class="">6</td><td id="EXcR" class="">6</td></tr><tr id="99645e87-8e4d-4cce-b5c1-dfaf1fadaed3"><td id="`ACZ" class="">0111</td><td id="qGcC" class="">7</td><td id="mMAV" class="">7</td><td id="wFuU" class="">7</td><td id="EXcR" class="">7</td></tr><tr id="1dcc49d3-ce1f-4b44-85b3-336ec71bb249"><td id="`ACZ" class="">1000</td><td id="qGcC" class="">8</td><td id="mMAV" class="">-0</td><td id="wFuU" class="">-7</td><td id="EXcR" class="">-8</td></tr><tr id="a6599450-6b15-4312-8f2d-aecb6802a951"><td id="`ACZ" class="">1001</td><td id="qGcC" class="">9</td><td id="mMAV" class="">-1</td><td id="wFuU" class="">-6</td><td id="EXcR" class="">-7</td></tr><tr id="d5a6f163-cd57-4cf5-adb0-f593505d1a79"><td id="`ACZ" class="">1010</td><td id="qGcC" class="">10</td><td id="mMAV" class="">-2</td><td id="wFuU" class="">-5</td><td id="EXcR" class="">-6</td></tr><tr id="77974970-25fa-4be7-8f7a-895bbc70fe82"><td id="`ACZ" class="">1011</td><td id="qGcC" class="">11</td><td id="mMAV" class="">-3</td><td id="wFuU" class="">-4</td><td id="EXcR" class="">-5</td></tr><tr id="7bee2a39-4462-417b-9f54-4330905bd5be"><td id="`ACZ" class="">1100</td><td id="qGcC" class="">12</td><td id="mMAV" class="">-4</td><td id="wFuU" class="">-3</td><td id="EXcR" class="">-4</td></tr><tr id="4b68a1c3-be7d-41e2-930c-6266892e3176"><td id="`ACZ" class="">1101</td><td id="qGcC" class="">13</td><td id="mMAV" class="">-5</td><td id="wFuU" class="">-2</td><td id="EXcR" class="">-3</td></tr><tr id="87e3965e-3eca-430a-9f6f-4a7c9e143458"><td id="`ACZ" class="">1110</td><td id="qGcC" class="">14</td><td id="mMAV" class="">-6</td><td id="wFuU" class="">-1</td><td id="EXcR" class="">-2</td></tr><tr id="eef4317c-d1af-4082-a71a-cd5d793821f1"><td id="`ACZ" class="">1111</td><td id="qGcC" class="">15</td><td id="mMAV" class="">-7</td><td id="wFuU" class="">-0</td><td id="EXcR" class="">-1</td></tr></tbody></table></li></ul><h3 id="3480ee5d-f29b-4427-a267-abb3b4d41d7a" class="block-color-orange">Signed Magnitude</h3><p id="e1f7fe91-8759-4b3d-a81c-4e051806f6df" class="">Flip the leading 0 to 1 to represent the negative sign.</p><h3 id="0a10b7e1-af84-44de-8982-b52b2fc2229e" class="block-color-orange">1&#x27;s Complement</h3><p id="d02ea42b-e1d2-4b5b-933a-b01a990b0e1a" class="">Flip all the bits to represent the corresponding negative number.<div class="indented"><ul id="a18a5312-e23e-466e-a1b3-cdfa13a55200" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>n</mi><mo>=</mo><mo>∽</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">-n=\backsim n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.37788em;vertical-align:0em;"></span><span class="mrel amsrm">∽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span></li></ul></div></p><h3 id="7e8bb013-96ce-4ba1-a661-1046fb5b0a61" class="block-color-orange">2&#x27;s Complement</h3><p id="e67e304a-6816-47b8-bf43-d85ead8e9d04" class="">Flip all the bits + 1 to represent the corresponding negative number</p><p id="0a3ecef8-f722-4f36-b33c-5f2fcc30f46f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>n</mi><mo>=</mo><mo>∽</mo><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-n=\backsim n + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.37788em;vertical-align:0em;"></span><span class="mrel amsrm">∽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span></p><ul id="d37c5298-e604-4baa-a237-86f0a9b82b04" class="bulleted-list"><li style="list-style-type:disc">What is 2&#x27;s compliment representation for -13?<p id="d711357f-7b7c-47b5-a8eb-7f4dd874eff2" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mn>1</mn><msub><mn>3</mn><mn>10</mn></msub><mo>=</mo><mn>0110</mn><msub><mn>1</mn><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">+13_{10} = 01101_{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">+</span><span class="mord">1</span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">0110</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="103c74f2-68dd-4572-84de-3921c118383e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∽</mo><mn>0110</mn><msub><mn>1</mn><mn>2</mn></msub><mo>=</mo><mn>1001</mn><msub><mn>0</mn><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\backsim 01101_{2}=10010_{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.37788em;vertical-align:0em;"></span><span class="mrel amsrm">∽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">0110</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">1001</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="c366ce50-f59b-4612-b107-ce6f6948ad46" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1001</mn><msub><mn>0</mn><mn>2</mn></msub><mo>+</mo><mn>12</mn><mo>=</mo><mn>1001</mn><msub><mn>1</mn><mn>2</mn></msub><mo>=</mo><mo>−</mo><mn>1</mn><msub><mn>3</mn><mn>10</mn></msub></mrow><annotation encoding="application/x-tex">10010_{2}+1{2}=10011_{2}=-13_{10}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">1001</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">2</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">1001</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="2d025751-19ba-49ca-b0f9-b3bbe1002434" class="">Binary Addition:<div class="indented"><p id="a631068e-3993-4bbf-bc56-d09992c3d2d8" class="">  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>01101</mn></mrow><annotation encoding="application/x-tex">01101</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">01101</span></span></span></span></span><span>﻿</span></span></p><p id="fce091a6-2662-4283-9387-b9ea1bf4985a" class="">+<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10011</mn></mrow><annotation encoding="application/x-tex">10011</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">10011</span></span></span></span></span><span>﻿</span></span></p><p id="7712ba9d-27df-47a7-931b-cd35df242426" class="">=<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>00000</mn></mrow><annotation encoding="application/x-tex">00000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">00000</span></span></span></span></span><span>﻿</span></span></p></div></p></li></ul><ul id="9c90823c-c7bb-4229-a7e9-308ba540d456" class="bulleted-list"><li style="list-style-type:disc">Used in most computers today</li></ul><ul id="d79d9b3c-9426-4d08-af2e-ebd97312426c" class="bulleted-list"><li style="list-style-type:disc">No need for a hardware subtractor, just a bitwise complement</li></ul><ul id="f5883442-a04f-4c44-9626-fff6c2dd0276" class="bulleted-list"><li style="list-style-type:disc">There exist only one 0</li></ul><ul id="96ede14f-c52a-4794-aa9c-a2dd33147d32" class="bulleted-list"><li style="list-style-type:disc">Addition still works as expected from binary arithmetic (if you don’t wrap)</li></ul><ul id="8582bff3-a590-4aed-8cd1-dfd3b1d9020f" class="bulleted-list"><li style="list-style-type:disc">The first bit still indicates the sign (as long as you will tolerate zero being positive)</li></ul><ul id="30165a75-6d9b-4b9f-a747-5bd0b18c0a6a" class="bulleted-list"><li style="list-style-type:disc">Easy calculation(Easy to find compliment of a number)<ul id="56c8df0f-384b-4fd1-9d41-23254e01a1f3" class="bulleted-list"><li style="list-style-type:circle">Since finding the complement is easy, there’s no need for subtraction: just complement and add</li></ul></li></ul><h2 id="dc18bed3-d272-4816-8931-df65c229c9ed" class="block-color-orange">Sign Extension</h2><ul id="a7646f9e-941e-43a3-a039-9c181c2fe711" class="bulleted-list"><li style="list-style-type:disc">Sign-extension is performed in order to be able to operate on bit patterns of <strong>different lengths</strong>. It does <strong>not</strong> affect the values of the numbers being represented.</li></ul><ul id="779bb466-60b9-43b3-a633-4911b3a13c5e" class="bulleted-list"><li style="list-style-type:disc">Positive Integer: +5 can be represented as 000101 or 0000000000000101</li></ul><ul id="0256a069-6acc-46fd-93eb-9a9bda094907" class="bulleted-list"><li style="list-style-type:disc">Negative Integer: -5 can be represented as 11101 or 1111111111111011</li></ul><ul id="ca6e4c52-9564-41f5-a4cc-d2b0cd7bfd95" class="block-color-blue_background bulleted-list"><li style="list-style-type:disc">Example: +5 + -5 = 0<ul id="cb8a76fc-d1ca-4e96-b20d-8405fb316fe4" class="bulleted-list"><li style="list-style-type:circle">Incorrect: - not flipping leading 0s when representing negative integers<p id="ce6151ce-b05f-4f85-93d2-5aa2099a1dab" class="">  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0000000000000101</mn></mrow><annotation encoding="application/x-tex">0000000000000101</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0000000000000101</span></span></span></span></span><span>﻿</span></span></p><p id="a09c5792-b96d-4c97-a602-eb6910fa2d0c" class="">+<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0000000000111011</mn></mrow><annotation encoding="application/x-tex">0000000000111011</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0000000000111011</span></span></span></span></span><span>﻿</span></span></p><p id="48c96488-9f63-4be4-93d1-81d24a36e38c" class="">=<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0000000001000000</mn></mrow><annotation encoding="application/x-tex">0000000001000000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0000000001000000</span></span></span></span></span><span>﻿</span></span></p></li></ul><ul id="5e74665c-a2cc-448a-aec6-9b09d8f4c221" class="bulleted-list"><li style="list-style-type:circle">Correct: Flipping leading 0s when representing negative integers.<p id="2c8d2c76-d3a2-426c-820d-c5ef8fff48c2" class="">  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0000000000000101</mn></mrow><annotation encoding="application/x-tex">0000000000000101</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0000000000000101</span></span></span></span></span><span>﻿</span></span></p><p id="581b9876-a78c-4b79-88b6-d4eb4e70c3b9" class="">+<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1111111111111011</mn></mrow><annotation encoding="application/x-tex">1111111111111011</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1111111111111011</span></span></span></span></span><span>﻿</span></span></p><p id="c57ef9c6-eee5-4ac6-b426-b7dda444047e" class="">=<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0000000000000000</mn></mrow><annotation encoding="application/x-tex">0000000000000000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0000000000000000</span></span></span></span></span><span>﻿</span></span></p></li></ul></li></ul><ul id="e2aa1958-72e5-40d5-9a23-d6ca7c7707f6" class="bulleted-list"><li style="list-style-type:disc">More Sign Extension Examples<ul id="8fad9cf3-1901-4429-9db9-d0f0127eb115" class="bulleted-list"><li style="list-style-type:circle">Add 3 and 64 (0011 and 01000000)</li></ul><ul id="b022cd12-da68-4f2f-9809-b07eb2388025" class="bulleted-list"><li style="list-style-type:circle"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0011</mn><mo>+</mo><mn>01000000</mn><mo>=</mo><mn>01000011</mn></mrow><annotation encoding="application/x-tex">0011+01000000=01000011</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">0011</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">01000000</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">01000011</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="18dc1509-4b4d-4ab2-b01b-dc4d9a3c6496" class="bulleted-list"><li style="list-style-type:circle">Add -3 and 64 (1101 and 01000000)<ul id="af8080c7-255d-4513-a4bb-c11e6599cb3c" class="bulleted-list"><li style="list-style-type:square"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>11111101</mn><mo>+</mo><mn>01000000</mn><mo>=</mo><mn>00111101</mn></mrow><annotation encoding="application/x-tex">11111101+01000000=00111101</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">11111101</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">01000000</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">00111101</span></span></span></span></span><span>﻿</span></span><ul id="e66616f7-32d2-4014-8288-d799a38fc40d" class="bulleted-list"><li style="list-style-type:disc">Throw away the carried out 1</li></ul></li></ul></li></ul></li></ul><h2 id="0fc1a9c0-79d3-45e8-afb9-294f155d3a89" class="block-color-orange">Fractional Binary Numbers</h2><table id="3c7ea610-4762-457f-9a3d-2dc8bb9aacb4" class="simple-table"><tbody><tr id="f07f2d6b-b827-490f-b7eb-ff3416daf008"><td id="FQoF" class="">8</td><td id="crhD" class="">4</td><td id="pVKe" class="">2</td><td id="dQLC" class="">1</td><td id="Lb&gt;k" class="">.5</td><td id="XkAp" class="">.25</td><td id="V_qv" class="">.125</td><td id="|a:x" class="">.0625</td></tr><tr id="46467f9a-2655-426b-99a1-a398ce684a83"><td id="FQoF" class="">1</td><td id="crhD" class="">0</td><td id="pVKe" class="">1</td><td id="dQLC" class="">0</td><td id="Lb&gt;k" class="">1</td><td id="XkAp" class="">1</td><td id="V_qv" class="">0</td><td id="|a:x" class="">0</td></tr></tbody></table><p id="939a3986-8e1a-4f44-ab1b-02c1ccfe1623" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>110</mn><msub><mn>1</mn><mo lspace="0em" rspace="0em">∧</mo></msub><mn>1100</mn><mo>=</mo><mn>10.7</mn><msub><mn>5</mn><mn>10</mn></msub></mrow><annotation encoding="application/x-tex">1101_{\land}1100=10.75_{10}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">110</span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.23889200000000002em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∧</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">1100</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">10.7</span><span class="mord"><span class="mord">5</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><h1 id="fc1761d3-b2e5-4b7a-b00f-5d5952421fe5" class="block-color-teal_background">Questions &amp; Answers</h1><h3 id="ee1f99b0-3de5-4ad0-90da-15cba01be2ca" class=""><strong>Conversions</strong></h3><ul id="78b20525-75ef-465b-b181-b5f8a2a48074" class="bulleted-list"><li style="list-style-type:disc"><strong>What&#x27;s the formula for negating a binary number in 2&#x27;s complement?</strong><p id="7083ccec-b080-492e-8bc5-426eaa173789" class="">Invert all the bits and add one to the result</p></li></ul><ul id="f8b1c31e-fdfc-42f2-9395-2fcc52d4ded8" class="bulleted-list"><li style="list-style-type:disc"><strong>Convert the 2&#x27;s complement binary number </strong><strong><mark class="highlight-gray_background">0b11101010</mark></strong><strong> into decimal</strong></li></ul><ul id="feac569a-efcd-4ba4-8340-0d9329dd6c9a" class="bulleted-list"><li style="list-style-type:disc"><strong>Convert the decimal number </strong><strong><mark class="highlight-gray_background">-72</mark></strong><strong> into 8-bit 2&#x27;s complement binary</strong></li></ul><ul id="8fd74436-1439-420b-a3aa-3451ccdf98e5" class="bulleted-list"><li style="list-style-type:disc"><strong>How many bits would we need to represent the decimal number -1000 in 2&#x27;s complement binary?</strong></li></ul><p id="dfcebea1-5232-4526-a9cb-3e39f6fa2661" class=""><strong>In 6-bit binary, what’s the range of possible values you can represent with:</strong></p><ul id="acf995dc-a846-4cd3-a2a3-9295a8d697ef" class="bulleted-list"><li style="list-style-type:disc"><strong>An unsigned number?</strong></li></ul><ul id="e1efbc70-e5ed-4cba-be9d-ef99ef14c12e" class="bulleted-list"><li style="list-style-type:disc"><strong>A sign-magnitude number?</strong></li></ul><ul id="1320705b-2970-44b4-ac4d-ef1194c66e25" class="bulleted-list"><li style="list-style-type:disc"><strong>A 1’s complement number?</strong></li></ul><ul id="5599698d-7518-4279-95ae-6c481945c4bf" class="bulleted-list"><li style="list-style-type:disc"><strong>A 2’s complement number?</strong></li></ul><p id="3482ae13-2e8c-4faa-8ad8-cc28835e78e1" class=""><strong>In n-bit binary, what’s the range of possible values you can represent with:</strong></p><ul id="be7c35ae-bb9b-4ba1-a36e-894e07ea3dd7" class="bulleted-list"><li style="list-style-type:disc"><strong>An unsigned number?</strong></li></ul><ul id="16409113-5706-4b86-a614-cdec90818317" class="bulleted-list"><li style="list-style-type:disc"><strong>A sign-magnitude number?</strong></li></ul><ul id="5952e55e-a29c-4dd8-ac40-d7d3d5596f95" class="bulleted-list"><li style="list-style-type:disc"><strong>A 1’s complement number?</strong></li></ul><ul id="64214f5d-c516-4f3a-9ef9-3c47e368d9e4" class="bulleted-list"><li style="list-style-type:disc"><strong>A 2’s complement number?</strong></li></ul><p id="72dbd324-14c3-4dd6-8d23-a6deea21558c" class=""><strong>On a conceptual level, why do we prefer 2’s complement over the other signed representations?</strong></p><ul id="3c465653-5863-478c-a8b9-8885def4a867" class="bulleted-list"><li style="list-style-type:disc">Used in almost all computers manufactured today</li></ul><ul id="4f16b970-3411-4735-a401-4be09401285b" class="bulleted-list"><li style="list-style-type:disc">Allows for low cost, high performance circuitry to do math operations</li></ul><ul id="debc74c5-3e36-4c85-8bad-c378b3ffe553" class="bulleted-list"><li style="list-style-type:disc">There’s no need for a hardware subtractor, just a bitwise complement</li></ul><ul id="1e3ec271-135b-46cd-acdd-4520371adad3" class="bulleted-list"><li style="list-style-type:disc">Useful Properties:<ul id="aae28dfe-28b9-4fd8-acea-5761dbee3cf9" class="bulleted-list"><li style="list-style-type:circle">There is only one zero</li></ul><ul id="e33c0424-d244-4a8f-b5d3-da08950a3ef7" class="bulleted-list"><li style="list-style-type:circle">Addition still works as expected from binary arithmetic (if you don’t wrap)</li></ul><ul id="70de8989-7add-4629-bff4-93cf86d48322" class="bulleted-list"><li style="list-style-type:circle">The first bit still indicates the sign (as long as you will tolerate zero being positive)</li></ul><ul id="a6f4849c-48c5-4166-a9c7-3aa4dcf18d7d" class="bulleted-list"><li style="list-style-type:circle">Finding the complement (additive inverse) of a number is easy</li></ul><ul id="8063f64a-ea73-4ac2-a4ef-7712fa3d2e39" class="bulleted-list"><li style="list-style-type:circle">Since finding the complement is easy, there’s no need for subtraction: just complement and add</li></ul></li></ul><ul id="dde49907-4b08-4fd2-afeb-e8cc65355a68" class="bulleted-list"><li style="list-style-type:disc">Useful new pattern:<ul id="562c5bdd-d45d-4db7-b525-b2452fe7433c" class="bulleted-list"><li style="list-style-type:circle">You can find the two’s complement of any number by flipping the bits and adding 1.</li></ul><ul id="f4e531fd-0bf7-429b-aeb2-a0032de3e2f1" class="bulleted-list"><li style="list-style-type:circle">And a two’s complement conveniently represents the additive inverse of the originally represented number!</li></ul></li></ul><h3 id="efe89767-07b3-4c2e-8fa8-e59e433fdddf" class="">How does one compute the additive inverse of a two’s complement number?</h3><p id="ecf6fb13-f139-4127-9226-7c11ec684c9f" class="">Take the boolean NOT of each bit and add 1</p><p id="5030b85e-e062-432f-9347-de3d8d1a05af" class="">
+</p></div></article></body></html>

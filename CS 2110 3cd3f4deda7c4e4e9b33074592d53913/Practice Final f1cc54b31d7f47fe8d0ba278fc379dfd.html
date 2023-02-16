@@ -1,0 +1,735 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Practice Final</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f1cc54b3-1d7f-47fe-8d0b-a278fc379dfd" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🏪</span></div><h1 class="page-title">Practice Final</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-purple">Assessment</span></td></tr></tbody></table></header><div class="page-body"><p id="d18cb154-e1ef-49be-8a3e-9b19d0f1c4cc" class=""><strong>Question 1</strong></p><p id="652df232-33bd-4fe6-b3ee-2ef4b6c1c383" class="">What are the resulting types of the following expressions?  Write them in English</p><p id="94d71b1e-74d4-41aa-a6e8-354a553056b9" class="">using among other things, the phrases “pointer to”, “array of”, and “function returning”.</p><p id="923adb58-258e-473d-9b44-fc03370bbe33" class="">Note, these are expressions, not type declarations.  The first two are done for you.</p><pre id="b8c00e01-3ad1-4bf1-a58f-6cd1409d1e7b" class="code"><code>char *a = “Last”;
+
+	struct c {
+	
+	int c1;
+	
+	float c2;
+	
+	char *c3;
+
+} c;
+
+struct c *d;
+
+int **f(int a, int b);
+
+float *(*g)[];
+
+int h[10][5][3];</code></pre><div id="29542f0f-e9b9-48ec-a7d6-991667dbb647" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Expression</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>Resulting Type</th></tr></thead><tbody><tr id="56343cca-3cad-41b7-83cf-e23ac3980af1"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/a%2056343cca3cad41b783cfe23ac3980af1.html">a</a></td><td class="cell-zXue">Pointer to char</td></tr><tr id="3dfc2bf5-e0e0-459f-a102-f5d1bc6ea2f0"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/a%203dfc2bf5e0e0459fa102f5d1bc6ea2f0.html">*a</a></td><td class="cell-zXue">char</td></tr><tr id="5fa9213a-661b-4bd9-b095-059b2e1886f8"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/a%5B0%5D%205fa9213a661b4bd9b095059b2e1886f8.html">a[0]</a></td><td class="cell-zXue">char</td></tr><tr id="3aacecdf-9d91-4d0f-8fdd-a5229517401f"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/c%20c3%203aacecdf9d914d0f8fdda5229517401f.html">c.c3</a></td><td class="cell-zXue">Pointer to char</td></tr><tr id="f94d135d-b584-4dfc-ac95-1c141f3561f9"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/f(3,4)%20f94d135db5844dfcac951c141f3561f9.html">*f(3,4)</a></td><td class="cell-zXue">Pointer to int</td></tr><tr id="418a25da-245e-473f-87dc-1fffe6681b0a"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/f(3,4)%20418a25da245e473f87dc1fffe6681b0a.html">f(3,4)</a></td><td class="cell-zXue">Pointer to pointer to int</td></tr><tr id="eee46f72-8ae5-4752-9577-e51412c840db"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/(%20d)%20c3%5B1%5D%20eee46f728ae547529577e51412c840db.html">(*d).c3[1]</a></td><td class="cell-zXue">char</td></tr><tr id="834f4291-54a4-434d-b5e8-a9d3e8fddb8d"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/d-%20c2%20834f429154a4434db5e8a9d3e8fddb8d.html">d-&gt;c2</a></td><td class="cell-zXue">float</td></tr><tr id="a6ee2a48-00cf-455b-b5ba-0f5e69b33c77"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/g%20a6ee2a4800cf455bb5ba0f5e69b33c77.html">g</a></td><td class="cell-zXue">Pointer to array of pointer to float</td></tr><tr id="e8ce61ae-c21a-435d-8751-90798bbd079a"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/g%20e8ce61aec21a435d875190798bbd079a.html">*g</a></td><td class="cell-zXue">Array of pointer to float</td></tr><tr id="05e043a0-ffa4-4c7c-9b07-60d75bd4d1e1"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/h%5B3%5D%2005e043a0ffa44c7c9b0760d75bd4d1e1.html">h[3]</a></td><td class="cell-zXue">Array 5 of array 3 of int</td></tr><tr id="6a5b1a37-bb35-411b-ac09-0013b93e3ac4"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%2029542f0fe9b948eca7d6991667dbb647/h%5B3%5D%5B4%5D%5B2%5D%206a5b1a37bb35411bac090013b93e3ac4.html">h[3][4][2]</a></td><td class="cell-zXue">int</td></tr></tbody></table></div><p id="155cf419-6d68-4835-b9d5-13faf12c7f75" class=""><strong>Question 2</strong></p><p id="b6ceaa39-5f7f-47d7-9a89-fd8a54d54c08" class="">Presume the following variables are all outside a function definition and are assigned</p><p id="394e4a3f-ef3e-4f5b-8cc2-86d1e26cb841" class="">to the memory addresses listed.</p><figure id="3daaecd9-bffc-40b8-aed5-0e7b5da5beca" class="image"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Screen_Shot_2021-12-14_at_13.44.18.png"><img style="width:1340px" src="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Screen_Shot_2021-12-14_at_13.44.18.png"/></a></figure><div id="6189da0d-45de-48a3-83b9-b09e69ff298c" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Expression</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>Value</th></tr></thead><tbody><tr id="6092c412-0c10-4fbc-8a83-23109909fd0b"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/a+1%206092c4120c104fbc8a8323109909fd0b.html">a+1</a></td><td class="cell-YRe:">a + 1 = a + 1*sizeof(24/6) = 0x20000 + #4 = 0x20004</td></tr><tr id="51323e5d-13ec-4a8e-bea4-1cd8d1f988bb"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/&amp;a%5B0%5D%2051323e5d13ec4a8ebea41cd8d1f988bb.html">&amp;a[0]</a></td><td class="cell-YRe:">&amp;a[0] = &amp;(*(a+0)) = a + 0*sizeof(4) = 0x20000</td></tr><tr id="5ca233b6-82e4-4874-8130-ddb73652b295"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/a%5B0%5D%205ca233b682e448748130ddb73652b295.html">a[0]</a></td><td class="cell-YRe:">a[0]  = *(a+0) = *(a+0*sizeof(4)) = *a = *(0x20000) = 1</td></tr><tr id="56a3c46e-8c64-4299-9e3d-df0cdab8a33b"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/b%2056a3c46e8c6442999e3ddf0cdab8a33b.html">b</a></td><td class="cell-YRe:">b = &amp;b[0] = address of ‘s’</td></tr><tr id="74055fce-e22b-4e1a-86c7-a54c2e43066e"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/b%5B2%5D%2074055fcee22b4e1a86c7a54c2e43066e.html">b[2]</a></td><td class="cell-YRe:">b[2] = *(b+2) = *(b+2*sizeof(1)) = *(b+2) = ‘r’</td></tr><tr id="1cfc7615-83aa-46f2-b7bc-379367d7bf6b"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/cx%201cfc761583aa46f2b7bc379367d7bf6b.html">cx</a></td><td class="cell-YRe:">cx = &amp;cx[0] = &amp;(*(cx+0)) = cx+0*sizeof(16) = 0x2001c</td></tr><tr id="3adf472b-54af-4691-8f69-dacd29252696"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/&amp;cx%5B2%5D%203adf472b54af46918f69dacd29252696.html">&amp;cx[2]</a></td><td class="cell-YRe:">&amp;cx[2] = &amp;(*(cx+2)) = cx + 2*sizeof(16) = 0x2001c + #32 = 0x2003c</td></tr><tr id="99d575c1-27ba-496c-b3fb-ef6bd83bba39"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/&amp;cx%5B3%5D%20c2%2099d575c127ba496cb3fbef6bd83bba39.html">&amp;cx[3].c2</a></td><td class="cell-YRe:">&amp;cx[3].c2 = &amp;(*(cx + 3*sizeof(struct c) + sizeof(c1)) = cx + 3*sizeof(16) + #8 =  0x2001c + #48 + #8 = 0x20054</td></tr><tr id="3b6b22ea-dcfe-4cfe-a26c-1f088768e52e"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/cx%20+%202%203b6b22eadcfe4cfea26c1f088768e52e.html">cx + 2</a></td><td class="cell-YRe:">cx + 2 = &amp;cx[0] + 2 = &amp;(*(cx+0)) + 2 = cx+0*sizeof(16) + 2*sizeof(16) = cx + #32 = 0x2001c + #32 = 0x2003C</td></tr><tr id="220ff07b-5530-4b8c-95c1-b68830f0bd2f"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/cp%20+%201%20220ff07b55304b8c95c1b68830f0bd2f.html">cp + 1</a></td><td class="cell-YRe:">cp + 1 = &amp;cx[0] + 1 = &amp;(*(cx + 0*sizeof(struct c) + 1*sizeof(struct c))) = cx + 1*sizeof(16) = cx + #16 = 0x2001c + #16 = 0x2002c</td></tr><tr id="fed2270e-10c2-4315-96b6-5305a193a8fa"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%206189da0d45de48a383b9b09e69ff298c/&amp;cp%5B1%5D%20fed2270e10c2431596b65305a193a8fa.html">&amp;cp[1]</a></td><td class="cell-YRe:">&amp;cp[1] = &amp;(*(cx + 1) = cx + 1*sizeof(struct c) = cx + #16 = 0x2001c + #16 = 0x2002c</td></tr></tbody></table></div><p id="919bcc2a-8838-4735-964c-ae20c99a2dfc" class=""><strong>Question 3</strong></p><p id="707515f8-768e-4bd7-af7a-a837e6e60125" class="">Trace the values of the variables in the following code by writing in the values that</p><p id="e4fca177-ff3b-4b80-bc0e-15581b664ab6" class="">change when each line of code is executed. The first line of the table shows the value of</p><p id="ae76d15a-80dd-45be-b1ed-43e1be523b32" class="">each variable when the declarations are finished.</p><pre id="767e05e1-0246-425a-a2ad-25d16f07aeb0" class="code"><code>int a = 12, b = 9;
+
+double c = 3.5, d = -2.7;
+
+char e[] = “badly”;
+
+char f = ‘w’;
+
+int *pa = &amp;a, *pb = &amp;b;
+
+double *pc = &amp;c, *pd = &amp;d, **ppc = &amp;pc, **ppd = &amp;pd;
+
+char *pf = &amp;f, **ppf =&amp;pf;</code></pre><div id="a001ca94-5ec9-4af3-be20-ad712973433c" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Property</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>a</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>b</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>c</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>d</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>e</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>f</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>pa</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>pb</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>pc</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>pd</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>ppc</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>ppd</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>pf</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>ppf</th></tr></thead><tbody><tr id="f668fc97-ee07-480d-9ed3-91cef28d5918"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/Untitled%20f668fc97ee07480d9ed391cef28d5918.html">Untitled</a></td><td class="cell-t?{`">12</td><td class="cell-LQW{">9</td><td class="cell-uQmq">3.5</td><td class="cell-FTZh">-2.7</td><td class="cell-=&lt;|{">badly</td><td class="cell-&gt;T^q">w</td><td class="cell-;lt|">&amp;a</td><td class="cell-|yc=">&amp;b</td><td class="cell-Ejh@">&amp;c</td><td class="cell-q[aY">&amp;d</td><td class="cell-:P[Y">&amp;pc</td><td class="cell-Hs{[">&amp;pd</td><td class="cell-{Ces">&amp;f</td><td class="cell-BJ?E">&amp;pf</td></tr><tr id="c56c8baa-5bc1-4049-bcde-fcba5f70cdd0"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/pa%20=%205%20c56c8baa5bc14049bcdefcba5f70cdd0.html">*pa = 5</a></td><td class="cell-t?{`">5</td><td class="cell-LQW{">0</td><td class="cell-uQmq">0</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q"></td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr><tr id="56ee8ca9-74e0-406b-a971-4f54b892dc5e"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/pb%20=%20pa%20+2%2056ee8ca974e0406ba9714f54b892dc5e.html">*pb = *pa +2</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">7</td><td class="cell-uQmq">0</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q"></td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr><tr id="72d7731f-6283-4dcd-8741-665cba93f60c"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/pa%20=%20pb%2072d7731f62834dcd8741665cba93f60c.html">pa = pb</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">0</td><td class="cell-uQmq">0</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q"></td><td class="cell-;lt|">&amp;b</td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr><tr id="6735acc9-cda9-42e4-a010-25aa89017e87"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/pa%20=%201%206735acc9cda942e4a01025aa89017e87.html">*pa = 1</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">1</td><td class="cell-uQmq">0</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q"></td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr><tr id="e12035e0-32bc-41a1-9af0-3d0bf7b61f91"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/pd%20=%20pc%20e12035e032bc41a19af03d0bf7b61f91.html">pd = pc</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">0</td><td class="cell-uQmq">0</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q"></td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY">&amp;c</td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr><tr id="0218ff7e-6917-481e-b756-a21447a539b8"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/ppd%20=%204%200%200218ff7e6917481eb756a21447a539b8.html">**ppd = 4.0</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">0</td><td class="cell-uQmq">4</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q"></td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr><tr id="c2235ecf-2ca7-434f-9583-4ee65f6d4069"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/ppc%20=%201%200%20c2235ecf2ca7434f95834ee65f6d4069.html">**ppc = 1.0</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">0</td><td class="cell-uQmq">1</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q"></td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr><tr id="49de7d1e-c39f-4695-a871-8c16db0b91ed"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/ppf%20=%20%E2%80%98X%E2%80%9D%2049de7d1ec39f4695a8718c16db0b91ed.html">**ppf = ‘X”</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">0</td><td class="cell-uQmq">0</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q">X</td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr><tr id="e3552e91-7f4c-4361-8774-408d23bda7cc"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/pf%20=%20e%20e3552e917f4c43618774408d23bda7cc.html">pf = e</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">0</td><td class="cell-uQmq">0</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{"></td><td class="cell-&gt;T^q"></td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces">&amp;e[0]</td><td class="cell-BJ?E"></td></tr><tr id="669639d3-8e18-4c9c-8e95-8d766bf5d71d"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20a001ca945ec94af3be20ad712973433c/(%20ppf)%5B3%5D%20=%200%20669639d38e184c9c8e958d766bf5d71d.html">(*ppf)[3] = 0</a></td><td class="cell-t?{`">0</td><td class="cell-LQW{">0</td><td class="cell-uQmq">0</td><td class="cell-FTZh">0</td><td class="cell-=&lt;|{">bad\0y\0 = bad\0 = bad</td><td class="cell-&gt;T^q"></td><td class="cell-;lt|"></td><td class="cell-|yc="></td><td class="cell-Ejh@"></td><td class="cell-q[aY"></td><td class="cell-:P[Y"></td><td class="cell-Hs{["></td><td class="cell-{Ces"></td><td class="cell-BJ?E"></td></tr></tbody></table></div><p id="3e64ac28-9507-4e37-aedc-75b679342504" class=""><strong>Question 7</strong></p><figure id="b5c15d1a-bbfc-4413-9c84-5524f8419a44" class="image"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Screen_Shot_2021-12-14_at_13.45.09.png"><img style="width:1330px" src="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Screen_Shot_2021-12-14_at_13.45.09.png"/></a></figure><div id="d82ce81f-6eac-4c46-aab2-c1ad8e34606c" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Assembly Instruction</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>R1</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>R2</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>R3</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>0x30f4</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>0x3102</th></tr></thead><tbody><tr id="5c6b07dd-cf9f-4e7b-a918-cbeb43e485b2"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20d82ce81f6eac4c46aab2c1ad8e34606c/LEA%20R1,%20#-3%205c6b07ddcf9f4e7ba918cbeb43e485b2.html">LEA R1, #-3</a></td><td class="cell-Ckip">x30F7-x0003 = x30F4</td><td class="cell-F|r?"></td><td class="cell-h||o">0</td><td class="cell-`t&lt;f"></td><td class="cell-^]ij">0</td></tr><tr id="a400704f-7b53-40b3-86d7-e79e06e66ceb"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20d82ce81f6eac4c46aab2c1ad8e34606c/ADD%20R2,%20R1,%20#14%20a400704f7b5340b386d7e79e06e66ceb.html">ADD R2, R1, #14</a></td><td class="cell-Ckip"></td><td class="cell-F|r?">x30F4 + x000E = x3012</td><td class="cell-h||o">0</td><td class="cell-`t&lt;f"></td><td class="cell-^]ij">0</td></tr><tr id="f4ddfe0a-8d78-4aca-b3e9-85a5f92e5733"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20d82ce81f6eac4c46aab2c1ad8e34606c/ST%20R2,%20#-5%20f4ddfe0a8d784acab3e985a5f92e5733.html">ST R2, #-5</a></td><td class="cell-Ckip"></td><td class="cell-F|r?"></td><td class="cell-h||o">0</td><td class="cell-`t&lt;f">x3012</td><td class="cell-^]ij">0</td></tr><tr id="9def658a-a586-4a16-98fe-ce7e1dbaef7a"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20d82ce81f6eac4c46aab2c1ad8e34606c/AND%20R2,%20R2,%20#0%209def658aa5864a1698fece7e1dbaef7a.html">AND R2, R2, #0</a></td><td class="cell-Ckip"></td><td class="cell-F|r?">0</td><td class="cell-h||o">0</td><td class="cell-`t&lt;f"></td><td class="cell-^]ij">0</td></tr><tr id="02856764-86a3-4c66-8a76-b00e853505c7"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20d82ce81f6eac4c46aab2c1ad8e34606c/ADD%20R2,%20R2,%20#5%200285676486a34c668a76b00e853505c7.html">ADD R2, R2, #5</a></td><td class="cell-Ckip"></td><td class="cell-F|r?">5</td><td class="cell-h||o">0</td><td class="cell-`t&lt;f"></td><td class="cell-^]ij">0</td></tr><tr id="bdf4bd30-7c7e-42c2-8d0d-af73f67307ca"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20d82ce81f6eac4c46aab2c1ad8e34606c/STR%20R2,%20R1,%20#14%20bdf4bd307c7e42c28d0daf73f67307ca.html">STR R2, R1, #14</a></td><td class="cell-Ckip"></td><td class="cell-F|r?"></td><td class="cell-h||o">0</td><td class="cell-`t&lt;f"></td><td class="cell-^]ij">5</td></tr><tr id="dcf0842b-c3a0-4dc0-a35d-ecf20e6dbbfe"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20d82ce81f6eac4c46aab2c1ad8e34606c/LDI%20R3,%20#-9%20dcf0842bc3a04dc0a35decf20e6dbbfe.html">LDI R3, #-9</a></td><td class="cell-Ckip"></td><td class="cell-F|r?"></td><td class="cell-h||o">5</td><td class="cell-`t&lt;f"></td><td class="cell-^]ij">0</td></tr></tbody></table></div><p id="e48ea4a0-c1ff-4973-ac38-532e76fac8f9" class=""><strong>Question 8</strong></p><figure id="353f8e9a-1c49-4b63-baea-f1234b4b46c7" class="image"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Screen_Shot_2021-12-14_at_13.45.28.png"><img style="width:1262px" src="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Screen_Shot_2021-12-14_at_13.45.28.png"/></a></figure><ol type="1" id="019879a3-4943-425c-ada4-b75f949aee5e" class="numbered-list" start="1"><li>z = a + b</li></ol><p id="eeaff479-df69-4442-a0fc-e4e07fd55a5a" class="">LDR R1, R5, #4</p><p id="e15ee6b9-cd59-4906-9519-9bb53574c6b2" class="">LDR R2, R5. #5</p><p id="5765bbc5-a873-43e5-806c-74addcc59552" class="">ADD R3, R1, R2</p><p id="12306bbd-da8c-437f-9dc0-dd4e4cb1b701" class="">STR R3, R5, #-2</p><ol type="1" id="06a04c43-d202-46d8-808a-cc916add6da1" class="numbered-list" start="1"><li>y = c * 4 + z</li></ol><p id="7f3f739f-19ba-4776-88d4-418cae5e06b7" class="">LDR R1, R5, #6</p><p id="5db458aa-7f2e-41b0-9db7-215ba0ced265" class="">LDR R2,  R5, #-2</p><p id="37f52e63-8e88-4a3e-92cf-ff52c43e63cd" class="">ADD R1, R1, R1</p><p id="72a4792a-4fab-4e97-b924-651dca634eba" class="">ADD R1, R1, R1</p><p id="c6c35ab8-6859-4a34-9e0e-b608bdbbc09d" class="">ADD R3, R2, R1</p><p id="417ea40d-f015-469c-8a78-0bf234ff34f1" class="">STR R3, R5, #-1</p><ol type="1" id="33645544-06e6-4e03-a047-5bf05be88275" class="numbered-list" start="1"><li>x = DIV(a, y)</li></ol><p id="5a2777e2-b651-4daf-9b6e-dfb2137bd0e1" class="">; Load a and y</p><p id="0db686d7-2993-41b6-b18e-4e80875645a8" class="">LDR R1, R5, #4</p><p id="b0c3f0cf-232d-4c88-8c56-d9e9d5136cad" class="">LDR R2, R5, #-1</p><p id="1c325bd5-602c-4081-a5a0-5f56731acc62" class="">; Push a and y parameters for DIV</p><p id="c9f48c50-cf90-4f67-b90d-c20e9566521a" class="">ADD R6, R6, #-1</p><p id="a7e8aa3b-e919-4cb4-97d8-f05388f295a7" class="">STR R2, R6, #1</p><p id="117cc59f-041f-4fe0-a6af-057505f32fac" class="">ADD R6, R6, #-1</p><p id="f27ac4f7-008b-4f1c-a683-20a53be710d2" class="">STR R1, R6, #0</p><p id="a68928f9-7220-4520-b22f-6f696b55a2b2" class="">; Call DIV subroutine and store return value</p><p id="d5d139cf-6f92-4625-896b-788c7e1ac90b" class="">JSR DIV</p><p id="5870b29e-0107-4d9e-a169-fa0f7dcb03a8" class="">LDR R3, R6, #0</p><p id="d19d8f22-df26-4403-b85d-35e5c81d9eaf" class="">ADD R6, R6, #3</p><p id="f6252ce9-424e-4d3e-b6f7-1a532ebfe15f" class="">STR R3, R5, #0</p><ol type="1" id="b84a40b6-0f12-437a-a6eb-e3b75b572a46" class="numbered-list" start="1"><li>The memory location labeled RV stores the return value of the function. R6 should point to the RV after execution returns to the caller.</li></ol><ol type="1" id="ef54ae10-9e26-43e8-92c5-64116bb729aa" class="numbered-list" start="2"><li>R0, R4, and R5’s values must not be changed while the body of MATH executes. R5 is our frame pointer and should only be changed during stack buildup/teardown. R0 and R4 are general purpose registers not saved on the stack and hence should not be used.</li></ol><ol type="1" id="9fe20034-9bf3-4cea-8600-89a151fd9bbd" class="numbered-list" start="3"><li>When MATH executes its final RET instruction, RV, a, b, and c will be left on the stack.</li></ol><p id="291ad59e-3513-419f-b45b-d484e90d7023" class=""><strong>Question 9</strong></p><p id="d8486936-64fa-4307-b2e4-4a1d76947567" class="">Write the assembly code instructions to perform the following actions. You may</p><p id="a0c5bfd0-be3d-42a7-968e-86743355180f" class="">use R4 as a temporary register.</p><ol type="1" id="a6b195e6-7d51-4f00-9a75-10c09d400d34" class="numbered-list" start="1"><li>Convert the number in R3 to its twos-complement.</li></ol><pre id="2480a746-f380-4aea-8d4a-a2c4ca20216c" class="code"><code>NOT R3, R3
+
+ADD R3, R3, #1</code></pre><ol type="1" id="a60de13d-1266-4c75-b67f-c4594d94c09f" class="numbered-list" start="2"><li>Compute the inclusive-OR of R1 and R2 with result in R0.  Remember that a|b is the same as ~((~a)&amp;(~b)).</li></ol><pre id="53fa3d21-d308-4ea3-997c-e8c239821fbd" class="code"><code>NOT R1, R1
+
+NOT R2, R2
+
+AND R0, R1, R2
+
+NOT R0, R0</code></pre><ol type="1" id="f6122228-830d-48f1-b0f4-1417a256831f" class="numbered-list" start="3"><li>Place the value 1 in R0 if the number in R1 is even; 0 otherwise</li></ol><pre id="1c204f7a-d56a-489d-bb5e-c4c79939f787" class="code"><code>AND R0, R0, #0</code></pre><ol type="1" id="bc3e62bc-2932-4d22-9fb6-8eae3ee8f66d" class="numbered-list" start="4"><li>Multiply the number in R3 by 4.</li></ol><pre id="b728510f-796b-4b92-9853-3e43dc3fd203" class="code"><code>ADD R3, R3, R3
+
+ADD R3, R3, R3</code></pre><ol type="1" id="20b0be0b-5d0b-4d32-bce2-cb92908937b7" class="numbered-list" start="5"><li>Compute the NAND of R1 and R2 with result in R0</li></ol><pre id="1e14b525-ce3a-4084-96bb-525c877042ec" class="code"><code>AND R0, R1, R2
+
+NOT R0, R0</code></pre><ol type="1" id="b041b609-71ea-4a96-970e-1415347b59f0" class="numbered-list" start="6"><li>Compute the absolute value of R1 in R0</li></ol><pre id="0d946d8f-7538-4149-9012-7bcbb520d513" class="code"><code>ADD R0, R1, #0
+
+BRzp END
+
+NOT R0, R0
+
+ADD R0, R0, #1
+
+END</code></pre><ol type="1" id="2b05fb53-f0d8-4373-9d8e-45814cd390f0" class="numbered-list" start="7"><li>Subtract R1 from R0</li></ol><pre id="8f0e3902-e8e3-42ca-8248-88dce0014448" class="code"><code>NOT R1, R1
+
+ADD R1, R1, #1
+
+ADD R0, R0, R1</code></pre><p id="8472b01f-3366-41aa-aa73-ec4fd780f3b1" class=""><strong>Question 10</strong></p><p id="3b0d36f1-b5df-4e21-80d2-c29e25ac1a3b" class="">(a) For what purpose are multiple sign-extenders (SEXT) connected between IR</p><p id="61e5f4eb-789a-4fbe-8286-b94fb5a1fe71" class="">and ADDR2MUX in the datapath of the LC-3.  (See the reference document for the</p><p id="7ddc760d-2416-425f-9260-a8d79347db8f" class="">datapath diagram and instruction set table.)</p><ol type="1" id="eb5c2f97-7953-4ad0-a704-e1235840d5bb" class="numbered-list" start="1"><li>The multiple sign-extenders (SEXT) connected between IR and ADDR2MUX in the datapath of the LC-3 are to allow for an offset to be applied to the IR value. An offset helps when computing addresses for instructions before or after the current instruction address.</li></ol><p id="a96b772b-3ce1-472f-ab8b-3af7af84800a" class="">(b) Why is there a need for three of them to be connected to ADDR2MUX?</p><ol type="1" id="4b15e563-2e93-47f7-b48e-3db1c8232a4a" class="numbered-list" start="1"><li>Three sign-extenders are connected to ADDR2MUX to allow for a 6 bit offset (offset6), 9 bit offset (PCoffset9), or 11 bit offset (PCoffset11) to the value in ADDR1MUX.</li></ol><p id="8fd74971-ddf5-4989-93db-785041d46a43" class=""><strong>Question 11</strong></p><div id="e69f765a-08e5-4276-b288-d00efb6c6856" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Title</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>A</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>B</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>C</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>D</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>S</th></tr></thead><tbody><tr id="e04acbc4-ab96-4ded-982d-9779ad4fe79d"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20e04acbc4ab964ded982d9779ad4fe79d.html">Untitled</a></td><td class="cell-s@Na">0</td><td class="cell-T^En">0</td><td class="cell-RfLp">0</td><td class="cell-pgHz">0</td><td class="cell-zccL">1</td></tr><tr id="77292e83-5f05-41db-a685-acc0972bb752"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%2077292e835f0541dba685acc0972bb752.html">Untitled</a></td><td class="cell-s@Na">0</td><td class="cell-T^En">0</td><td class="cell-RfLp">0</td><td class="cell-pgHz">1</td><td class="cell-zccL">0</td></tr><tr id="f995b3ca-f457-4213-a947-df0fbaa2f07e"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20f995b3caf4574213a947df0fbaa2f07e.html">Untitled</a></td><td class="cell-s@Na">0</td><td class="cell-T^En">0</td><td class="cell-RfLp">1</td><td class="cell-pgHz">0</td><td class="cell-zccL">1</td></tr><tr id="fadf7f74-f91a-4e01-9e19-bc5427b5307e"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20fadf7f74f91a4e019e19bc5427b5307e.html">Untitled</a></td><td class="cell-s@Na">0</td><td class="cell-T^En">0</td><td class="cell-RfLp">1</td><td class="cell-pgHz">1</td><td class="cell-zccL">0</td></tr><tr id="7e4fe275-1c56-4062-82a9-09d0100eb75e"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%207e4fe2751c56406282a909d0100eb75e.html">Untitled</a></td><td class="cell-s@Na">0</td><td class="cell-T^En">1</td><td class="cell-RfLp">0</td><td class="cell-pgHz">0</td><td class="cell-zccL">0</td></tr><tr id="2eed5828-5481-4c76-a83e-db7ed7d75161"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%202eed582854814c76a83edb7ed7d75161.html">Untitled</a></td><td class="cell-s@Na">0</td><td class="cell-T^En">1</td><td class="cell-RfLp">0</td><td class="cell-pgHz">1</td><td class="cell-zccL">1</td></tr><tr id="a66e1433-fd53-4ab3-bad3-ad747ea9debf"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20a66e1433fd534ab3bad3ad747ea9debf.html">Untitled</a></td><td class="cell-s@Na">0</td><td class="cell-T^En">1</td><td class="cell-RfLp">1</td><td class="cell-pgHz">0</td><td class="cell-zccL">1</td></tr><tr id="c9c8db71-a3ac-4b82-a769-4c95f4489c1d"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20c9c8db71a3ac4b82a7694c95f4489c1d.html">Untitled</a></td><td class="cell-s@Na">0</td><td class="cell-T^En">1</td><td class="cell-RfLp">1</td><td class="cell-pgHz">1</td><td class="cell-zccL">1</td></tr><tr id="3d00063a-b085-4d13-9d01-3aa19f5e00b5"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%203d00063ab0854d139d013aa19f5e00b5.html">Untitled</a></td><td class="cell-s@Na">1</td><td class="cell-T^En">0</td><td class="cell-RfLp">0</td><td class="cell-pgHz">0</td><td class="cell-zccL">0</td></tr><tr id="b9b795d4-8459-44e0-bd8e-d75052bbf5e6"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20b9b795d4845944e0bd8ed75052bbf5e6.html">Untitled</a></td><td class="cell-s@Na">1</td><td class="cell-T^En">0</td><td class="cell-RfLp">0</td><td class="cell-pgHz">1</td><td class="cell-zccL">1</td></tr><tr id="3fc292a1-3491-4bee-b84c-25146e05ac80"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%203fc292a134914beeb84c25146e05ac80.html">Untitled</a></td><td class="cell-s@Na">1</td><td class="cell-T^En">0</td><td class="cell-RfLp">1</td><td class="cell-pgHz">0</td><td class="cell-zccL">1</td></tr><tr id="d0fc8f3f-dbcb-4a1a-8862-27e2c5e53387"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20d0fc8f3fdbcb4a1a886227e2c5e53387.html">Untitled</a></td><td class="cell-s@Na">1</td><td class="cell-T^En">0</td><td class="cell-RfLp">1</td><td class="cell-pgHz">1</td><td class="cell-zccL">0</td></tr><tr id="b2482c02-ba0e-48cb-a5ba-92158fdb9790"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20b2482c02ba0e48cba5ba92158fdb9790.html">Untitled</a></td><td class="cell-s@Na">1</td><td class="cell-T^En">1</td><td class="cell-RfLp">0</td><td class="cell-pgHz">0</td><td class="cell-zccL">0</td></tr><tr id="ce0946ff-6604-44a1-bdd8-0545a0fc9615"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%20ce0946ff660444a1bdd80545a0fc9615.html">Untitled</a></td><td class="cell-s@Na">1</td><td class="cell-T^En">1</td><td class="cell-RfLp">0</td><td class="cell-pgHz">1</td><td class="cell-zccL">0</td></tr><tr id="10fec5ad-899b-4c45-8886-23eb169c048c"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%2010fec5ad899b4c45888623eb169c048c.html">Untitled</a></td><td class="cell-s@Na">1</td><td class="cell-T^En">1</td><td class="cell-RfLp">1</td><td class="cell-pgHz">0</td><td class="cell-zccL">0</td></tr><tr id="45f45ec3-2648-4717-8168-d2e2cf8c6f76"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%20e69f765a08e54276b288d00efb6c6856/Untitled%2045f45ec3264847178168d2e2cf8c6f76.html">Untitled</a></td><td class="cell-s@Na">1</td><td class="cell-T^En">1</td><td class="cell-RfLp">1</td><td class="cell-pgHz">1</td><td class="cell-zccL">1</td></tr></tbody></table></div><p id="6eb655c8-f3ae-49c6-83b3-3769bd56818f" class=""><strong>Question 12</strong></p><pre id="38fa47af-ff53-46e0-9edd-23ba82fba667" class="code"><code>char Title[200]; 
+extern int errorstatus; 
+static double stats[100][100]; 
+ 
+double calculate(int a, int b) { 
+ double result; 
+ static int count = 0; 
+ result = (double)(a + count) / b; 
+ if (result &gt; 0) 
+  count++; 
+ return result; 
+}</code></pre><div id="4206eca0-8b00-4b10-963e-f54246c7df3e" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Property</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Statically addressed</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Stack</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>Heap</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Visible to all</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>Visible within C file</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Visible within function</th></tr></thead><tbody><tr id="194562bf-09c7-4cbe-8ea7-a1db81b78023"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%204206eca08b004b10963ef54246c7df3e/Title%20194562bf09c74cbe8ea7a1db81b78023.html">Title</a></td><td class="cell-}gE|"><span class="selected-value select-value-color-green">X</span></td><td class="cell-Cwar"></td><td class="cell-IGkU"></td><td class="cell-P@yH"><span class="selected-value select-value-color-orange">X</span></td><td class="cell-eS&gt;K"></td><td class="cell-F?Dk"></td></tr><tr id="48f39723-91c6-4b32-9857-148d5044f04e"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%204206eca08b004b10963ef54246c7df3e/errorstatus%2048f3972391c64b329857148d5044f04e.html">errorstatus</a></td><td class="cell-}gE|"><span class="selected-value select-value-color-green">X</span></td><td class="cell-Cwar"></td><td class="cell-IGkU"></td><td class="cell-P@yH"><span class="selected-value select-value-color-orange">X</span></td><td class="cell-eS&gt;K"></td><td class="cell-F?Dk"></td></tr><tr id="e1afeb32-ba39-4bbc-9429-bfe29488eb33"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%204206eca08b004b10963ef54246c7df3e/stats%20e1afeb32ba394bbc9429bfe29488eb33.html">stats</a></td><td class="cell-}gE|"><span class="selected-value select-value-color-green">X</span></td><td class="cell-Cwar"></td><td class="cell-IGkU"></td><td class="cell-P@yH"></td><td class="cell-eS&gt;K">X</td><td class="cell-F?Dk"></td></tr><tr id="55c86517-c683-457b-9d48-d9fa9f773de0"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%204206eca08b004b10963ef54246c7df3e/a%2055c86517c683457b9d48d9fa9f773de0.html">a</a></td><td class="cell-}gE|"></td><td class="cell-Cwar"><span class="selected-value select-value-color-yellow">X</span></td><td class="cell-IGkU"></td><td class="cell-P@yH"></td><td class="cell-eS&gt;K"></td><td class="cell-F?Dk"><span class="selected-value select-value-color-red">X</span></td></tr><tr id="a71a0d90-97a6-49bf-8b31-544bf5273bae"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%204206eca08b004b10963ef54246c7df3e/b%20a71a0d9097a649bf8b31544bf5273bae.html">b</a></td><td class="cell-}gE|"></td><td class="cell-Cwar"><span class="selected-value select-value-color-yellow">X</span></td><td class="cell-IGkU"></td><td class="cell-P@yH"></td><td class="cell-eS&gt;K"></td><td class="cell-F?Dk"><span class="selected-value select-value-color-red">X</span></td></tr><tr id="016062b3-6e9f-4332-bcd9-31461e2253fb"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%204206eca08b004b10963ef54246c7df3e/result%20016062b36e9f4332bcd931461e2253fb.html">result</a></td><td class="cell-}gE|"></td><td class="cell-Cwar"><span class="selected-value select-value-color-yellow">X</span></td><td class="cell-IGkU"></td><td class="cell-P@yH"></td><td class="cell-eS&gt;K"></td><td class="cell-F?Dk"><span class="selected-value select-value-color-red">X</span></td></tr><tr id="f1c1c807-d683-4351-8e4f-2ff9ff0ef9db"><td class="cell-title"><a href="Practice%20Final%20f1cc54b31d7f47fe8d0ba278fc379dfd/Untitled%20Database%204206eca08b004b10963ef54246c7df3e/count%20f1c1c807d68343518e4f2ff9ff0ef9db.html">count</a></td><td class="cell-}gE|"><span class="selected-value select-value-color-green">X</span></td><td class="cell-Cwar"></td><td class="cell-IGkU"></td><td class="cell-P@yH"></td><td class="cell-eS&gt;K"></td><td class="cell-F?Dk"><span class="selected-value select-value-color-red">X</span></td></tr></tbody></table></div><p id="8954133b-57f9-4ff9-bd0b-0ba4cc3859ba" class=""><strong>Question 13</strong></p><p id="08f54bbd-dc8e-454c-b236-101752006aa6" class="">_____ (a) The BR and JMP LC-3 instructions use the same addressing mode</p><p id="c9127605-cf2b-46f2-9a31-09b23d84664d" class="">_____ (b) The instruction TRAP x27 loads hexadecimal 27 into the PC</p><p id="70beb98a-a67b-4e3c-98a2-b854d3443724" class="">_____ (c) Representing the number -81 in twos-complement requires at least 8 bits</p><p id="15b942fc-4aca-4d6d-b2fb-8405eaf0ac4a" class="">_____ (d) An 8-bit twos-complement integer can represent numbers in the range -</p><p id="7ebf7cee-1ba3-4870-bf35-8033919dadf0" class="">127 to +127</p><p id="fe24e7e8-ac1b-4c95-84ab-b474439a7a31" class="">_____ (e) A twos-complement integer can be multiplied by two by shifting it one bit</p><p id="f13b80a2-3b82-4cbb-be5c-491a6ffe58bd" class="">to the left, filling the low-order bit with zero</p><p id="5f032608-0eb1-42c9-a203-191321e0caf3" class="">_____ (f)  Any Boolean function can be calculated by a proper combination of NOR</p><p id="9df6eb9e-2ea9-4e4f-83dd-565080ae7c6b" class="">gates</p><p id="16bc882b-47ed-4a57-a0b6-0c15bcb04caf" class="">_____ (g) In C, computing (14 &amp; 19) gives the result of 2</p><p id="b978326a-51f1-4a7c-a51c-f1c4dde6e658" class="">_____ (h) The hexadecimal number 3F07 can be represented in octal as 37407</p><p id="4296e635-e393-4a7b-9d76-92fa355ea4c6" class="">_____ (i)  Sign-extending the 8-bit twos-complement integer 0xA7 to 32 bits yields</p><p id="86cbbc36-ccc2-4b28-90ad-e93d92dbb646" class="">0xFFFFFFA6</p><p id="82edf0c8-5768-4b85-b44d-07a2615a48e5" class="">_____ (j) The twos-complement of 0x0000 is 0xFFFF</p><p id="fafc9daa-797b-46a9-8467-c4dd430bb325" class="">
+</p><ol type="1" id="2d967f74-8ef8-4ad3-859e-4ee8e59b732c" class="numbered-list" start="1"><li>False; BR uses PCoffset9 while JMP uses the base register with no offset</li></ol><ol type="1" id="f2ebca15-5e9a-4e71-9b07-230da01d9ecd" class="numbered-list" start="2"><li>False; TRAP codes such as TRAP x27 are loaded into the trap vector table</li></ol><ol type="1" id="fabc172f-8e8a-4d5c-acb9-c2c50e8a09d6" class="numbered-list" start="3"><li>True; the 2’s complement range for 8 bits is -128 to 127 and -81 is within this range</li></ol><ol type="1" id="96697b1f-659c-4ef7-b67c-d36bda080358" class="numbered-list" start="4"><li>False; the range for an 8 bit 2’s complement integer is -128 to 127</li></ol><ol type="1" id="84b0279f-7888-4747-8cde-382df57e705c" class="numbered-list" start="5"><li>True</li></ol><ol type="1" id="e0bdf8a8-53c8-4588-b9a2-e0af162bc5b2" class="numbered-list" start="6"><li>True; NOR gates can be used to construct AND, OR, and NOT gates. With those three gates you can construct any boolean function</li></ol><ol type="1" id="c2f65638-42d1-467d-ad56-b23c14f338c4" class="numbered-list" start="7"><li>True; 14 = 01110 and 19 = 10101. 01110 &amp; 10011 = 00010 = 2</li></ol><ol type="1" id="ad81ca6c-2843-42ed-8e69-f171cb5a9a6f" class="numbered-list" start="8"><li>True; hex 3F07 and octal 37407 are both equivalent to 16135 in decimal</li></ol><ol type="1" id="63cc0b1b-f194-4a21-aae7-b968dc093279" class="numbered-list" start="9"><li>False; sign extending 0xA7 would fill the left 24 bits with 1s which translates to 6 leading Fs in hex. A sign extension would not impact the rightmost 8 bits and hence changing A7 to A6 is what makes this false.</li></ol><ol type="1" id="5ca00bb7-73c8-4d80-8890-d67598b4e546" class="numbered-list" start="10"><li>False; 0x0000 is equivalent to just 0 and two’s complement does not have a negative representation of 0, hence this question is conceptually invalid</li></ol><ul id="75573701-f236-4800-932d-8860b5993684" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.onlinegdb.com/online_c_compiler">Online C Compiler - online editor</a></li></ul><ul id="19343728-0d15-4b22-957d-c00beca0b670" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.rapidtables.com/convert/number/hex-to-binary.html">https://www.rapidtables.com/convert/number/hex-to-binary.html</a></li></ul><ul id="e7c26d46-c3ce-4ac3-b8df-14e81a1d3919" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.exploringbinary.com/twos-complement-converter/">About the Decimal/Two&#x27;s Complement Converter</a></li></ul><ul id="f8a95006-4581-47b5-82c1-7316c6814861" class="bulleted-list"><li style="list-style-type:disc"><a href="https://cdecl.org/">cdecl: C gibberish ↔ English</a></li></ul><ul id="92a4846c-bb11-4c68-8a6b-ca5f71b164c8" class="bulleted-list"><li style="list-style-type:disc"><a href="https://ncalculators.com/digital-computation/hex-addition-calculator.htm">Hex Numbers Addition Calculator - Digital Computation</a></li></ul><ul id="2bc0835f-5c0c-4943-8391-571f3203e68b" class="bulleted-list"><li style="list-style-type:disc"><a href="http://www.32x8.com/index.html">Online Karnaugh map solver with circuit for up to 6 variables</a></li></ul><p id="a1aefcf7-0412-48d6-a681-e64907a0cc28" class="">Verified</p><ul id="355507d6-039b-49c2-aaf3-7c4a9f399f20" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.calculator.net/hex-calculator.html?b2dnumber1=260A&amp;calctype=b2d&amp;x=97&amp;y=10#hex2decimal">https://www.calculator.net/hex-calculator.html?b2dnumber1=260A&amp;calctype=b2d&amp;x=97&amp;y=10#hex2decimal</a></li></ul><ul id="d6d63558-1c90-4dd8-a28f-5cb4e89e9e76" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.binaryhexconverter.com/hex-to-binary-converter">Hexadecimal to Binary Converter</a></li></ul></div></article></body></html>

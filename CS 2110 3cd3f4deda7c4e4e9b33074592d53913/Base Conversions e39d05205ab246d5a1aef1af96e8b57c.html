@@ -1,0 +1,729 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Base Conversions</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e39d0520-5ab2-46d5-a1ae-f1af96e8b57c" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/woodcuts_4.jpg" style="object-position:center 60%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🔢</span></div><h1 class="page-title">Base Conversions</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-blue">Quiz 1 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="81f54c44-266c-4a65-9aa5-e09aab94cbd3" class="block-color-teal_background">Notes</h1><h2 id="5175f739-bcda-4c36-80d9-d49380ca4c02" class="">Conversions</h2><h3 id="a7c17697-b0af-4457-a1c9-f22e2b17d6ac" class="block-color-blue_background">Binary to Decimal</h3><p id="d41ca093-6b3a-4e52-b807-03b4d941175d" class=""><a href="https://www.w3resource.com/convert/number/binary-to-decimal.php"><strong>Online Converter</strong></a></p><p id="962cb51f-d63c-48bd-b3e1-f6c812e23ce5" class="">Visual Representation:</p><table id="7531accb-bcb5-49c0-b77e-e21fa5ceee9f" class="simple-table"><tbody><tr id="414680fd-98ca-4de2-a433-bf1946653798"><td id="pLb{" class="">Decimal</td><td id="ahEK" class="">Binary</td><td id="KQ&lt;L" class="">Arithmetic</td></tr><tr id="c07c642c-2a45-4f91-93c8-4eae350cfdf3"><td id="pLb{" class="">0</td><td id="ahEK" class="">0000</td><td id="KQ&lt;L" class="">0+0+0+0</td></tr><tr id="bc1d8557-7d38-4faa-b291-3bf8da3d3561"><td id="pLb{" class="">1</td><td id="ahEK" class="">0001</td><td id="KQ&lt;L" class="">0+0+0+1</td></tr><tr id="12566673-bb50-42dd-978a-2f0dca91c115"><td id="pLb{" class="">2</td><td id="ahEK" class="">0010</td><td id="KQ&lt;L" class="">0+0+2+0</td></tr><tr id="3456ab19-1efa-4d91-b3c2-a3d425d96e45"><td id="pLb{" class="">3</td><td id="ahEK" class="">0011</td><td id="KQ&lt;L" class="">0+0+2+1</td></tr><tr id="cc267e19-6fa8-47ba-82a7-1cce85a80874"><td id="pLb{" class="">4</td><td id="ahEK" class="">0100</td><td id="KQ&lt;L" class="">0+4+0+0</td></tr><tr id="b21815d8-b25e-47a8-8f7a-2976bfff0f07"><td id="pLb{" class="">5</td><td id="ahEK" class="">0101</td><td id="KQ&lt;L" class="">0+4+0+1</td></tr><tr id="ab6a827f-3f7a-4157-81de-db26af2508e0"><td id="pLb{" class="">6</td><td id="ahEK" class="">0110</td><td id="KQ&lt;L" class="">0+4+2+0</td></tr><tr id="41bc8676-fdda-4f64-a6dc-162b2d8545c7"><td id="pLb{" class="">7</td><td id="ahEK" class="">0111</td><td id="KQ&lt;L" class="">0+4+2+1</td></tr><tr id="5c5276ba-084c-49a2-8333-31878064b714"><td id="pLb{" class="">8</td><td id="ahEK" class="">1000</td><td id="KQ&lt;L" class="">8+0+0+0</td></tr><tr id="a6b00190-4e24-4976-8fb5-4eb2da254fd7"><td id="pLb{" class="">9</td><td id="ahEK" class="">1001</td><td id="KQ&lt;L" class="">8+0+0+1</td></tr><tr id="94b966e1-5359-459f-9856-3343ac20e59c"><td id="pLb{" class="">10</td><td id="ahEK" class="">1010</td><td id="KQ&lt;L" class="">8+0+2+0</td></tr><tr id="ea3be6a4-8818-45f8-bdb2-c67c2c8a9f38"><td id="pLb{" class="">11</td><td id="ahEK" class="">1011</td><td id="KQ&lt;L" class="">8+0+2+1</td></tr><tr id="fd418b1f-142d-4f7c-893e-f6893b610312"><td id="pLb{" class="">12</td><td id="ahEK" class="">1100</td><td id="KQ&lt;L" class="">8+4+0+0</td></tr><tr id="5f95bcbe-0663-4111-8349-f2615180aeb5"><td id="pLb{" class="">13</td><td id="ahEK" class="">1101</td><td id="KQ&lt;L" class="">8+4+0+1</td></tr><tr id="e7c59a89-6d25-44d8-9d7c-60ebdaaa2aeb"><td id="pLb{" class="">14</td><td id="ahEK" class="">1110</td><td id="KQ&lt;L" class="">8+4+2+0</td></tr><tr id="cd6a275a-42f4-4c67-8273-c81f3c1ac049"><td id="pLb{" class="">15</td><td id="ahEK" class="">1111</td><td id="KQ&lt;L" class="">8+4+2+1</td></tr></tbody></table><p id="9f6f60aa-873a-4dc6-a452-c30053faf80a" class=""><strong>0b</strong>010101110 is sometimes used for binary, but is not standard in Java and C</p><pre id="63bf990b-7d63-4b5e-81bd-63f636f4b62f" class="code"><code>// Does not include negative numbers
+public static int binaryStringToInt(String binary) {
+    int output = 0;
+    for (int i = 0; i &lt; binary.length(); i++) {
+        if (binary.charAt(i) == &#x27;1&#x27;) {
+            output += 1 &lt;&lt; binary.length() - i - 1;
+        }
+    }
+    return output;
+}</code></pre><h3 id="ccf054d0-6474-4cb8-969f-e86ef6ce9a58" class="block-color-blue_background">Binary to Octal</h3><p id="ab72da65-6d60-46a9-9dbe-9d302cf4f1e3" class=""><a href="https://www.w3resource.com/convert/number/binary-to-octal.php">Online Converter</a></p><p id="1d355b51-31e7-4ed1-a00f-5b98c1c6c90d" class="">Diagram:</p><table id="652042d5-5fb4-46e3-8dbd-83e952f7c2da" class="simple-table"><tbody><tr id="9492bffb-6376-473d-b7ea-e6f6d84308ab"><td id="o{XM" class="">Base 2</td><td id="AypL" class="">000</td><td id="QEKs" class="">111</td><td id="H{&gt;G" class="">010</td><td id="Iv|B" class="">100</td><td id="n{hk" class="">101</td></tr><tr id="d91c2741-f0b8-4c1a-b36d-da998bcb4e11"><td id="o{XM" class="">Base 8</td><td id="AypL" class="">0</td><td id="QEKs" class="">7</td><td id="H{&gt;G" class="">2</td><td id="Iv|B" class="">4</td><td id="n{hk" class="">5</td></tr></tbody></table><pre id="bfc52a6f-42ee-461c-9882-a2cd3aee0880" class="code"><code>public static String binaryStringToOctalString(String binary) {
+    int decimal = 0;
+    for (int i = 0; i &lt; binary.length(); i++) {
+        if (binary.charAt(i) == &#x27;1&#x27;) {
+            decimal += 1 &lt;&lt; binary.length() - i - 1;
+        }
+    }
+
+    String output = &quot;&quot;;
+    int counter = 21;
+    for (int i = 7; i &gt;= 0; --i) {
+        output += (decimal &gt;&gt; counter) &amp; 0b111;
+        counter -= 3;
+    }
+    return output;</code></pre><h3 id="a7521fbd-324f-4768-b879-433d3fcfe2c9" class="block-color-blue_background">Binary to Hexadecimal</h3><p id="9beafecd-861f-47c5-8e8b-7b163cc591ca" class=""><a href="https://www.w3resource.com/convert/number/binary-to-hex.php">Online Converter</a></p><p id="4f84a7ba-a4d0-47ac-8647-7122dfa1d686" class="">Diagram:</p><table id="70ce68e8-a631-49d2-9148-3c503a392128" class="simple-table"><tbody><tr id="04c4a0ee-81bf-490a-bfc1-e612c95f3f45"><td id="o{XM" class="">Base 2</td><td id="AypL" class="">1000</td><td id="QEKs" class="">1111</td><td id="H{&gt;G" class="">0011</td><td id="Iv|B" class="">1100</td><td id="n{hk" class="">0001</td></tr><tr id="a93fa4f4-92e4-4f84-8696-afe06e34c43d"><td id="o{XM" class="">Base 8</td><td id="AypL" class="">8</td><td id="QEKs" class="">F</td><td id="H{&gt;G" class="">3</td><td id="Iv|B" class="">C</td><td id="n{hk" class="">1</td></tr></tbody></table><hr id="1c7448b3-8060-4f28-b8d5-9c7db260ce9a"/><h3 id="ddf53a70-6217-4517-a3b4-27ff29b616b6" class="block-color-purple_background">Decimal to Binary</h3><p id="f016cc41-482f-4080-a6cb-8ce06475d3cf" class=""><a href="https://www.w3resource.com/convert/number/decimal-to-binary.php">Online Converter</a></p><h3 id="30389eea-6a4d-4335-9a65-8e4a20aef89c" class="block-color-purple_background">Decimal to Octal</h3><p id="be35d23f-7393-4c1f-abf9-13281a1c3121" class=""><a href="https://www.w3resource.com/convert/number/decimal-to-octal.php">Online Converter</a></p><h3 id="e2525d8c-90f4-4a0a-a50e-a4eb149a5400" class="block-color-purple_background">Decimal to Hexadecimal</h3><p id="00ba24bf-2d36-4cd6-b1e9-988cfb61474a" class=""><a href="https://www.w3resource.com/convert/number/decimal-to-hex.php">Online Converter</a></p><pre id="1b5a43e9-4a2f-4d32-a903-46efbb49ef69" class="code"><code>public static String intToHexString(int hex) {
+    String output = &quot;&quot;;
+    int counter = 16;
+    while (counter &lt;= hex) {
+        counter = counter &lt;&lt; 4;
+    }
+    counter = counter &gt;&gt; 4;
+    int counter2 = 0;
+    while (counter != 0) {
+        if (hex &lt; counter) {
+            if (counter2 &gt; 9) {
+                output += (char)(counter2 + 65 - 10);
+            } else {
+                output += counter2;
+            }
+            counter = counter &gt;&gt; 4;
+            counter2 = 0;
+        }
+        hex -= counter;
+        counter2++;
+    }
+    return output;
+}</code></pre><hr id="ca5d0d2b-ba80-4b5e-a380-9aa02b59b245"/><h3 id="8c3a9a92-4322-4931-aab5-a00bbed88365" class="block-color-pink_background">Octal to Binary</h3><p id="90ada34c-3b4c-42aa-809f-bd1bd37319c5" class=""><a href="https://www.w3resource.com/convert/number/octal-to-binary.php">Online Converter</a></p><table id="d37c9106-1d22-45f6-b018-1d29a61cd8ed" class="simple-table"><tbody><tr id="a42454e0-9669-4092-86e4-45da78d755d5"><td id="es_~" class="">Base 8</td><td id="ljWK" class="">6</td><td id="]oAg" class="">4</td><td id="QWa^" class="">3</td><td id="rgAr" class="">0</td><td id="`C?k" class="">2</td></tr><tr id="12954c90-3afd-4e9f-8351-a60aaf7c8112"><td id="es_~" class="">Base 2</td><td id="ljWK" class="">110</td><td id="]oAg" class="">100</td><td id="QWa^" class="">011</td><td id="rgAr" class="">000</td><td id="`C?k" class="">010</td></tr></tbody></table><p id="40c1b023-a9c9-42c8-b6ad-687b2e18039f" class=""><strong>0</strong>456 is octal</p><h3 id="9fd75c1d-d109-45e2-a767-d32e6cd8866d" class="block-color-pink_background">Octal to Decimal</h3><p id="855b1f2c-2479-47aa-a8de-9f55248ca5f7" class=""><a href="https://www.w3resource.com/convert/number/octal-to-decimal.php">Online Converter</a></p><pre id="c072bcf3-4796-4bc5-b368-93c1bf80deb3" class="code"><code>public static int octalStringToInt(String octal) {
+     int output = 0, counter = 0;
+     for (int i = octal.length() - 1; i &gt; -1; i--) {
+         output += (octal.charAt(i) - 48) &lt;&lt; counter;
+         counter += 3;
+     }
+     return output;
+ }</code></pre><h3 id="e1f5bec6-65d9-40dd-8696-cecfb491390f" class="block-color-pink_background">Octal to Hexadecimal</h3><p id="9cc3e177-90a1-44f2-b584-0e83de5953a0" class=""><a href="https://www.w3resource.com/convert/number/octal-to-hex.php">Online Converter</a></p><hr id="b23e52e7-7baa-4907-95c4-03d9891e44d8"/><h3 id="e64df570-aba7-4c09-91a7-3f939b86be7a" class="block-color-red_background">Hexadecimal to Binary</h3><p id="d3b15a8d-ef92-4e7a-b431-36cde7ca7172" class=""><a href="https://www.w3resource.com/convert/number/hex-to-binary.php">Online Converter</a></p><p id="2f72ad28-e4ce-4e6d-bb69-6997dbf45e21" class="">Diagram Example:</p><table id="26f869b6-4fc9-413a-9e17-d50db8b54b9f" class="simple-table"><tbody><tr id="a56f9762-edb9-4964-b6e9-91e534ab61f1"><td id=":&gt;`Q" class="">Base 16</td><td id="pfya" class="">F</td><td id="k&gt;D:" class="">0</td><td id="pvyM" class="">0</td><td id="Fl[e" class="">D</td><td id="Z|M@" class="">5</td></tr><tr id="0f991f17-b25c-451f-8d61-af056d3754c0"><td id=":&gt;`Q" class="">Base 2</td><td id="pfya" class="">1111</td><td id="k&gt;D:" class="">0000</td><td id="pvyM" class="">0000</td><td id="Fl[e" class="">1101</td><td id="Z|M@" class="">0101</td></tr></tbody></table><p id="a9f8faed-8a8d-435d-95c4-5941f85f47cd" class=""><strong>0x</strong>456 is hexadecimal</p><h3 id="6f38449d-89f5-41ff-95af-c337b03af1a7" class="block-color-red_background">Hexadecimal to Decimal</h3><p id="c725c6ec-7e16-4588-80a0-47058c385fc2" class=""><a href="https://www.w3resource.com/convert/number/hex-to-decimal.php">Online Converter</a></p><h3 id="5fe58f22-cc16-4ea9-b82e-af47a8f611c8" class="block-color-red_background">Hexadecimal to Octal</h3><p id="f4aecc02-1508-4481-81b6-fa1641c43e16" class=""><a href="https://www.w3resource.com/convert/number/hex-to-octal.php">Online Converter</a></p><hr id="cfc52d2e-625f-4d38-a86c-4ad6b6a91b06"/><h3 id="4cfa0d11-5e61-44ce-9fba-ce6eb8a38738" class="">Bonus Info</h3><p id="1556f488-2f03-4174-85ec-afecaab911c0" class="">Converting base 10 string to int:</p><pre id="23308c2c-6079-4577-a6d9-4b2758dcb5c2" class="code"><code>public static int decimalStringToInt(String decimal) {
+    int output = 0, counter = 1;
+    for (int i = decimal.length() - 1; i &gt; -1; i--) {
+        output += (decimal.charAt(i) - 48) * counter;
+        counter *= 10;
+    }
+    return output;
+}</code></pre><h2 id="fcff491f-e07c-415f-8f2d-2e240d5efa56" class="">Powers of 2</h2><table id="8ef7b290-661c-4b5c-87a8-04982e836aa8" class="simple-table"><tbody><tr id="2d7454b6-e50a-4f2b-bb40-40bb9c3acc9a"><td id="hNMK" class="">2^n</td><td id="&lt;x={" class="">literal value</td></tr><tr id="f07f06e2-61f7-40ac-94fb-837fa66db967"><td id="hNMK" class="">2^0</td><td id="&lt;x={" class="">1</td></tr><tr id="1ccb56ae-edb4-4a28-b99d-debb8ab02af0"><td id="hNMK" class="">2^1</td><td id="&lt;x={" class="">2</td></tr><tr id="9b16baea-e27a-4ef5-9eea-80bba6dea5ef"><td id="hNMK" class="">2^2</td><td id="&lt;x={" class="">4</td></tr><tr id="2580232e-2e85-4a31-a5d5-9ba105eb9490"><td id="hNMK" class="">2^3</td><td id="&lt;x={" class="">8</td></tr><tr id="91fb68e8-cd67-4bbb-aace-352af2745933"><td id="hNMK" class="">2^4</td><td id="&lt;x={" class="">16</td></tr><tr id="532ee244-f5d8-4d0f-93ed-fe2736b7d71a"><td id="hNMK" class="">2^5</td><td id="&lt;x={" class="">32</td></tr><tr id="c767d7f6-7a8d-4945-8a8c-a2d7dd5abcbe"><td id="hNMK" class="">2^6</td><td id="&lt;x={" class="">64</td></tr><tr id="41bbc6e3-b3b0-4476-a9ba-b582247dceac"><td id="hNMK" class="">2^7</td><td id="&lt;x={" class="">128</td></tr><tr id="49d58757-bd7f-47ef-8f03-dfb0dd2dd68f"><td id="hNMK" class="">2^8</td><td id="&lt;x={" class="">256</td></tr><tr id="44297490-0295-454d-961f-ef4bc206aa42"><td id="hNMK" class="">2^9</td><td id="&lt;x={" class="">512</td></tr><tr id="163bd11e-cc91-4727-8344-8beaf373c5bf"><td id="hNMK" class="">2^10</td><td id="&lt;x={" class="">1024</td></tr><tr id="f3018447-2975-4e97-9971-4ab687df3454"><td id="hNMK" class="">2^11</td><td id="&lt;x={" class="">2048</td></tr><tr id="c31adf41-2b18-4166-83bc-ccba74fb2f23"><td id="hNMK" class="">2^12</td><td id="&lt;x={" class="">4096</td></tr><tr id="33632d5e-db48-41fb-b0b4-a17855fb5969"><td id="hNMK" class="">2^13</td><td id="&lt;x={" class="">8192</td></tr><tr id="66c4a443-b021-44c8-b6f6-a71977f16c48"><td id="hNMK" class="">2^14</td><td id="&lt;x={" class="">16384</td></tr><tr id="60678021-b313-4b6c-9de5-ed22c67a7c54"><td id="hNMK" class="">2^15</td><td id="&lt;x={" class="">32768</td></tr><tr id="74072aec-1ddd-4d37-a0b9-2a9dd80be80d"><td id="hNMK" class="">2^16</td><td id="&lt;x={" class="">65536</td></tr></tbody></table><h1 id="a9143a17-70d4-47ba-8f82-dfb7b3627af1" class="block-color-teal_background">Questions &amp; Answers</h1><p id="6e22c0f7-e94d-4826-adb1-8abfe49a37b6" class=""><strong>How many different numbers can be represented by n bits?</strong></p><p id="a953ff54-b1f0-4670-aa20-c560c82a5023" class=""><mark class="highlight-purple">2^n</mark></p><p id="aaccdf12-8dc8-4640-96a0-c4fc5fd0a994" class=""><strong>What are the tricks to doing conversions in between binary/octal/hexadecimal (larger numbers) quickly?</strong></p><p id="25a9a731-09b9-4cd1-9fe9-651695e68390" class="">
+</p></div></article></body></html>

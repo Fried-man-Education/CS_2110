@@ -1,0 +1,793 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>C Keywords, DataTypes, Storage</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="dc30535e-5ff6-483c-9635-59cb1f2e54f8" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🖍️</span></div><h1 class="page-title">C Keywords, DataTypes, Storage</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="d53dfc85-6611-484a-8373-c799db4df5e9" class="block-color-teal_background">Notes</h1><ul id="0d522f61-af16-42d0-99a7-240d8ab78ee3" class="bulleted-list"><li style="list-style-type:disc">C is <strong>procedural</strong>; no objects or classes<ul id="f0e2517b-f578-4670-8ada-037714672a2c" class="bulleted-list"><li style="list-style-type:circle"><strong>C structs</strong> are used in place of classes</li></ul></li></ul><h2 id="16ef35b4-ef3a-46db-9074-08536da97ee4" class="block-color-pink_background">Type Qualifiers</h2><ul id="27547dea-98d1-455a-a7c7-cd92208d71cd" class="bulleted-list"><li style="list-style-type:disc">Part of the type (unlike Storage Class)</li></ul><ul id="3f668256-51e4-4c4f-9f34-2e3e058d2feb" class="bulleted-list"><li style="list-style-type:disc">Not mutually exclusive with a Storage class</li></ul><ul id="42dcbd7b-8bd8-4a94-8379-429324a365c9" class="bulleted-list"><li style="list-style-type:disc">They contain no methods</li></ul><ul id="a615d4bd-a3ac-4230-aabb-1bbe1dcd0464" class="bulleted-list"><li style="list-style-type:disc">All data members are publicly visible</li></ul><h3 id="ebb68800-72d5-4f74-a5bb-26b8d04fcc1f" class="">Const</h3><ul id="cc0ec703-4261-4e1d-aa55-de1eda1cd8ba" class="bulleted-list"><li style="list-style-type:disc">The value of this variable may not be changed after initialization</li></ul><ul id="fd975599-e6b3-4e6f-993e-7caee6c901f8" class="bulleted-list"><li style="list-style-type:disc">Defines a variable as constant (value cannot be changed)<ul id="de469ff7-983b-4da7-a718-da6da4a0edf6" class="bulleted-list"><li style="list-style-type:circle">Ex. const int x = 5;</li></ul><ul id="8bbc52f6-9e9e-46c5-bbb6-bc7aaf25858b" class="bulleted-list"><li style="list-style-type:circle">Data section of memory.</li></ul><p id="0d8f729b-a37b-4708-8ff2-dc6e69055ff7" class="">
+</p><p id="b18bdca4-0d39-413a-8f66-366d7573b6b4" class="">
+</p></li></ul><h3 id="ffd0b78c-21e6-4016-b337-ced9c264d7b9" class="">Volatile</h3><ul id="0b31b18f-6520-4341-98eb-7f19a603b974" class="bulleted-list"><li style="list-style-type:disc">It doesn&#x27;t change the scope or storage of a variable</li></ul><ul id="73597e26-a0fe-4860-86c5-382f59e4e3df" class="bulleted-list"><li style="list-style-type:disc">Tells the compiler NOT to optimize away the variable</li></ul><ul id="ce5578e2-66ab-43fa-a7df-42e6bc5d22df" class="bulleted-list"><li style="list-style-type:disc">Use this for device registers</li></ul><ul id="5510b31a-1b8a-4f1a-97f1-2a0ada117ff3" class="bulleted-list"><li style="list-style-type:disc">The volatile keyword is intended to prevent the compiler from applying any optimizations on objects that can change in ways that cannot be determined by the compiler. Objects declared as volatile are <strong>omitted from </strong>optimization because their values can be changed by code outside the scope of current code at any time.</li></ul><ul id="a8fb32e4-fb7b-48eb-b3f1-695f3e05946d" class="bulleted-list"><li style="list-style-type:disc">the compiler may not optimize references to this variable (e.g. it’s a device register that may change value asynchronously)</li></ul><h3 id="201908c1-c27c-4cf6-a02e-3ab148c96962" class="">Restrict</h3><ul id="70323f62-69d4-4183-beee-47944b32f285" class="bulleted-list"><li style="list-style-type:disc">For the lifetime of a pointer, only the pointer itself or a value directly derived from it may be used to access the object to which it points. This allows better optimization.</li></ul><p id="a0f60ffb-5df0-4b59-8cb7-029bcd706f4b" class="">
+</p><h2 id="b75b57c5-f0ad-46c9-bad1-2781b9037c0b" class="block-color-pink_background">Memory Regions in C</h2><ul id="8e97565c-ab48-445c-8d3a-925102cda477" class="bulleted-list"><li style="list-style-type:disc">Stack: local variables and arguments (like LC-3 Stack)</li></ul><ul id="9723d121-4833-413d-a0fd-a757d1d59b5a" class="bulleted-list"><li style="list-style-type:disc">Heap – dynamically allocated memory<ul id="35363784-d548-49e8-9660-70bcd0d96d7e" class="bulleted-list"><li style="list-style-type:circle">Related to allocating a “new” object in Java</li></ul></li></ul><ul id="c29d23d3-7cdd-47d9-a3a2-a6bc5140140d" class="bulleted-list"><li style="list-style-type:disc">Data – global variables are stored here<ul id="f5d31f87-64fa-40de-92f7-11ab4ebbbbb8" class="bulleted-list"><li style="list-style-type:circle">Like labels in your assembly program, e.g. ARRAY .fill x4000</li></ul></li></ul><ul id="1880485e-5203-4c17-9936-879850d956da" class="bulleted-list"><li style="list-style-type:disc">Code – our executable code</li></ul><p id="1bcb6a98-b48f-4c67-80dd-a3f156a005ee" class="block-color-purple"><strong>Global Variables</strong></p><pre id="2f83cf46-dff1-44a1-bc20-ebc7c360998c" class="code"><code>int x = 4;
+int main(void) {
+    int y = 3;
+    return 0;
+}
+//x is a global variable stored in the &quot;data&quot; section of our memory
+//y is a local variable stored on the stack (specifically, on the stack frame for main)</code></pre><h2 id="02a5fa90-7676-46c8-be83-6a383e21d1cc" class="block-color-pink_background">Storage Class Specifiers</h2><ul id="6bc1a981-6d36-4afd-a81a-1a15500216b9" class="bulleted-list"><li style="list-style-type:disc">tells us <strong>where the data will be stored</strong> and <strong>who will be able to see it</strong></li></ul><ul id="61473e29-3ea7-4042-bde3-74ab88b76ad1" class="bulleted-list"><li style="list-style-type:disc">Not part of the type; it only affects the variables defined or declared using it</li></ul><figure id="6dae0f43-2d29-4cca-b47f-86067ca9c0c5" class="image"><a href="C%20Keywords,%20DataTypes,%20Storage%20dc30535e5ff6483c963559cb1f2e54f8/Screen_Shot_2021-11-10_at_14.20.05.png"><img style="width:576px" src="C%20Keywords,%20DataTypes,%20Storage%20dc30535e5ff6483c963559cb1f2e54f8/Screen_Shot_2021-11-10_at_14.20.05.png"/></a></figure><h3 id="60917314-7ab9-4f94-9592-c6bcb97681c5" class="">Auto</h3><ul id="545cad90-288b-4c3f-9828-3bd53ea715b7" class="bulleted-list"><li style="list-style-type:disc">refer to table</li></ul><h3 id="2169cb97-aef9-4acd-8e23-f4caa29e418f" class="">Static</h3><ul id="0f39694e-cd6b-464e-9a16-bc7dd987e194" class="bulleted-list"><li style="list-style-type:disc"><strong>static</strong> defined functions are not visible outside of its C file (like private in java)</li></ul><ul id="4d4d9678-5610-446c-9d52-e13da13555d8" class="bulleted-list"><li style="list-style-type:disc"><strong>static</strong> defined global variables are not visible outside of its C file (like private in java)</li></ul><ul id="cb906332-f09f-4463-aef3-4830065c3c23" class="bulleted-list"><li style="list-style-type:disc"><strong>static</strong> defined local variables do not lose values between function calls<ul id="c506799e-f1e1-43e7-b787-2eda12e5a746" class="bulleted-list"><li style="list-style-type:circle">Local variables are normally stored on the stack</li></ul><ul id="263b19d5-e9e6-496e-b77f-4ffebf420b6e" class="bulleted-list"><li style="list-style-type:circle">This isn’t possible for static locals, since they need to persist.</li></ul></li></ul><ul id="9813fe97-46a0-4bc9-a5a7-d1a8d8ca6ac4" class="bulleted-list"><li style="list-style-type:disc">Has two meanings:<ol type="1" id="d769817f-dc94-41ae-9659-00c1f6dbffe2" class="numbered-list" start="1"><li><em>Inside a function:</em> static changes the <span style="border-bottom:0.05em solid">storage location</span> to static memory, either data or BSS segment (the scope stays local)</li></ol><ol type="1" id="a97bfd1b-1cf1-4f24-ba20-f352e1ac1e99" class="numbered-list" start="2"><li><em>Outside a function:</em> static changes the <span style="border-bottom:0.05em solid">scope (visibility)</span> to be only visible within the file (the storage location stays in static memory)</li></ol></li></ul><ul id="88c4197b-5656-4a49-88bc-e3d9f2914dca" class="block-color-pink_background toggle"><li><details open=""><summary>example</summary><pre id="c3d38638-4b96-445e-a433-fd1c1a2c0c02" class="code"><code>void funcCounter(void) {
+  static int counter = 0;  // one instance, static memory
+  counter++;           // visible only in function
+  printf(“This function was called %d times.\n”, counter);
+}</code></pre><ul id="4603f012-d5c9-41bc-b750-8dbeb21df3f6" class="bulleted-list"><li style="list-style-type:disc">the counter is allocated once in the Initialized Data static area of memory</li></ul><ul id="14b0e711-6446-4bd0-9cb8-46fb335f7037" class="bulleted-list"><li style="list-style-type:disc">the counter is NOT located on the stack</li></ul><ul id="10a286b3-3e93-462f-8dd5-efde0a336ddf" class="bulleted-list"><li style="list-style-type:disc">Every call to funcCounter() sees the same shared instance of counter.</li></ul><ul id="c1b162a6-83e3-4fe1-8a9c-e886391a4c68" class="bulleted-list"><li style="list-style-type:disc">It is only initialized to 0 once at program load (not every time function is called).</li></ul><ul id="89d014d9-60d6-4b82-82ee-3c7de962723f" class="bulleted-list"><li style="list-style-type:disc">It’s the analog of .fill from LC-3</li></ul></details></li></ul><h3 id="202abb17-d778-4f55-a138-d8ae536a137e" class="">Extern</h3><ul id="7e8e3680-419e-4de7-bf5a-7a2df20a9783" class="bulleted-list"><li style="list-style-type:disc"><strong>extern</strong> tells the compiler that the variable has been defined in another file</li></ul><ul id="906a5b6e-3bd2-4cbf-af2f-e0a870b1c664" class="toggle"><li><details open=""><summary>Example</summary><p id="3dbbe01b-6df0-4f32-89f1-52d0dd348ded" class="">other.c</p><pre id="a98474e8-c4bf-49b9-b044-cced013a2bc4" class="code"><code>int x = 5; /*global var*/</code></pre><p id="ad058952-3120-458a-b60a-d52e68b3a269" class="">main.c</p><pre id="51fe3b3a-d08d-4886-a710-70b0bb0b7ce2" class="code"><code>extern int x;
+int main(void) {
+     printf(&quot;%d&quot;, x) /*prints 5*/
+}</code></pre></details></li></ul><ul id="162258cc-b7dd-4c6a-a627-825be0d5432e" class="bulleted-list"><li style="list-style-type:disc">Compiler does NOT allocate storage</li></ul><ul id="50bf412e-6845-48e5-aeb8-19e86389e6b1" class="bulleted-list"><li style="list-style-type:disc">For type checking of the identifier name only</li></ul><ul id="39ded00c-8151-4553-a70b-f136276855b8" class="bulleted-list"><li style="list-style-type:disc">Another C file must allocate storage by defining that var name(or function)</li></ul><ul id="754ddc3a-07ff-4f8d-ae1c-fce0566d9e65" class="bulleted-list"><li style="list-style-type:disc">A function prototype is automatically given the extern storage class</li></ul><ul id="c1ed4def-d291-4f08-bea7-9a0d5045d9a2" class="block-color-pink_background toggle"><li><details open=""><summary>Example: Static inside a function</summary><figure id="df37766c-356d-4e0d-8e65-939bd8c583c4" class="image"><a href="C%20Keywords,%20DataTypes,%20Storage%20dc30535e5ff6483c963559cb1f2e54f8/Screen_Shot_2021-11-10_at_14.22.08.png"><img style="width:672px" src="C%20Keywords,%20DataTypes,%20Storage%20dc30535e5ff6483c963559cb1f2e54f8/Screen_Shot_2021-11-10_at_14.22.08.png"/></a></figure><p id="6afde988-d5fd-4529-a341-04eada1b55c5" class="">Static variable is initialized at compile time. Not at Runtime</p><p id="28b4bd71-9275-45e9-a00c-c8a6939933ec" class="">First time call function - prints 1</p><p id="34fbc2f8-d8be-4b0e-a765-4ae9f3aae607" class="">Second time - prints 2</p><p id="788d3cd0-fe78-4428-8d19-fcdf9393b095" class="">Third time - prints 3</p><p id="57e75ad8-3b21-4d53-a19e-5e665c6503e3" class="">Fourth time - prints 4</p><p id="868c9626-154f-41ac-b4d0-025e0f684ae0" class="">
+</p></details></li></ul><h3 id="9186daa1-bc49-4019-a15e-ba991960d687" class="">Register</h3><ul id="28f412f1-6e2b-474f-a41d-d3aa17bd4ebf" class="bulleted-list"><li style="list-style-type:disc">It used to be applied to local variables</li></ul><ul id="50cd16da-83c1-4914-8814-7497105849dd" class="bulleted-list"><li style="list-style-type:disc">It doesn&#x27;t change the scope, but it requests that the variable only be in a register and not in the local variables in the stack frame.<ul id="acdcb3d1-bc26-459f-91e6-fa96c82a161c" class="bulleted-list"><li style="list-style-type:circle">The compiler is not obliged to listen</li></ul></li></ul><ul id="9bc50ca1-8511-4dd8-b8e3-927436911b0c" class="bulleted-list"><li style="list-style-type:disc">not very important nowadays, just know it used to be applied to local variables. It doesn&#x27;t change the scope, but it requests that the variable only be in a register and not in the local variables in the stack frame. The compiler is not obliged to listen :p</li></ul><h2 id="7cf95490-6a8e-4f6c-8389-4d1c430f6604" class="block-color-pink_background">Other Keywords</h2><h3 id="85901e84-82b9-479a-8685-6462a7eb91a8" class="">Unsigned</h3><ul id="718a9194-f4e0-42d7-9e15-d2fd15fc0aba" class="bulleted-list"><li style="list-style-type:disc">Uses the value of the leftmost bit to contribute to the magnitude of the number as opposed to the sign of the number</li></ul><ul id="17dd2159-d546-4435-b556-3a5a21fbbb9c" class="bulleted-list"><li style="list-style-type:disc">An unsigned is <strong>an integer that can never be negative</strong></li></ul><h3 id="10412d74-8aef-4f79-b2e1-65a7b3534e5e" class="">Enum</h3><ul id="3c6133af-e95d-4723-b385-4dac7910cfc1" class="bulleted-list"><li style="list-style-type:disc">Enumeration (or enum) is a user-defined data type in C. It is mainly used to assign names to integral constants, the names make a program easy to read and maintain.</li></ul><h2 id="cfb2f30f-d999-4f3d-a942-263311905a59" class="block-color-red_background">Structs</h2><ul id="4efba3b7-bab1-43f8-bce9-893c27822998" class="bulleted-list"><li style="list-style-type:disc">In C, a struct (structure) is a data type that is used to group together multiple values in one block of memory</li></ul><ul id="ad49696e-9458-46ed-85d3-46c27bb7b1b6" class="bulleted-list"><li style="list-style-type:disc">They look similar to classes in Java; however, they do not have methods—they are just data bundled together</li></ul><ul id="f5e01f29-70af-4c65-b5de-8d13b3562bdc" class="bulleted-list"><li style="list-style-type:disc">Typically define structs by global variables outside of a function</li></ul><ul id="62e28890-1f57-46e8-a7cc-76daf6971623" class="bulleted-list"><li style="list-style-type:disc">Struct members occupy a namespace unique to the containing struct. That means that “struct b { int b} b;” is legal and not ambiguous.</li></ul><ul id="28a5c4fb-e4e4-4538-bf56-835b15258b9d" class="bulleted-list"><li style="list-style-type:disc">You can <em>declare</em> a struct type, and <em>define</em> an instance (or multiple instances) of the variable at the same time.</li></ul><ul id="32d38ddd-636d-443a-94ca-d24a8313f71b" class="bulleted-list"><li style="list-style-type:disc">Structures may<ul id="24dff215-4a7c-4122-99d2-3cab5d2869eb" class="bulleted-list"><li style="list-style-type:circle">be copied or assigned</li></ul><ul id="d9f15d19-d803-494c-82c8-15038086c2c4" class="bulleted-list"><li style="list-style-type:circle">have their address taken with &amp;</li></ul><ul id="f1fc651c-b195-444e-bffe-24128d89efec" class="bulleted-list"><li style="list-style-type:circle">have their members accessed</li></ul><ul id="053f93b1-4563-4f3b-b5c5-1a5f0ee3d050" class="bulleted-list"><li style="list-style-type:circle">be passed as arguments to functions</li></ul><ul id="64023659-2066-454f-8cb7-93702f3132c4" class="bulleted-list"><li style="list-style-type:circle">be returned from functions</li></ul></li></ul><ul id="75210253-19af-4268-a4f8-d74a749ac6b0" class="bulleted-list"><li style="list-style-type:disc">Structures may not<ul id="95ff3f33-f390-4eb1-84ca-9fc4a2a32211" class="bulleted-list"><li style="list-style-type:circle">be compared</li></ul></li></ul><ul id="15256288-e2d9-43e1-b3e4-896689814fff" class="bulleted-list"><li style="list-style-type:disc">Properties:<ul id="2ab6794a-7fcc-4868-aad5-e5d094720047" class="bulleted-list"><li style="list-style-type:circle">Contain no methods</li></ul><ul id="02e83812-85fa-447a-a56f-2e497d21a622" class="bulleted-list"><li style="list-style-type:circle">All data members are publicly visible</li></ul><ul id="39aab0cd-1926-4f3e-b8b1-28e6330ea7bb" class="bulleted-list"><li style="list-style-type:circle">only bundled data</li></ul><ul id="b14d02bc-82fb-4781-bc3e-aa9861e6883f" class="bulleted-list"><li style="list-style-type:circle">structs tag declares the type</li></ul><ul id="b0a9b9d6-a4fc-4dae-8ec0-35b8abc0b61a" class="bulleted-list"><li style="list-style-type:circle">Use named, not structural, type equivalence</li></ul><ul id="ac8fb827-f9fb-4d8d-a08a-38d84c276175" class="bulleted-list"><li style="list-style-type:circle">Untagged structs are each a different type</li></ul><ul id="29a393aa-2626-4244-9ab6-fde111494570" class="bulleted-list"><li style="list-style-type:circle">Use the . operator to access variables inside a struct</li></ul><ul id="a7451fc3-2e4a-4556-95e6-48606fc1bebb" class="bulleted-list"><li style="list-style-type:circle">If given a pointer to a struct, use the -&gt; operator to simultaneously dereference and access it<ul id="011b3e3f-cb14-4709-8422-238f1e9494ce" class="bulleted-list"><li style="list-style-type:square">The left operand must be a pointer to struct and the right operand a <strong>struct</strong> member.</li></ul><ul id="97d8c8bd-72ab-474f-bf4a-f033181f072a" class="bulleted-list"><li style="list-style-type:square">It is literally a shorthand for * and .<pre id="b37c40cd-61ff-4278-a4d7-0d4f22c20db3" class="code"><code>struct myStruct {
+	int a, b;
+} *p; // p is a pointer to struct myStruct
+
+// same meaning below
+(*p).a = (*p).b;
+p-&gt;a = p-&gt;b;</code></pre></li></ul></li></ul></li></ul><ul id="3f5556e7-722f-4553-bb16-59a06206649c" class="block-color-red_background toggle"><li><details open=""><summary>How struct is laid out in memory</summary><figure id="b8ac54bc-8413-48f2-814b-cefcb7435c11" class="image"><a href="C%20Keywords,%20DataTypes,%20Storage%20dc30535e5ff6483c963559cb1f2e54f8/Screen_Shot_2021-11-03_at_18.49.27.png"><img style="width:1668px" src="C%20Keywords,%20DataTypes,%20Storage%20dc30535e5ff6483c963559cb1f2e54f8/Screen_Shot_2021-11-03_at_18.49.27.png"/></a></figure></details></li></ul><ul id="03cd31f7-2448-4656-b0fe-a9db0f3dc590" class="block-color-red_background toggle"><li><details open=""><summary>Struct Declaration</summary><pre id="f4f90f8b-c60a-4b88-af3c-c8a8b629c319" class="code"><code>struct [ &lt;optional tag&gt; ] [ {
+	&lt;type declaration&gt;;
+	&lt;type declaration&gt;;
+	...
+} ] [ &lt;optional variable list&gt; ];</code></pre><ul id="cfff2095-6e89-4c80-a4cb-cd22495c673b" class="bulleted-list"><li style="list-style-type:disc">Struct declarations that have a <strong>member list</strong> in curly braces define a <strong>new type</strong>, specifically a struct type.</li></ul><ul id="79cec925-4ae4-44d8-af8c-7160356d641d" class="bulleted-list"><li style="list-style-type:disc">If the optional tag is omitted it creates an unnamed struct type that’s different from every other struct type.</li></ul><ul id="3eb2d457-aef6-4132-861b-3f3a64922a30" class="bulleted-list"><li style="list-style-type:disc">Struct member names are in yet another name space local to the structure type, e.g. every structure type could have a member named “next”</li></ul></details></li></ul><ul id="c0c1a664-7c9c-47ed-8337-0a9b73af24ec" class="block-color-red_background toggle"><li><details open=""><summary>Struct car example</summary><p id="f10bd7c4-d8a5-4a36-803c-065a6ba62ca9" class=""><em>The type declared here is &#x27;struct car&#x27;, not just &#x27;car&#x27;:</em></p><pre id="9a223570-b006-4d08-a5c6-b454b8d04eca" class="code"><code>struct car {
+
+	char mfg[30];
+	
+	char model[30];
+	
+	int year;
+
+}</code></pre><p id="7b17a5e0-3f27-482c-b2ae-0c9f88a35c48" class=""><strong>Names following the struct tag define instances of the struct</strong></p><p id="5072c81a-6061-4b3e-9347-ad19b9942ce8" class="">struct car mikes_car, joes_car;</p><p id="0be02b00-c1a1-4e13-a196-704b8781fb57" class=""><strong>You can declare a struct type, and define an instance (or multiple instances) of the variable at the same time.</strong></p><pre id="eb5f26a5-100b-41ad-9d3c-553186b0c3dd" class="code"><code>struct car {
+
+	char mfg[30];
+	
+	char model[30];
+	
+	int year;
+
+} mikes_car;</code></pre><p id="853fcc5e-f524-4741-b3c9-4851a1f12062" class="">struct car is a data type</p><p id="12ce65bf-181c-44f9-bf6d-0a7b2d79cf6e" class="">mikes_car is a variable of type struct car</p></details></li></ul><ul id="5943f7c3-f681-4361-b329-3e6cea742926" class="block-color-red_background toggle"><li><details open=""><summary>Referencing Structurer Members Example</summary><p id="bdbb8efa-73fc-4c3d-adf9-90f0351579d0" class="">The . operator is used just as in Java to reference members of a struct</p><pre id="6d8512c6-264a-4ad5-988a-512a8a2b9d12" class="code"><code>printf(&quot;%s\n&quot;, mikes_car.model);
+
+johns_car.mfg = &quot;Chevrolet&quot;; —&gt; WRONG!!
+
+// Instead: Use strcpy(), a library function
+
+strcpy(johns_car.mfg, &quot;Chevrolet&quot;);</code></pre></details></li></ul><h2 id="b2ae4dab-bca7-4881-aaf9-f7f343a5900a" class="block-color-pink_background">Scope</h2><h3 id="2ed56709-7e46-4ca3-bf43-2e5ebef47312" class="">Global vs Local</h3><pre id="7cc4434f-9aff-49e0-a01c-477abe2068a8" class="code"><code>// x is a global variable stored in the &quot;data&quot; section of our memory
+// y is a local variable stored on the stack (specifically, on the stack frame for main)
+int x = 4;
+int main(void) {
+    int y = 3;
+    return 0;
+}</code></pre><ul id="c47a03a1-529b-4184-9e35-db32eade1f77" class="block-color-pink_background toggle"><li><details open=""><summary>Scope Example</summary><pre id="fcc1516c-4d08-4b9d-bd37-fc1756542ba7" class="code"><code>#include &lt;stdio.h&gt;
+int i = 0;
+void f(int);
+
+int main (int argc, char *argv[]) {
+	i = 1; //points to line 2 (int i = 0;)
+	int i = 0;
+	i = 2; //points to line 7 (int i = 0;)
+	for (int i = 0; i &lt; 10; i++) {
+		f(i); //points to line 9 loop int i
+		int i = 2;
+		f(i); //points to line 11 int i = 2
+	}
+	f(i); //points to line 7 (int i = 0; i = 2;)
+}
+
+void f(int j) {
+	printf(&quot;%d\n&quot;, i); ////points to line 2 int i = 0, prints line 6 i = 1
+}</code></pre></details></li></ul><h3 id="558eb0f1-e3e4-437f-a62b-e2e35dd46337" class="">Static vs Extern</h3><ul id="da8c3638-c7a0-4203-8959-e21ce19eb3ec" class="bulleted-list"><li style="list-style-type:disc">The keywords extern and static control whether the name is seen in other files</li></ul><figure id="a80fec96-c68b-4346-8287-56c312a52e00" class="image"><a href="C%20Keywords,%20DataTypes,%20Storage%20dc30535e5ff6483c963559cb1f2e54f8/Screen_Shot_2021-11-10_at_13.38.15.png"><img style="width:664px" src="C%20Keywords,%20DataTypes,%20Storage%20dc30535e5ff6483c963559cb1f2e54f8/Screen_Shot_2021-11-10_at_13.38.15.png"/></a></figure><ul id="fd40c8bf-d407-486c-9c4f-3e7d0e86aac3" class="block-color-pink_background toggle"><li><details open=""><summary>Scope Example</summary><p id="6659e469-76ba-4ef4-a031-8aaff1066896" class="">file1.c:</p><pre id="46546d39-a470-4256-a297-f32945de5f34" class="code"><code>int a[10];    // external definition
+static struct r *p;  // this file only
+extern float c[100]; // ref to c in file2.c
+...</code></pre><p id="5be88315-1f01-4810-b3a1-5f339acef8ff" class="">file2.c:</p><pre id="803a2ae7-3855-4a4c-8ef5-5317deed7170" class="code"><code>extern int a[10];   // ref to arr in file1.c
+static struct r *p; // NOT the p above
+float c[100];   // definition
+...</code></pre></details></li></ul><h2 id="5a912088-ad10-41b9-8c21-1238fc484d9e" class="block-color-pink_background">Functions</h2><ul id="c1e706eb-6b76-4a07-9ebd-ffd6a9673623" class="bulleted-list"><li style="list-style-type:disc">Pass by value always (not by reference)</li></ul><ul id="1b4fb508-3b71-4c0d-8671-fb6ad8033e5f" class="bulleted-list"><li style="list-style-type:disc"><strong>Copies</strong> of arguments are pushed on the stack</li></ul><ul id="1dd243a4-7103-4fb6-b2e4-1feeddfaa7ba" class="toggle"><li><details open=""><summary>example w/ breakdown</summary><pre id="d5e509f7-a102-469a-a6eb-41bd5b32a9e4" class="code"><code>int mult(int a, int b) {
+	return a*b;
+}</code></pre><ul id="4eb40829-e72d-4032-972b-1a6e06cbb094" class="bulleted-list"><li style="list-style-type:disc">Two arguments (int), pushed on the stack</li></ul><ul id="f5baa0c4-0c87-4a3f-8850-26923eb2ac23" class="bulleted-list"><li style="list-style-type:disc">Returns an int</li></ul></details></li></ul><h3 id="13fd02b3-fdd0-4ab9-9e9b-6c4d8f76697e" class="">main()</h3><pre id="faaedcfd-21e0-4caf-b59e-01c5557b79d4" class="code"><code>int main(int argc, char *argv[]) {
+	return 0;
+}</code></pre><ul id="bba53eb2-7704-45fa-af2f-ca84681ac1aa" class="bulleted-list"><li style="list-style-type:disc">main() is just another function</li></ul><ul id="88ead979-ff09-4b02-a297-ff52a97811d2" class="bulleted-list"><li style="list-style-type:disc">It is the first function invoked when you run your program from the command line</li></ul><ul id="15dd2ac6-ece6-4638-a1e8-03ff1b3bd4d5" class="bulleted-list"><li style="list-style-type:disc">Convention: return 0 on success, or non-0 on error</li></ul><ul id="bc4c8072-825b-475d-a58d-41d12ec466da" class="bulleted-list"><li style="list-style-type:disc">Hint: type echo $? in the Linux shell to see the return value from main()</li></ul><ul id="5b3b81ec-2cf5-42cd-ab4a-b56679e410ff" class="bulleted-list"><li style="list-style-type:disc">argc is the number of arguments<ul id="f3958208-2d4b-405b-ad22-ef4378730781" class="bulleted-list"><li style="list-style-type:circle">Including the program name itself</li></ul><ul id="c7413e8b-c9a7-49af-9434-ba0cdc3737a6" class="bulleted-list"><li style="list-style-type:circle"><em>Think “argument count”</em></li></ul></li></ul><ul id="225f5b6a-cee9-45f4-8a4d-c259e6f8319a" class="bulleted-list"><li style="list-style-type:disc">argv is an array of strings<ul id="bf72e26a-59ef-4317-a3db-2eb1596af227" class="bulleted-list"><li style="list-style-type:circle">More properly, an array of pointer to char</li></ul><ul id="dd58edc5-828b-4502-b0c4-ca2094f3f5fd" class="bulleted-list"><li style="list-style-type:circle"><em>Think “argument values”</em></li></ul></li></ul><ul id="5618b04a-e6da-4173-af31-a67875489689" class="toggle"><li><details open=""><summary>command line example</summary><pre id="e43b2cd4-3b00-42d7-866c-84cd63ce2465" class="code"><code>$ ./myprogram cs2110 rocks</code></pre><ul id="ef06411e-b730-45b0-b2ba-88a2634de724" class="bulleted-list"><li style="list-style-type:disc">argc == 3</li></ul><ul id="0fe61545-04dc-454c-9b1d-0a62cff17c44" class="bulleted-list"><li style="list-style-type:disc">argv[0] is “./myprogram”</li></ul><ul id="63693f5e-134f-4789-8cc7-7537c0d90240" class="bulleted-list"><li style="list-style-type:disc">argv[1] is “cs2110”</li></ul><ul id="4a2e1a0b-908b-44f0-a963-69190120234a" class="bulleted-list"><li style="list-style-type:disc">argv[2] is “rocks”</li></ul></details></li></ul><h3 id="95ec97ec-6dd5-45a5-a1c7-1cf555c98bb0" class="">void</h3><pre id="43b9cfd3-4293-4c60-91cf-410e3e0d0945" class="code"><code>void func(void) {
+	printf(“Hello\n”);
+}</code></pre><ul id="1983c01f-067c-4c27-9ad1-048774671277" class="bulleted-list"><li style="list-style-type:disc">void is a special keyword</li></ul><ul id="d52fdbfd-3bc8-454e-be45-a5f15d605901" class="bulleted-list"><li style="list-style-type:disc"><strong>return type void</strong>: function does not return a value</li></ul><ul id="736f68f1-1e68-40f7-8902-defbb16080dd" class="bulleted-list"><li style="list-style-type:disc"><strong>arguments of void:</strong> function takes no arguments</li></ul><h2 id="529a1360-2d7b-4bf3-b87a-228923f1f259" class="block-color-pink_background">C Data Types and Sizes</h2><ul id="5fdd31a5-a8b3-43e4-8787-6c467cf7b00a" class="bulleted-list"><li style="list-style-type:disc">Unlike in Java, the exact sizes of number types is not specified in the C standard</li></ul><ul id="6cdbc252-a00f-4b9e-9742-aed5da424a66" class="bulleted-list"><li style="list-style-type:disc">There are minimums in the standard as well as some conventions</li></ul><ul id="2f2a1acf-e53a-42c7-b265-095676475020" class="bulleted-list"><li style="list-style-type:disc">The exact sizes are implementation-specific and may vary between compilers or systems—you should never assume a given type is a given size<ul id="15177def-506b-41db-adbd-4c0696e4be02" class="bulleted-list"><li style="list-style-type:circle">One exception: POSIX (another standard) requires char to be 8 bits, so we can pretty much always assume it is</li></ul></li></ul><ul id="84754177-c04b-45a2-86c2-ce52eeddb9df" class="bulleted-list"><li style="list-style-type:disc">You can use the sizeof operator to determine the size of a C type (in bytes)<ul id="7d880089-4923-4500-ac7c-19212392554d" class="bulleted-list"><li style="list-style-type:circle">Always use sizeof() to express/use the size of a type.</li></ul></li></ul><div id="e465659d-a266-46fb-a49b-a8e2fb2bc0b3" class="column-list"><div id="278d723f-dd69-4c98-8b1b-02e134359b26" style="width:50%" class="column"><table id="f3ee2746-5dd8-4d40-a47d-098b4f693abc" class="simple-table"><tbody><tr id="9390fe5a-1524-4c18-8dac-f7bcacb3c07e"><td id="^a_:" class="">char</td><td id="Ucm@" class="" style="width:279px">Exactly 8 bits</td></tr><tr id="ac972171-5d57-48c8-b5e2-c17f77aecf02"><td id="^a_:" class="">short</td><td id="Ucm@" class="" style="width:279px">At least 16 bits (usually 16)</td></tr><tr id="059531de-25f5-4c90-816c-2dc726256173"><td id="^a_:" class="">int</td><td id="Ucm@" class="" style="width:279px">At least 16 bits</td></tr><tr id="bd5b058d-90fa-4ecc-8374-ce35d122debf"><td id="^a_:" class="">long</td><td id="Ucm@" class="" style="width:279px">At least 32 bits</td></tr><tr id="4680363e-c6c0-42d9-9700-53a0f7a71c53"><td id="^a_:" class="">long long</td><td id="Ucm@" class="" style="width:279px">At least 64 bits</td></tr><tr id="0d4a261d-24b4-456a-bc7f-7b2e4ed2cba5"><td id="^a_:" class="">float</td><td id="Ucm@" class="" style="width:279px">Unspecified, usually 32 bits</td></tr><tr id="e4374d91-b147-4e3a-b7f5-8caff184e094"><td id="^a_:" class="">double</td><td id="Ucm@" class="" style="width:279px">Unspecified, usually 64 bits</td></tr><tr id="e76633e5-4449-4dc7-b1a2-c357cbd9c714"><td id="^a_:" class="">long double</td><td id="Ucm@" class="" style="width:279px">Unspecified, usually 64, 96 or 128 bits</td></tr></tbody></table></div><div id="fb406cec-fae2-4e24-9041-0c4a70fbe3f0" style="width:49.99999999999999%" class="column"><p id="d0d35af5-1392-445e-89de-119fca493c93" class="">You can also safely assume the following about sizes: </p><ul id="bc5a89c9-0a79-4af3-833d-9a965f5af028" class="bulleted-list"><li style="list-style-type:disc">sizeof(long long) ≥ sizeof(long) </li></ul><ul id="0e047149-9c8c-4149-9b3c-a205963e866d" class="bulleted-list"><li style="list-style-type:disc">sizeof(long) ≥ sizeof(int) </li></ul><ul id="0569b5b3-3737-4476-abc0-2d34a56c2438" class="bulleted-list"><li style="list-style-type:disc">sizeof(int) ≥ sizeof(short) </li></ul><ul id="393eaf2e-4e50-4ccf-889d-e75be98f187d" class="bulleted-list"><li style="list-style-type:disc">sizeof(short) ≥ sizeof(char) </li></ul><ul id="aa53a1be-2a35-4f66-a405-bb3c7f5c1fd0" class="bulleted-list"><li style="list-style-type:disc">sizeof(long double) ≥ sizeof(double) </li></ul><ul id="8bb563f7-e561-4e8c-b2ff-da15642fceee" class="bulleted-list"><li style="list-style-type:disc">sizeof(double) ≥ sizeof(float) </li></ul><ul id="43ebc30d-dd9e-4f87-b756-f095b8b472f1" class="bulleted-list"><li style="list-style-type:disc">sizeof(float) ≥ sizeof(char) </li></ul><ul id="67d2d83c-2c18-40df-a527-b27d4b65f5e3" class="bulleted-list"><li style="list-style-type:disc">Pretty much, this means that no type is smaller than the one above it in the table (and float is no smaller than char).</li></ul></div></div><h1 id="c3bbf12a-0b9c-4b9d-a266-13d95f06fa55" class="block-color-teal_background">Questions &amp; Answers</h1><ul id="2f6ed543-4af6-428d-b0cf-961be0408a7a" class="bulleted-list"><li style="list-style-type:disc"><code>static</code> is a pretty overloaded keyword in C; it can be used in three different places!<ul id="9ef0d658-fbe8-44da-b79d-7a26f9b7cf33" class="bulleted-list"><li style="list-style-type:circle">What does it mean for a function to be marked <code>static</code>?</li></ul><ul id="97fe95a9-807a-4bab-b148-b130f2fd59d8" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><p id="aba7412a-9451-4970-bc84-00a0a91ce6d7" class="">static defined functions are not visible outside of its C file (like private in java)</p></details></li></ul><ul id="5016df73-7cd8-4705-8da9-ad70c117afa3" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><p id="3f497ed0-953b-45a8-bc6f-5fcd5b6e2b00" class=""><em><strong>The function is not visible outside of its C file (like private in Java)</strong></em></p></details></li></ul><ul id="fafb3c42-24c6-45d5-95a7-ab81824ec57e" class="bulleted-list"><li style="list-style-type:circle">What does it mean for a global variable (outside of a function) to be marked <code>static</code>?</li></ul><ul id="c81dce1c-666f-4fed-bd11-5e4d0f47b4cd" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="bb36b540-be07-4514-aaf0-ab7538f490ba" class="bulleted-list"><li style="list-style-type:disc">Outside a function : static changes the scope (visibility) to be only visible within the file (the storage location stays in static memory)</li></ul><ul id="35d70b3e-57b5-4e5d-957f-88b12dfe0033" class="bulleted-list"><li style="list-style-type:disc">static defined global variables are not visible outside of its C file (like private in java)</li></ul></details></li></ul><ul id="0a4741c0-d3aa-4095-957a-c68b443fdd64" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><p id="95659461-c893-4c9f-86c3-d82406707629" class=""><em><strong>The global variable is not visible outside of its C file (like private in Java)</strong></em></p></details></li></ul><ul id="5fca1fa2-43b0-4694-bf5f-b183ed13fb02" class="bulleted-list"><li style="list-style-type:circle">What does it mean for a variable inside of a function to be marked <code>static</code>?<ul id="c03b3c0c-0139-40b2-82ca-933a967e3331" class="bulleted-list"><li style="list-style-type:square">This one is especially important!</li></ul></li></ul><ul id="e0ad9774-fbf9-4bc4-ab3d-df3cd585d126" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="0127a05d-906b-45ba-9027-738252e6890c" class="bulleted-list"><li style="list-style-type:disc">inside a function : static changes the storage location to static memory, either data or BSS segment (the scope stays local)</li></ul><ul id="47e03958-ee80-4763-ac2a-87d9916354e8" class="bulleted-list"><li style="list-style-type:disc">static defined local variables do not lose values between function calls<ul id="1095d9e9-7592-4eb2-93f7-47cc303a62b5" class="bulleted-list"><li style="list-style-type:circle">Local variables are normally stored on the stack</li></ul><ul id="61388602-dd17-4229-9923-cf599bb751f1" class="bulleted-list"><li style="list-style-type:circle">This isn’t possible for static locals, since they need to persist. Where can we store them instead?</li></ul></li></ul><ul id="61583af2-292b-4f72-96be-81ae21655892" class="bulleted-list"><li style="list-style-type:disc">Static local variables are stored in the data segment as we don’t want to lose their values when the stack frame is torn down</li></ul></details></li></ul><ul id="c9303b7a-4d8d-4278-a6cb-78813341cd86" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><ul id="9540bb67-947b-4841-ab1b-81386de89d68" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Variables inside a C function are called local variables</strong></em></li></ul><ul id="466c1c1c-28e5-4b43-ad93-def8c5971acc" class="bulleted-list"><li style="list-style-type:disc"><em><strong>The local variable does not lose values between function calls since they are stored in the data section of memory</strong></em></li></ul><ul id="f0da7d56-0be2-430c-89c3-a76447f7fa47" class="bulleted-list"><li style="list-style-type:disc"><em><strong>The static initialization line inside a function only happens once (later calls to the function skip that line)</strong></em></li></ul></details></li></ul><ul id="905a7fe0-eb71-49db-a15f-0071b26b2c0d" class="toggle"><li><details open=""><summary><strong>Better Answer</strong></summary><pre id="eaf5c18d-bce9-4076-a15e-282a7a8f278b" class="code code-wrap"><code>void foo()
+{
+    static int x = 5;
+    x++;
+    printf(&quot;%d&quot;, x);
+}
+
+int main()
+{
+    foo();
+    foo();
+    return 0;
+}</code></pre><p id="bb1de4f6-19cd-45cc-b96b-0c1fafc308f1" class="">There are two issues here, lifetime and scope.</p><p id="09b66078-cb1c-4128-b859-3bea8193018a" class="">The <strong>scope</strong> of a variable is where the variable name can be seen. Here, <code>x</code> is visible only inside function <code>foo()</code>.</p><p id="365e0b85-fd52-4ce4-bb70-7b17a84ffb9c" class="">The <strong>lifetime</strong> of a variable is the period over which it exists. If <code>x</code> were defined without the keyword static, the lifetime would be from the entry into <code>foo()</code> to the return from <code>foo()</code>; so it would be re-initialized to 5 on every call.</p><p id="5fa1ac90-7402-420f-9f42-32435c1e2cc6" class="">The keyword static acts to extend the lifetime of a variable to the lifetime of the program; e.g. initialization occurs once and once only and then the variable retains its value - whatever it has come to be - overall future calls to <code>foo()</code>.</p></details></li></ul></li></ul><ul id="f7b23073-cd9a-458c-8d31-e448e5ed2eff" class="bulleted-list"><li style="list-style-type:disc">What does <code>extern</code> mean? When would you use it?<ul id="ef27dfbe-3221-43a7-a6b3-f600352e632e" class="bulleted-list"><li style="list-style-type:circle">Does declaring a variable with <code>extern</code> reserve any additional space?</li></ul><ul id="a601a0d9-999a-4e33-b6c3-49e473fb45bb" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><ul id="a4a96761-4ff7-49ae-a4eb-7497297b9530" class="bulleted-list"><li style="list-style-type:disc"><em><strong>No!</strong></em></li></ul></details></li></ul></li></ul><ul id="4ca9aee9-87a3-484c-9754-d6604adc74f8" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="3ff5db1f-c712-41db-b285-3829f126081a" class="bulleted-list"><li style="list-style-type:disc">Variable is defined in another class</li></ul><ul id="7fce56ba-83a8-42b2-b893-9aa3cab394a9" class="bulleted-list"><li style="list-style-type:disc">The compiler does NOT allocate storage since it is defined elsewhere</li></ul><ul id="957712d8-7117-433a-ad01-946ee33ed677" class="bulleted-list"><li style="list-style-type:disc">For type checking of the identifier name only</li></ul><ul id="7e9e5230-b052-48e9-9fce-90c023b6db0a" class="bulleted-list"><li style="list-style-type:disc">Another C file must allocate storage by defining that var name (or function) used to extend the visibility of variables/functions</li></ul></details></li></ul><ul id="2f381424-67a1-4cea-a94b-e017c6b618c3" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><ul id="5ecc0620-163b-4d3d-807a-f9b8373fd225" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Tells the compiler that the variable has been defined in another file</strong></em></li></ul><ul id="ab38fa8b-160e-4cf0-a594-9cf36e9353b1" class="bulleted-list"><li style="list-style-type:disc"><em><strong>You would use it when using variables that have already been defined and populated with data in another file</strong></em></li></ul></details></li></ul><ul id="0193e58a-7c2f-45c6-a77d-6eac24f2699c" class="bulleted-list"><li style="list-style-type:disc">What is the difference between the following two function prototypes?<ul id="2f99b2a1-512f-4fdd-b0b9-be753c95dfcd" class="bulleted-list"><li style="list-style-type:circle"><code>void f();</code></li></ul><ul id="49f39c30-6520-4bc2-b995-650e29262f0e" class="bulleted-list"><li style="list-style-type:circle"><code>void f(void);</code></li></ul></li></ul><ul id="25c8758a-7991-4361-a1fc-d41e3abeedca" class="toggle"><li><details open=""><summary><strong>Student Solution</strong></summary><ul id="1f097f86-2e69-4e3c-b245-e5131f4e9eb6" class="bulleted-list"><li style="list-style-type:disc">any number of arguments can be passed while calling the f() function, but no argument can be passed in f(void).</li></ul><pre id="30b63701-50da-4ea4-b763-cf2bfb6d980a" class="code"><code>void f(); // declaration and prototype
+void f(void); // declaration but not prototype</code></pre></details></li></ul><ul id="1ff5e36e-5d38-4f58-b225-56d3fd8157b1" class="toggle"><li><details open=""><summary><strong>TA Solution</strong></summary><ul id="7954790f-a1c8-491f-a21d-429bc726a796" class="bulleted-list"><li style="list-style-type:disc">void f();<ul id="1fc554c6-6d23-4b50-91ba-91c6d8ba5275" class="bulleted-list"><li style="list-style-type:circle"><em><strong>There can be any amount of any type of parameters passed (including none)</strong></em></li></ul></li></ul><ul id="efc33f44-a16c-4505-8d48-a552f10ac09f" class="bulleted-list"><li style="list-style-type:disc">void f(void);<ul id="a86f5977-475b-4102-ab1e-e7974dbc54a2" class="bulleted-list"><li style="list-style-type:circle"><em><strong>There must be no passed parameters</strong></em></li></ul></li></ul></details></li></ul><ul id="2aa12db4-d0dc-4e99-b5ff-48ebfcddc705" class="bulleted-list"><li style="list-style-type:disc">Practice question:<p id="10c6f9ea-a192-44bf-97e0-b7ec253e6477" class="">Let&#x27;s say file1.c contains the following code:</p><pre id="e38800cc-eb43-403d-911d-5490af15b68e" class="code code-wrap"><code>    extern int foo;
+    static int bar;
+
+    static int baz(void) {
+      volatile int i = 0;
+      i++;
+      return i;
+    }</code></pre><p id="f88b9e9c-ba9d-447c-b0dd-1bbda4e9b9dd" class="">And file2.c contains the following code:</p><pre id="6c2c7f88-65ea-4cba-bf4d-5f21355a051b" class="code code-wrap"><code>    int foo;
+    static int bar;
+
+    static int baz(void) {
+      static unsigned int j = 0;
+      j++;
+      return j;
+    }</code></pre><p id="07d3cfe0-55f6-45f0-9616-a128f32e42b1" class="">For the variables/functions foo, bar, baz, i, and j, answer the following:</p><ul id="d95f0df2-f467-4f04-932f-5e7cf9918911" class="bulleted-list"><li style="list-style-type:circle">Is the variable private to file1.c, private to file2.c, or visible to both files?</li></ul><ul id="c31669c4-bd91-42f5-9a93-de203e796fdc" class="toggle"><li><details open=""><summary><strong>Student &amp; TA Solution</strong></summary><ul id="704dca99-f73e-44fa-9fe1-f6cb6d647637" class="bulleted-list"><li style="list-style-type:disc">foo : visible to both</li></ul><ul id="0e49b2b8-519d-4a65-b69c-ca2b08635c71" class="bulleted-list"><li style="list-style-type:disc">bar : private to file1.c and private to file2.c</li></ul><ul id="e8cc42ef-16c4-4c4a-a49e-5b5a66a471a4" class="bulleted-list"><li style="list-style-type:disc">baz : private to file1.c and private to file2.c</li></ul><ul id="0ec7e03b-8da8-48df-875a-80e02512bf03" class="bulleted-list"><li style="list-style-type:disc">i : private to file1.c</li></ul><ul id="d372ee36-7989-4d9a-96b5-9e16d6d4d3bf" class="bulleted-list"><li style="list-style-type:disc">j : private to file2.c</li></ul></details></li></ul><ul id="7a12b718-9ac3-4e90-973e-e8c78e99e006" class="bulleted-list"><li style="list-style-type:circle">Is the variable stored on the stack or in global/static memory?</li></ul><ul id="8fdce328-c699-4b3d-9e70-62151bca7d24" class="toggle"><li><details open=""><summary><strong>Student &amp; TA Solution</strong></summary><ul id="0d2f8bfb-b972-47ee-b520-b02ff63523ce" class="bulleted-list"><li style="list-style-type:disc">foo : global/static</li></ul><ul id="1ff72985-38f1-4c82-b2ac-1493f6f04eab" class="bulleted-list"><li style="list-style-type:disc">bar : global/static</li></ul><ul id="3ef94bcc-2288-4d92-9830-8c55db82e28a" class="bulleted-list"><li style="list-style-type:disc">baz : global/static</li></ul><ul id="1953d1ca-7d3e-4ad0-91a4-04602b71d7ad" class="bulleted-list"><li style="list-style-type:disc">i : stack</li></ul><ul id="80164aa8-a655-42c9-ab03-480b6f30e46a" class="bulleted-list"><li style="list-style-type:disc">j : global/static</li></ul></details></li></ul><ul id="ff86b53f-8416-4afa-9948-98d517660cb9" class="bulleted-list"><li style="list-style-type:circle">Is space reserved for this variables from both of the files (two separate variables with the same name), or from only one of the files?</li></ul><ul id="5ff11071-7a52-4d45-83b9-0564bb3ba68b" class="toggle"><li><details open=""><summary><strong>Student &amp; TA Solution</strong></summary><ul id="72f22a44-391c-402b-8449-9b0361a809a6" class="bulleted-list"><li style="list-style-type:disc">If both are static - Separate space is reserved for two separate variables in two separate files with the same name</li></ul><ul id="7afeacf5-4781-464e-8a6f-4233f244af75" class="bulleted-list"><li style="list-style-type:disc">If one is extern - Space is reserved for the variable in the file where it is declared (not the one that uses “extern”)</li></ul></details></li></ul></li></ul><hr id="016fa4d6-c41d-40b6-8e78-ea156feb1f6d"/><ul id="f1869566-4b5e-4c1c-b51c-6263d95f3a37" class="bulleted-list"><li style="list-style-type:disc">You encounter the following definition<strong> before the first function definition</strong> in a file. What is its scope and where is F stored?<pre id="155f7f07-6cc9-479f-b54e-deb13e581ba6" class="code"><code>double F;</code></pre><ol type="a" id="70ee6650-61aa-4871-b065-28f0257f2100" class="numbered-list" start="1"><li>Scope is all functions in the file; stored on the stack</li></ol><ol type="a" id="db90f352-7a23-46d0-87ab-4281f3d48dbb" class="numbered-list" start="2"><li>Scope is all functions in all files; stored in static memory</li></ol><ol type="a" id="88340cd1-ea80-4743-beec-6bd09993bc77" class="numbered-list" start="3"><li>Scope is the first function in the file; stored in static memory</li></ol><ol type="a" id="9f96c142-8e67-4527-96c7-b0f9c642b62c" class="numbered-list" start="4"><li>Scope is all functions in all files that include a corresponding <strong>extern</strong> declaration; stored on the stack</li></ol><ol type="a" id="bea8f1f9-88d9-48a1-86a2-6c1a1bce78ee" class="numbered-list" start="5"><li>Scope is all functions in all files that include a corresponding <strong>extern</strong> declaration; stored in static memory</li></ol><ul id="3e007678-4b47-44df-8233-eafb14ffe32f" class="toggle"><li><details open=""><summary>Prof Solution</summary><p id="81588964-9e91-4e72-8bce-b20eba31c235" class=""><strong>E</strong></p></details></li></ul></li></ul><ul id="749a3787-96fa-451e-a832-563cca3185e3" class="bulleted-list"><li style="list-style-type:disc">What is the type of p:<pre id="dd0efa7b-2534-4685-9d66-9f63223b7f67" class="code"><code>static const int *p;</code></pre><ol type="a" id="7eeb7f35-9927-4093-9796-2c49c3213d49" class="numbered-list" start="1"><li>pointer to int</li></ol><ol type="a" id="74fcf3ba-049c-42bc-9b17-89451ace7458" class="numbered-list" start="2"><li>static pointer to const int</li></ol><ol type="a" id="e78b019a-a4a5-4511-b640-c37574de7015" class="numbered-list" start="3"><li>static pointer to int</li></ol><ol type="a" id="670e3117-b050-4a16-8e56-27c578a63df6" class="numbered-list" start="4"><li>pointer to const int</li></ol><ul id="36ff623a-d578-4d19-9c2a-b0d2854b068d" class="toggle"><li><details open=""><summary>Prof Solution</summary><p id="3a1dfd73-6c6a-4202-9af1-9c3eb52ee02b" class=""><strong>D</strong></p><p id="302ccbe7-76b0-4b04-91ca-e43a0788db69" class="">Remember:</p><ul id="5d2d9b1e-c13d-4465-a84d-ccf1d0b7731a" class="bulleted-list"><li style="list-style-type:disc">Storage classes are not part of the type</li></ul><ul id="3a95667a-fd39-437a-a42a-2e70f1b0cdee" class="bulleted-list"><li style="list-style-type:disc">Type qualifiers ARE part of the type</li></ul></details></li></ul></li></ul><ul id="4efd7915-9181-416e-8f95-7c3638944880" class="bulleted-list"><li style="list-style-type:disc">Is the assignment legal?<pre id="2c632f3a-44ca-4581-87dd-64dcbaae38bf" class="code"><code>struct mystruct_tag {
+	int myint;
+	char mychar;
+	char mystr[20];
+} ms;
+ms.mystr = &quot;foo&quot;;</code></pre><ol type="a" id="2876b208-6bf6-4afa-8a02-80c7932ec2ca" class="numbered-list" start="1"><li>The assignment is legal</li></ol><ol type="a" id="1862414d-cf9e-4165-a6ae-1a0b345e129f" class="numbered-list" start="2"><li>The assignment is illegal because “foo” is a different size than ms.mystr</li></ol><ol type="a" id="09d83b39-201f-499a-826f-faadfe5282be" class="numbered-list" start="3"><li>The assignment is illegal because “foo” is stored in the constant data section of memory</li></ol><ol type="a" id="088dde97-7152-4148-9ef5-be0e8dddab8b" class="numbered-list" start="4"><li>The assignment is illegal because it is trying to assign an array to an array</li></ol><ul id="3d1123cd-199f-4ad8-8fe8-0b0648f9a5cf" class="toggle"><li><details open=""><summary>Prof Solution</summary><p id="454828b8-bc3f-4e58-893e-e134753234b7" class=""><strong>D</strong></p><p id="279a547a-93a0-42bb-b580-1a9451c49384" class="">
+</p></details></li></ul></li></ul><ul id="69e19024-886d-4b7a-adba-e479d93bde21" class="bulleted-list"><li style="list-style-type:disc">Is the initializer legal?<pre id="3fd421db-6d02-4479-b51c-c41b9e3770b9" class="code"><code>struct mystruct_tag {
+	int myint;
+	char mychar;
+	char mystr[20];
+};
+struct mystruct_tag ms = {42,&#x27;b&#x27;,&quot;Boo!&quot;};</code></pre><ol type="a" id="cf78f407-9033-4b4a-88a7-60d97c69752f" class="numbered-list" start="1"><li>The initializer is legal because a character array can be initialized to a string as a special case</li></ol><ol type="a" id="f3b06e4f-7abb-4090-9aa7-274a5995d3e2" class="numbered-list" start="2"><li>The initializer is illegal because “Boo!” is a different size than ms.mystr</li></ol><ol type="a" id="81c95e2e-be91-4cf8-8463-602227a9b86f" class="numbered-list" start="3"><li>The initializer is illegal because “Boo!” is stored in the constant data section of memory</li></ol><ol type="a" id="76273477-c105-4066-bfbc-114726bc88f5" class="numbered-list" start="4"><li>The initializer is illegal because it is trying to assign an array to an array</li></ol><ul id="5e680b87-8d03-4a6d-b81b-30be5314ead6" class="toggle"><li><details open=""><summary>Prof Solution</summary><p id="6bcbffc5-a174-400e-ad36-d072165f6ad3" class=""><strong>A</strong></p><p id="3239a2d1-568e-4b69-b729-2fffc0cfd03d" class="">
+</p></details></li></ul></li></ul></div></article></body></html>

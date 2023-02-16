@@ -1,0 +1,746 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Pointers/Arrays/Pointer Arithmetic</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2286deaf-7a5a-441a-a8fb-c8f92b9d39e0" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧥</span></div><h1 class="page-title">Pointers/Arrays/Pointer Arithmetic</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="dc6d2524-2d46-4460-920b-61a12a3a5c13" class="block-color-teal_background">Notes</h1><h2 id="9f42a323-0d54-46e8-a30e-b23220dae62e" class="block-color-red_background">Pointers</h2><p id="5abdc66f-089d-4a2f-95d2-471a685d4543" class=""><strong>Pointers are variables that contain a memory address</strong></p><ul id="c8fbfafe-b171-4444-b8d9-7244f61ebf0e" class="bulleted-list"><li style="list-style-type:disc">Act like dot operator</li></ul><ul id="16c95816-9f77-40be-9cce-109ac12a8476" class="bulleted-list"><li style="list-style-type:disc">No runtime checking</li></ul><ul id="b62bc2fd-b6a2-48fe-8e89-e437a0a2c187" class="bulleted-list"><li style="list-style-type:disc">Pointers contain memory addresses (or NULL)<ul id="a7d20b94-84b6-4b20-a97c-17f82a6b88a9" class="bulleted-list"><li style="list-style-type:circle">If you try to dereference a pointer containing NULL you will cause a segmentation fault</li></ul></li></ul><ul id="a4ef3541-7a97-4b94-91d2-0abd55e58d05" class="bulleted-list"><li style="list-style-type:disc">They also have a type<ul id="20d3dbeb-fe2c-4694-b03e-9e58ecb06dfe" class="bulleted-list"><li style="list-style-type:circle">This refers to the type of data AT that memory address.</li></ul><ul id="43bac04c-4f4d-4759-a810-3634dac6d03c" class="bulleted-list"><li style="list-style-type:circle">There is also a special case: void pointers which point to a memory address but there is no type for the data at the address</li></ul></li></ul><p id="d97a3600-232b-40a0-afb3-42c369ed075d" class="block-color-red">* is the symbol for pointer type</p><p id="0fb15839-6377-4701-9b68-fda9ae1d54e9" class="block-color-red">&amp; is the “address of” operator; you use it to obtain a pointer to an existing data item, used in place of object references</p><p id="425e92e4-0e88-418a-8c4f-e768c8d05eae" class="block-color-red">An &amp; symbol can be used to find the address of a code element such as a variable or function, and then assigned to a pointer:</p><pre id="def0243f-97f5-4821-9a3c-13b233ce3d84" class="code"><code>char *x;   // declares that x is a pointer to a char.
+char **y;  // declares that y is a pointer to a pointer to a char.
+void *z;   // declares that z is a pointer to an unspecified type
+
+char i = 97;    // i stores the value 97 or &#x27;a&#x27;
+char *x = &amp;i;   // x stores the address of the variable i
+char **y = &amp;x;  // y stores the address of the variable x
+void *z = &amp;i;   // z also stores the address of the variable i</code></pre><ul id="78eff0e0-e85b-4bb0-9b52-ebda01e8027d" class="block-color-red_background toggle"><li><details open=""><summary>example1</summary><pre id="6ba58a28-25c2-4147-9535-55271dc8d064" class="code"><code>int y = 7;
+int z = 9;
+int *x = &amp;y;
+x = &amp;z;
+
+//One possible assembly implementation:
+.orig x3000
+LEA R0, Z      ; R0 = x3022
+ST  R0, X      ; x = x3022 = &amp;z
+.end
+.orig x3020
+X .fill x3021
+Y .fill 7      ; address x3021
+Z .fill 9      ; address x3022
+.end</code></pre><figure id="405db25b-4c99-434b-ba1c-7b74f32a954b" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_19.49.01.png"><img style="width:750px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_19.49.01.png"/></a></figure><p id="cf240a26-fb9f-4047-ab0b-55bb7b399661" class="">&amp;b —&gt; Address of b. &amp; means the address of</p><p id="b170343a-0539-48bb-8e2b-4950f8c29412" class="">* is a pointer to the address</p></details></li></ul><p id="76f90ef9-20f0-4ddd-b9bd-88f8fafb19db" class="">To reference what a pointer points to, we use the dereference
+operator * (acts like “indirect” in LC-3 loads and stores)</p><ul id="47a0d55a-5e69-4f22-ae02-bfbd6461425f" class="bulleted-list"><li style="list-style-type:disc">In a type declaration, * means “pointer to” and is part of the type<ul id="c9523f9c-f4f3-4069-826a-565df2cb0d92" class="bulleted-list"><li style="list-style-type:circle">** would mean pointer to pointer to</li></ul></li></ul><ul id="563257c1-c9f6-4ee5-9481-c06ff6943327" class="bulleted-list"><li style="list-style-type:disc">In an expression, * is the “dereference” operator – it acts as the “indirect” in the LC-3 loads and stores</li></ul><ul id="9c4be872-8e49-4a00-a011-b476d2a2b51e" class="bulleted-list"><li style="list-style-type:disc">When applied to a pointer, * makes the expression mean “What this pointer points to”</li></ul><pre id="47c60176-bc7a-46f2-a2be-8b92da67805c" class="code"><code>Pointer Declaration:
+int i, x;
+int *px = &amp;x;
+Declaration: *px —&gt; pointer to px
+
+Pointer Expression:
+i = *px;
+Expression: get the data px points to</code></pre><ul id="7320b074-dec2-49b1-9c5e-44e5e417a3e9" class="block-color-red_background toggle"><li><details open=""><summary>example2</summary><figure id="1c2a9105-1125-48d9-ac88-0d621ff3230e" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_19.49.21.png"><img style="width:826px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_19.49.21.png"/></a></figure><p id="5d191c6b-98de-4aa0-b38d-d0a06bc0b1ea" class="">RHS: *badder —&gt; the int that badder points to.</p><p id="e78d3818-c872-4569-9177-4fa3767ea868" class="">*badder + 2 is the int result of the addition</p><p id="16a987b0-a1e1-44ad-92e1-9b02c046db03" class="">LHS *badder shows the direction it goes</p></details></li></ul><ul id="aee80aa2-1d29-4f33-8249-b826f64aefed" class="block-color-red_background toggle"><li><details open=""><summary>example3</summary><figure id="8d3f3be6-a11a-4d5a-a406-08f93dd50184" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_19.49.50.png"><img style="width:614px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_19.49.50.png"/></a></figure><p id="4c217cf1-ccd8-43d5-a705-fdd611d2ff26" class="">The value stored at b has been changed to 18; baddr still contains the address of b</p></details></li></ul><ul id="e6efd733-9e53-4fd5-b140-0615cafd75b0" class="block-color-red_background toggle"><li><details open=""><summary>example4</summary><figure id="08fd7e20-58c5-40d9-aa56-10771aa04d9c" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_19.56.34.png"><img style="width:1030px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_19.56.34.png"/></a></figure><p id="b4e62f42-ccb8-49f2-adbc-bf4737efa4f9" class="">
+</p></details></li></ul><p id="3c3c02fb-0564-4d97-a013-cd402b9be021" class="">
+</p><h2 id="34b4b8d5-79cf-47eb-a7bb-3f4e5988bc8f" class="block-color-red_background">Dereferencing a Pointer</h2><pre id="08730a58-c7a8-4bf9-9239-4233d3887ce2" class="code"><code>int y = 7; 
+int *x = &amp;y;
+R0 = *x;
+R0++;
+*x = R0;// C can’t directly modify registers like this, but this is C pseudocode  ̄\_(ツ)_/ ̄
+
+//One possible assembly implementation:
+.orig x3000
+LDI R0, X      ; R0 = mem[mem[x3021]]
+ADD R0, R0, 1  ; R0++;
+STI R0, X      ; mem[mem[x3021]] = R0;
+.end
+.orig x3020
+X .fill x3021
+Y .fill 7      ; address x3021
+.end</code></pre><h2 id="6c5fc462-42ed-4142-b84f-d70782242875" class="block-color-red_background">Pointers and Arrays</h2><p id="5f8c1e0b-0e03-4a42-b24e-c21c7ea9e6fc" class=""><strong>Arrays in c (like in assembly) is a fixed-size sequence of same-typed elements</strong></p><pre id="cfd05687-badd-4198-8e41-d60db7283fc4" class="code"><code>int arr[5];                // declares arr as an array of 5 ints
+char arr[] = {&#x27;A&#x27;,66,&#x27;C&#x27;}; // arr is an array of 3 chars
+int *arr[3]; // arr is an array of 3 int pointers</code></pre><p id="f544ab68-609f-4b45-8849-8b61948ce2e9" class="">int a[10]; —&gt; a is an array, size 10, of int</p><p id="d98f5762-0370-4ba3-8035-0c5e79650f3b" class="">int *p; —&gt; p is a pointer to int (memory address)</p><p id="6bac953e-7f37-4a74-bd0a-eadd02731a54" class="block-color-red"><strong><em>In an expression, an array name becomes a constant pointer to the first element</em></strong></p><ul id="10bad47d-67f4-482e-b960-d002302f2b18" class="bulleted-list"><li style="list-style-type:disc">a is the memory address where the array starts</li></ul><ul id="ba621b25-0215-4f47-a013-59c93c12bf5a" class="block-color-red bulleted-list"><li style="list-style-type:disc">a can’t be changed (but its contents can)</li></ul><ul id="91a923f7-6d90-42d9-9d7d-b490608d2c81" class="bulleted-list"><li style="list-style-type:disc">In other words, it’s the address of a[0] (or specifically &amp;a[0])</li></ul><ul id="35de2c82-e57a-43e3-9b7b-3d328811b445" class="block-color-red bulleted-list"><li style="list-style-type:disc">arr[0] = 7 is equivalent to arr = 7</li></ul><ul id="840601f4-595f-4184-aa34-a0e101ac3feb" class="block-color-pink_background toggle"><li><details open=""><summary>Example</summary><figure id="071b6123-4e17-4ecd-9268-5f66be4e8447" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.03.22.png"><img style="width:764px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.03.22.png"/></a></figure><p id="7b0f490d-2b64-4787-aa1f-92a177873aa9" class="">
+</p></details></li></ul><hr id="037689ad-638b-4557-9e9d-b3e78c1c0e9c"/><p id="583302a0-294a-4f92-a95c-608bbdf19b0b" class="block-color-red">Arrays can decay to pointers to their first element. And you can treat a pointer like an array since array notation is a shorthand for pointer arithmetic</p><ul id="d6d3e09f-5ed2-49b9-90c8-50270f979abe" class="bulleted-list"><li style="list-style-type:disc"><strong>But they are not the same:</strong><ul id="6abf6f4c-10e2-4b49-b4d1-ca86362cab81" class="bulleted-list"><li style="list-style-type:circle">Arrays are fixed-size and cannot be reassigned. They refer to a specific region of memory.</li></ul><ul id="fadec298-846b-45d2-9b21-09a7165bdf73" class="bulleted-list"><li style="list-style-type:circle">A pointer is just a variable that holds a memory address.</li></ul></li></ul><pre id="ea47be50-0ec9-402d-94ce-c2eed76b6086" class="code"><code>int *ptr;
+int arr[10];
+*(ptr + x) == ptr[x];
+*(arr + x) == arr[x];</code></pre><h2 id="ce1d08e6-6771-4a12-8d21-67223b57fa78" class="block-color-red_background">Strings and Pointers</h2><p id="2470a87a-731c-4a4f-91c4-79420eb47e42" class="">Strings in C are accessed through a pointer to the first character</p><p id="3b459258-e377-4d79-ad88-02d4f8d824aa" class="">C-strings are null-terminated (just like in assembly)</p><pre id="e998f32f-6ae5-4a7e-972e-73bb9be85c98" class="code"><code>char *a;   //denotes a pointer to a character
+char *a = &quot;Hello&quot;;  // null terminator is added implicitly
+char b[] = {&#x27;W&#x27;, &#x27;o&#x27;, &#x27;r&#x27;, &#x27;l&#x27;, &#x27;d&#x27;, &#x27;\0&#x27;};</code></pre><p id="70808284-bce8-41f9-bd51-74a82ba3eaac" class="">char str[6] = “Hello”;</p><p id="2c897896-a8ac-4821-acfc-da9ee70ab49b" class="">char *str;  —&gt; pointer to the first character of str</p><h2 id="aa6038f6-54b3-4e31-b42b-9852ce98a035" class="block-color-red_background">Pointer Arithmetic</h2><p id="82944fb6-42da-4ff3-a323-c4c41862e8d6" class="">Adding and subtracting to/from pointers; it adds offset times the size of the pointer type.</p><p id="66513fdb-cf58-426f-a366-0ac5c5dfb0cd" class="">int *p = &amp;i;</p><p id="e5edb977-0c23-41ea-ac10-4ef03582f2b2" class="">p = p + 1;   —&gt; is interpreted as p = p + 1 * sizeof(*p);</p><p id="d509d25f-7127-438b-956c-5ecf114dc13d" class="">(if p is an int pointer, p + 1 is the address of the next int – the address in p is incremented by the size of an int)</p><pre id="eab52bac-b89b-41de-8d08-360e042174e9" class="code"><code>int *y;
+y + 2 evaluates to y + 2*sizeof(int)
+y[2] (array notation) is an equivalent shorthand
+
+int arr[4];
+
+arr[3] = 12; is equivalent to
+*(arr + 3) = 12; is equivalent to
+arr + 3*sizeof(int)
+</code></pre><ul id="ce3339eb-9a0c-4e25-90b2-25b2c302261a" class="block-color-red_background toggle"><li><details open=""><summary>Example</summary><figure id="96bb281b-cbf0-4825-b360-ababfe166cdf" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.07.54.png"><img style="width:530px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.07.54.png"/></a></figure></details></li></ul><ul id="ce88eef7-ca1a-4ed4-adc9-92eee6a189f8" class="block-color-red_background toggle"><li><details open=""><summary>Pointer Arithmetic example</summary><figure id="9719ddfb-e3b7-4453-a724-834b9ac12245" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.09.19.png"><img style="width:998px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.09.19.png"/></a></figure></details></li></ul><ul id="722447bf-cc71-4518-aca4-a81ea112b926" class="block-color-red_background toggle"><li><details open=""><summary>More Pointer Arithmetic example</summary><figure id="a5d28610-39b3-4483-8f39-e1dbdac9c009" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.10.44.png"><img style="width:1184px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.10.44.png"/></a></figure></details></li></ul><p id="5d163bdf-0d6d-47a2-b691-bfea47ed26bc" class="">This also applies to arrays: </p><ol type="1" id="53c98558-c60e-4c53-8bf7-d4b36e476232" class="numbered-list" start="1"><li>int arr[4]; </li></ol><ol type="1" id="f7660aaa-6913-4fc3-aacf-d42582822219" class="numbered-list" start="2"><li>arr[3] = 12; </li></ol><ol type="1" id="60e0abef-c879-411b-9f39-94a0574fc46d" class="numbered-list" start="3"><li>*(arr + 3) = 12</li></ol><ul id="eb782a59-f29f-42d5-95f6-b7a23cc10c6c" class="bulleted-list"><li style="list-style-type:disc">The above evaluates to <strong>arr + 3*sizeof(int)</strong> to get the correct physical address of the fourth element.</li></ul><ul id="75b564fe-5a8c-4b92-adbc-a9cb7875339c" class="bulleted-list"><li style="list-style-type:disc">pointer arithmetic automatically takes the sizeof the element type into account in pointer arithmetic<ul id="17be58c6-c46e-4d6a-b6fd-da84ff5c3f0d" class="bulleted-list"><li style="list-style-type:circle"><em><strong>Ex 1:</strong></em><pre id="d4dbde1d-a300-469e-922a-8c5aff1ac678" class="code"><code>int arr[4];
+arr[3] = 12; //Same as prev line...evaluates to *(arr + 3*sizeof(int))</code></pre></li></ul><ul id="c0e2d0ab-acc5-4014-aac0-7785d4bc7e32" class="bulleted-list"><li style="list-style-type:circle"><em><strong>Ex 2:</strong></em><pre id="b60ab526-cded-46f1-84af-8cb9b47cc7df" class="code"><code>int *y;
+y+2; // evaluates to y+2*sizeof(int)</code></pre></li></ul></li></ul><h2 id="436dcadb-0fd4-462e-9fd7-9ad6afeaec9d" class="block-color-red_background">Pointers to Structs</h2><p id="98fad998-3dd1-43ee-a6e8-cec9cad2df02" class="">—<strong><em>&gt; Operator</em></strong></p><p id="feabf310-b05b-4c15-971d-b44aca65598b" class=""><em><strong>The left operand must be a pointer to struct and the right operand a struct member</strong></em></p><p id="d84d4d68-198f-4ae1-8653-581b814fff5f" class="">A shorthand for *</p><ul id="819ab851-a68c-451f-bbbd-415a7b39d731" class="block-color-red_background toggle"><li><details open=""><summary>Example</summary><figure id="1a99d821-3b19-4331-b6c1-92be8f93ea00" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.12.29.png"><img style="width:626px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-03_at_20.12.29.png"/></a></figure><p id="913b8966-6579-42fc-b0b3-aebfc98c39e7" class="">
+</p></details></li></ul><h2 id="32e705e5-11db-4091-b410-8361e5e18883" class="block-color-pink_background">Implementing a call-by-reference function with pointers</h2><p id="5c042d7a-c4f8-4b81-96fd-9baadb593bdd" class="">SWAP function</p><p id="abcd3cf1-c6d6-4736-944c-3c565a31d150" class="block-color-pink_background">No pointers(bad!)<div class="indented"><figure id="8f8ec700-d947-4808-8789-c284f3f50294" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.36.07.png"><img style="width:916px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.36.07.png"/></a></figure><figure id="51c13c91-a48a-4978-b72a-9b6cca997630" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.36.14.png"><img style="width:924px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.36.14.png"/></a></figure><figure id="3c29186c-9933-4f3b-9c8e-25cccff88017" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.36.21.png"><img style="width:930px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.36.21.png"/></a></figure><figure id="d20b4d5b-23c8-4cf9-9f8d-a3439a04f567" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.35.28.png"><img style="width:918px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.35.28.png"/></a></figure></div></p><ul id="f3b9bbcb-ae72-4c80-8118-bf88de672688" class="block-color-pink_background toggle"><li><details open=""><summary>Pointers(Good!)</summary><figure id="862b79e4-eb4d-4892-973b-bcdd8a0d227d" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.36.50.png"><img style="width:944px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.36.50.png"/></a></figure><figure id="500fe385-a910-4145-b898-07c9eec75b0e" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.37.01.png"><img style="width:948px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.37.01.png"/></a></figure><figure id="07d8bea6-cc57-437c-b978-0971a960ca06" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.37.09.png"><img style="width:942px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.37.09.png"/></a></figure><figure id="8dfb8061-fea6-4bed-8ce9-0ccb466ec0ae" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.37.17.png"><img style="width:944px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.37.17.png"/></a></figure><p id="70dfecf8-681f-416c-b193-192766bc7701" class="">
+</p></details></li></ul><ul id="1d33fa34-c2a2-46e2-b9b0-71c1d30c5274" class="block-color-pink_background toggle"><li><details open=""><summary>Another way to do pointers</summary><figure id="87ead493-62da-48e8-b8bd-52fa100ef65d" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.38.01.png"><img style="width:418px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.38.01.png"/></a></figure><p id="6fcbd1f8-7896-47d8-b860-66f5132a10da" class="">
+</p></details></li></ul><h1 id="8825204d-73c8-4e66-871b-919a1d9f5c60" class="block-color-purple_background">Arrays</h1><ul id="e0527e94-726c-48b2-b074-1cc08b488667" class="bulleted-list"><li style="list-style-type:disc">They declare a fixed-size sequence of same-typed elements</li></ul><ul id="0f5a268b-695f-4c88-a862-1c56f0b1d477" class="bulleted-list"><li style="list-style-type:disc">They are laid out consecutively in memory</li></ul><ul id="3432afe1-6e28-4719-a2e0-1ae8932b6e88" class="bulleted-list"><li style="list-style-type:disc">You can also make arrays of pointers</li></ul><ul id="0cef90af-0a6f-45cb-8b0f-d3fde8e49c37" class="bulleted-list"><li style="list-style-type:disc">Unlike in Java, you cannot count on uninitialized data to be NULL or 0; it is simply un-initialized (just like assembly!)</li></ul><ul id="7ebf2eea-8158-4d37-968d-709d92d729f5" class="bulleted-list"><li style="list-style-type:disc">Like in assembly, arrays are essentially just two pieces of information: the address of the first element and the length of the array</li></ul><ul id="5c9c1e82-eb96-41a4-8570-3b5f414b1a57" class="bulleted-list"><li style="list-style-type:disc">“Address of first element” == “pointer to first element”</li></ul><ul id="0484f7b0-131e-4366-8d7d-e735e9247e5b" class="bulleted-list"><li style="list-style-type:disc">Arrays decay to pointers: we can choose to lose the length and implicitly convert an array to a pointer to its first element</li></ul><p id="073a07a3-c053-4e13-a4c4-5eca7c927bf1" class="block-color-purple">Find the dimension of an Array IN SCOPE(not a parameter):</p><p id="defa3a1a-1d03-449a-a45d-510643f57483" class="">sizeof(ary) / sizeof(ary[0])</p><p id="dff53d36-748b-49a7-a745-18bfeb4b72f9" class="block-color-purple">If the array is passed as a parameter:</p><p id="74855404-1d83-4e67-8e5e-bd6161980c9f" class="">Must pass the length with the array</p><h2 id="57480b74-35e5-4ed3-8a40-10e0f349e9b9" class="block-color-pink_background">Initializing Arrays</h2><p id="1732df4e-c945-45e0-afef-dad73f64c1d7" class="">Use values in braces &quot;{}&quot;</p><p id="32256f70-e00d-4379-8b3a-bec706d3ae18" class="block-color-pink">int ib[5] = {5,4,3,2,1};</p><p id="977cb372-1e13-4c1b-b7bf-20b98c8c047d" class="">or:</p><p id="24a8d4ed-03eb-4434-8e90-107f680b1232" class="">int ib[] = {5,4,3,2,1,0};</p><p id="19b577d6-11d7-4105-b341-e2122dc31acd" class="">or</p><p id="928c145a-c85d-4166-84f9-323f5ba84d21" class="">char cb[] = {&#x27;x&#x27;, &#x27;y&#x27;, &#x27;z&#x27;};</p><p id="c5bdb3cb-fb7a-4b2b-9140-818d52d95f9c" class="">or</p><p id="6ee726d8-222e-4208-a26e-6aa0e2d15ed5" class="">char cb[] = &quot;hello&quot;;  —&gt; cb: h e l l o \0, size = 6</p><p id="1b69cd6f-53c9-4df4-8723-252ee8e1a67c" class="">or </p><p id="44c48bd3-7d20-42c0-92cb-bdb1f8b85f91" class="">char *cb = &quot;hello&quot;; —&gt; pointer to the address that contains &quot;hello&quot;, size is the size of the memory address</p><ul id="d820f983-f048-4be4-adaf-a2d487bc2b74" class="block-color-pink_background toggle"><li><details open=""><summary>Example cb[] vs *cb</summary><p id="3e0545da-597c-4840-aa9d-4b100954793f" class="">char c1[] = &quot;hello&quot; </p><p id="b431893a-ae1a-45af-89b2-6261cfd0dcce" class="">char #c2 = &quot;hello&quot;</p><p id="28b16886-214b-41a7-8e78-e64a75f566d1" class="">sizeof(c1) == 6 //array size including the null terminator \0</p><p id="815e1cad-cd8a-47fd-b905-709f09783d60" class="">sizeof(c2) == 8 //size of a pointer on your system</p><p id="72101d6a-254f-4b96-bffb-61ed6ad0a5fd" class="">strlen(c1) == 5 </p><p id="c1399582-dcc8-4c2b-819f-c472c46cd6a1" class="">strlen(c2) == 5</p><figure id="04fff55e-8e90-4d30-a353-27af9baa1de0" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.18.25.png"><img style="width:808px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.18.25.png"/></a></figure><figure id="71a0a0eb-e2ee-4e8a-8570-5b491b707f38" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.19.46.png"><img style="width:786px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.19.46.png"/></a></figure></details></li></ul><ul id="9f1314af-5ff0-4ff2-8080-d32b5fb31958" class="block-color-pink_background toggle"><li><details open=""><summary>More array example(POINTER ARITHMETIC)</summary><figure id="7908007d-c9af-4d28-a341-7f02c19fe936" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.24.10.png"><img style="width:528px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.24.10.png"/></a></figure><figure id="dd86ffb8-9995-4b5e-bfdb-79344af16c39" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.24.39.png"><img style="width:716px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.24.39.png"/></a></figure><p id="c71e4049-8916-40d5-be3c-0c6aa1e57b59" class="">ia is a constant, cannot assign value to a constant</p><figure id="4f1a0283-4394-4bdb-9954-d0372dc87f81" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.25.09.png"><img style="width:590px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.25.09.png"/></a></figure><figure id="31ade8ee-f107-477a-906d-3fa8184407be" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.26.17.png"><img style="width:364px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.26.17.png"/></a></figure><p id="137e4784-a609-4207-8f8d-c1c88a889130" class="">IT WORKS!!! But don&#x27;t write it like this</p></details></li></ul><p id="426fb3b1-c9b5-4548-a2b5-016a9d94750c" class="">
+</p><ul id="34702c3a-d61d-4c7f-93fe-952e5d832d9e" class="block-color-blue_background toggle"><li><details open=""><summary>In-class Quiz</summary><figure id="4bf95ee2-bde1-43fe-bdfb-c4137e8f3870" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.29.16.png"><img style="width:704px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.29.16.png"/></a></figure><p id="abb2a8ca-844b-4a5e-bfcd-2ec10f1e1e54" class="">#2 is illegal since we cannot assign something to an array name</p></details></li></ul><ul id="001b2e97-34a5-4ac4-b534-63c12e25e7b1" class="block-color-blue_background toggle"><li><details open=""><summary>In-class Quiz</summary><figure id="41b17ce5-c5d8-4d8f-881a-cd823ed3855b" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.30.09.png"><img style="width:486px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.30.09.png"/></a></figure><p id="f9fa2d69-23db-4609-95ec-d0c68d09a45d" class="">Cannot assign value to an array name</p></details></li></ul><p id="aee039de-c8ca-4106-a3c9-36c2ef0ed85d" class="">
+</p><ul id="d908624e-dd18-4be5-a9e5-3a7c9e41c614" class="block-color-pink_background toggle"><li><details open=""><summary>Looping through an array(POINTER ARITHMETIC)</summary><figure id="58345b73-a53d-4b54-acc2-a11b162f2834" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.44.21.png"><img style="width:874px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.44.21.png"/></a></figure><p id="6110d2cf-8bf9-4faa-919e-e53406890521" class="">Pointer Arithmetic doesn&#x27;t have multiplication(ia[i])</p></details></li></ul><ul id="d3cd5c09-2ec8-4e69-a329-48f11ab25e97" class="block-color-pink_background toggle"><li><details open=""><summary>Looping through an array(SWAP)</summary><figure id="0034728b-5413-4696-84ea-ef72845c92da" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.48.21.png"><img style="width:532px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.48.21.png"/></a></figure><p id="d512ef0d-0ce0-4f5a-8a4d-b18c72f654f4" class="">Correct implementation of swap_pointers</p><figure id="ad8ca06f-58e1-4905-9834-db7977350b3e" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.47.26.png"><img style="width:598px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_16.47.26.png"/></a></figure><p id="243ab4c5-0fa2-4949-868d-39795f7074ff" class="">**a —&gt; pointer to a pointer to an int</p><p id="89d46b4e-a287-47e7-bf95-d5244762a63e" class="">in the function, exchange pointers</p></details></li></ul><h2 id="d98636fb-7f03-462c-809d-966ebbfe2577" class="block-color-pink_background">Array as arguments</h2><p id="0cd22210-712e-4b06-87c1-daa171d771b3" class="">char s[10] = “Hello”;</p><p id="a4aed315-0cb2-40a2-a7c4-78c13fcd5eaf" class="">void test(char *s) {<div class="indented"><p id="7f24fe37-35a1-4976-a3b4-915a6493dd38" class="">printf(“%s\n”, s);</p></div></p><p id="6d499cec-83e4-438d-917c-d61c4a4de6c3" class="">}</p><p id="7894ea97-cd61-49dd-882d-19be444a7759" class="">int main(int argc, char *argv[]) {<div class="indented"><p id="9d2f6dfd-28b7-4e0e-9d48-7ad76252f380" class="">test(s);</p><p id="66a2588b-329c-4e4c-940b-4684413dea9f" class="">test(&amp;s[0]);</p></div></p><p id="24b2864b-099d-4379-a5cb-111f810bc747" class="">}</p><p id="c1ba8441-69fe-40db-b19f-eb49ab1fd7db" class=""><strong>To pass an array into a function, we pass a pointer to the first element. </strong></p><p id="01be471b-3cde-44e4-81fe-b7415cf557f3" class=""><strong>Note that an array name in an expression (function call) is automatically promoted to a pointer to its first element. </strong></p><p id="15eb2063-227f-42c1-b45f-5be36add9468" class=""><strong>This includes strings (arrays of char)</strong></p><h3 id="8d9da13a-e878-407c-9425-17007156c3f8" class="block-color-red_background">Sizeof()</h3><ul id="896f8ae1-6319-4b1d-b2e2-d4a6947def5f" class="bulleted-list"><li style="list-style-type:disc">Know how the sizeof operator works in C<ul id="a09dbe07-faea-4c17-b9ee-8389a8766866" class="bulleted-list"><li style="list-style-type:circle">Know that the sizes of common datatypes like int are not guaranteed</li></ul><ul id="00083647-584f-4a78-8520-c98e49b1c27e" class="bulleted-list"><li style="list-style-type:circle">Know that the size of a struct is the sum of the sizes of its components (we will be assuming that the compiler does not pad structs with empty space)</li></ul></li></ul><ul id="d167cc71-4f25-45ca-97c1-e86a86b0fe76" class="toggle"><li><details open=""><summary>cheat sheet</summary><figure id="d762379b-b246-41be-b45c-7561e497ea21" class="image"><a href="https://lh4.googleusercontent.com/kxeI3UXWRZVbzAWK1INvmaGQzx-QaRpoE3bOWlfoV3zGtuqxdWRon9qozujhA1fhG4IHg2xhO76hcchtVWvr7XfjvpiPHPSQ3LbXza9wJ_j6pDqBg7cQkQ5CWU5Q_eMue9xxBLw3"><img src="https://lh4.googleusercontent.com/kxeI3UXWRZVbzAWK1INvmaGQzx-QaRpoE3bOWlfoV3zGtuqxdWRon9qozujhA1fhG4IHg2xhO76hcchtVWvr7XfjvpiPHPSQ3LbXza9wJ_j6pDqBg7cQkQ5CWU5Q_eMue9xxBLw3"/></a></figure></details></li></ul><h1 id="0ecbbc37-886b-472d-871e-907db183fff3" class="block-color-teal_background">Questions &amp; Answers</h1><p id="3e82e448-a68d-43fb-b472-8155036d781e" class="">Practice question: Assume we&#x27;re on a machine where <code>sizeof(int) = 4</code> and <code>sizeof(int *) = 4</code>. Given</p><pre id="b390eb4c-07ea-4091-9297-ef504d862312" class="code code-wrap"><code>int c[3];</code></pre><p id="d8069bb7-96f3-4bd0-a253-5bdef0136631" class="">Which of the following are equivalent to <code>c[1]</code>? There may be more than one correct answer.</p><ul id="6078c5dc-318c-43a9-8734-5791e8998472" class="bulleted-list"><li style="list-style-type:disc"><code>&amp;(c + 1)[0]</code>.  </li></ul><ul id="bcfd7bdd-0269-473d-915a-1dd92ee068a2" class="bulleted-list"><li style="list-style-type:disc"><code>*(c + 1)</code></li></ul><ul id="192fd748-2f3c-45c7-86ba-6acf4847e509" class="bulleted-list"><li style="list-style-type:disc"><code>*(int **)((char *) c + 4)</code></li></ul><ul id="c449672b-8b0c-49a3-8b72-1868e70a6386" class="bulleted-list"><li style="list-style-type:disc"><code>*((char *) c + 4)</code></li></ul><ul id="6350eec9-64c8-4c3e-813e-38cd0e660a95" class="bulleted-list"><li style="list-style-type:disc"><code>(c + 3)[-2]</code></li></ul><ul id="dd722a70-a089-4167-9d28-3ba82ce5f5c5" class="bulleted-list"><li style="list-style-type:disc"><code>*(int *)((char *) c + 1)</code></li></ul><ul id="6ce74c66-946f-4459-a4fd-d2bf0a2fc8d4" class="bulleted-list"><li style="list-style-type:disc"><code>1[c]</code></li></ul><ul id="cf4ae982-a296-4dbc-a9da-43345f7d1e77" class="toggle"><li><details open=""><summary>Aiden Solution</summary><ul id="464ca676-d63e-446b-b795-2a4d158e9cbf" class="bulleted-list"><li style="list-style-type:disc">&amp;(c + 1)[0] - <em><strong>Incorrect ; address of element at index 1 rather than the element itself</strong></em></li></ul><ul id="dc0dba00-ae2d-45a7-a693-430473de56b1" class="bulleted-list"><li style="list-style-type:disc">(c + 1) <em><strong>Correct</strong></em></li></ul><ul id="b30e30db-ce8e-45ca-af3c-cceb190709b5" class="bulleted-list"><li style="list-style-type:disc">(int *)((char *) c + 4); <em><strong>Correct - ???</strong></em></li></ul><ul id="18ce7322-79b4-47b5-876c-fc227c136f80" class="bulleted-list"><li style="list-style-type:disc">((char *) c + 4); <em><strong>Incorrect (Dereferencing a char pointer when we want an int)</strong></em></li></ul><ul id="199cad17-50f6-4185-831a-f91c4d0ce649" class="bulleted-list"><li style="list-style-type:disc">((char *) c + 1); <em><strong>Incorrect (Dereferencing a char pointer when we want an int). Also offset is incorrect, that 1 is being multiplied by sizeof(char), which is 1, not sizeof(int), which is 4</strong></em></li></ul><ul id="3ab2b2ca-6f64-4019-a0ef-320c7cb8f07a" class="bulleted-list"><li style="list-style-type:disc">&amp;c[1][0];  <strong><em>Correct</em></strong></li></ul></details></li></ul><ul id="9c6dbf89-1cab-4d3b-ae51-9a1b80d0d0e9" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><ul id="439c82df-cb40-4c65-8c19-b8630e129a2c" class="bulleted-list"><li style="list-style-type:disc">&amp;(c + 1)[0] <em><strong>Incorrect ; address of element at index 1 rather than the element itself</strong></em></li></ul><ul id="27a3dc0a-6dfb-4ae1-a29b-175a38f6466d" class="bulleted-list"><li style="list-style-type:disc">(c + 1) <strong>(this one)</strong></li></ul><ul id="8db66d1b-de45-47d1-b07a-fbf1a9fb1985" class="bulleted-list"><li style="list-style-type:disc">(int *)((char *) c + 4)<strong>(this one)</strong></li></ul><ul id="6af1eb60-b9b8-48b8-b001-03cbf105a1a9" class="bulleted-list"><li style="list-style-type:disc">((char *) c + 4)</li></ul><ul id="94a62fe4-0e8d-498f-98ec-4f831c4e40f6" class="bulleted-list"><li style="list-style-type:disc">(c + 3)[-2] <strong>(This one) 3-2 = 1</strong></li></ul><ul id="4b8e51ad-d066-462b-98cd-6c6c177d7d63" class="bulleted-list"><li style="list-style-type:disc">(int *)((char *) c + 1)</li></ul><ul id="dcf8747e-f64a-4341-90a5-4aeb5e1c84ee" class="bulleted-list"><li style="list-style-type:disc">&amp;c[1][0] <strong>(this one)</strong></li></ul></details></li></ul><p id="7d7938c0-155b-4e33-bfc8-3787c93b9dd2" class="">Practice question: Assume we&#x27;re on a machine where <code>sizeof(int) = 4</code>. What would the following program print?</p><pre id="d2a01ddc-1f26-453c-8295-d6db1bc0aeff" class="code code-wrap"><code>int main(void) {
+  struct coord {
+    int x; // 0x4 bytes
+    int y; // 0x4 bytes
+  };
+  struct coord coords[10];  // assume this starts at address 0x4000
+  printf(&quot;%p\n&quot;, &amp;coords[4].y);
+}</code></pre><ul id="797e0d5c-6d31-4705-9c07-ae774aee8d0a" class="toggle"><li><details open=""><summary>Student &amp; TA Solution</summary><p id="a05ab718-4476-4868-b954-345361ef0815" class=""><strong>0x4000 + #36 = 0x4024</strong></p></details></li></ul><hr id="44200ef3-88de-487d-b4f5-78c3faad1575"/><ul id="0bef7fed-1921-4ef4-afb8-9450cfed3643" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz questions</summary><figure id="c9c73593-81e7-4034-8fe7-a0ea0f82b66e" class="image"><a href="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.39.30.png"><img style="width:1280px" src="Pointers%20Arrays%20Pointer%20Arithmetic%202286deaf7a5a441aa8fbc8f92b9d39e0/Screen_Shot_2021-11-10_at_15.39.30.png"/></a></figure></details></li></ul><ul id="0f0be7b3-ff6a-4bbe-950a-722d0d4023aa" class="bulleted-list"><li style="list-style-type:disc">why is &amp;(c+1)[0] not equal to c[1] but &amp;c[1][0] is equal to c[1]?</li></ul><ul id="fc443b37-d8e3-4fe8-a73c-dda71c52676c" class="toggle"><li><details open=""><summary>TA Solution</summary><p id="1fec3ae8-32c2-4e86-994c-85c14399a513" class="">Basically, the pointer arithmetic is the same but using brackets (like [0]) also dereferences, so the second expression dereferences twice and the first only once. &amp;(c+1)[0] gets the ADDRESS of the first index, while c[1] and &amp;c[1][0] gets the actual VALUE of the first index</p></details></li></ul></div></article></body></html>

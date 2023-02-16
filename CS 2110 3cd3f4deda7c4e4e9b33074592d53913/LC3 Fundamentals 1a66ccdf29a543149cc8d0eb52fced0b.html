@@ -1,0 +1,676 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>LC3 Fundamentals</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1a66ccdf-29a5-4314-9cc8-d0eb52fced0b" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">⌨️</span></div><h1 class="page-title">LC3 Fundamentals</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-orange">Quiz 3 Material</span></td></tr></tbody></table></header><div class="page-body"><h2 id="4a471f00-409c-4c11-b79e-96e64412bad7" class="">Registers</h2><p id="2c6a02db-5ad3-408c-85d3-54cd0f168bb0" class="block-color-purple">General-purpose register set</p><ul id="ba21b812-781b-4f04-b20d-eb22e42f26f9" class="bulleted-list"><li style="list-style-type:disc">Additional temporary storage locations that can be accessed in a single machine cycle(Since it usually takes far more than one machine cycle to obtain data from memory)</li></ul><ul id="a6fe4ca2-bda2-4921-a220-6f4278210a78" class="bulleted-list"><li style="list-style-type:disc">Registers have the same property as memory locations in that they are used to store information that can be retrieved later.</li></ul><ul id="2792c234-0c1c-43c4-ae3d-b76843463f6f" class="bulleted-list"><li style="list-style-type:disc">Registers must be uniquely identifiable</li></ul><ul id="d5115986-187d-462b-95e7-694a8e7beed6" class="bulleted-list"><li style="list-style-type:disc">identified by a 3-bit register number, R0 - R7</li></ul><h2 id="94798e5e-abaa-4c0d-aa42-a76170c1418f" class="">Data types</h2><p id="f8f76ad1-b451-4712-9eaa-ee1c79f9e22e" class="">The only data type supported by the ISA of the LC-3: 2&#x27;s complement integers.</p><h2 id="3f9bc375-65bf-4d8e-b6e5-7f7f32902a88" class="">The Instruction Set</h2><p id="c0594273-4c83-4352-9802-adae94d1d299" class="">An instruction is made up of two things, its <strong><em>opcode</em></strong><em> </em>(what the instruction is asking the computer to do) and its <strong><em>operands</em></strong><em>(who the computer is expected to do it to)</em></p><p id="99c76d10-aae9-4357-a6bc-ea5a861bc92e" class="block-color-purple">Opcode</p><ul id="d291e898-efff-4043-8818-e631a8efda9f" class="bulleted-list"><li style="list-style-type:disc">The LC-3 ISA has 15 instructions, each identified by its unique opcode</li></ul><ul id="f3f48fb7-bef7-4e1d-846a-14551db855ff" class="bulleted-list"><li style="list-style-type:disc">16 distinct opcodes are possible(4 bit with 1101 reserved for future needs)</li></ul><p id="8da8f42a-38c4-4571-8821-f3e7210658cf" class="block-color-purple">LC3 has three different types of instructions(three different types of opcode)</p><ul id="7c6ed0fb-0bdb-499a-9c1a-973d8d9f514a" class="bulleted-list"><li style="list-style-type:disc">Operates<ul id="62b782a0-5f35-4885-9047-ccdfea085f94" class="bulleted-list"><li style="list-style-type:circle">Process information</li></ul></li></ul><ul id="b8c7ac83-1e37-4141-ace5-90bc1f982a91" class="bulleted-list"><li style="list-style-type:disc">Data movement<ul id="d2d6e7ca-d18b-405d-a93c-4c4af1174496" class="bulleted-list"><li style="list-style-type:circle">move information between memory and the registers and between registers/memory and input/output devices.</li></ul></li></ul><ul id="ab59eebb-5f0b-4aab-a7c6-d05b9ba93d8e" class="bulleted-list"><li style="list-style-type:disc">Control Instructions<ul id="f4582732-27e5-4e21-bd75-3af0ecb1051a" class="bulleted-list"><li style="list-style-type:circle">change the sequence of instructions that will be executed</li></ul></li></ul><p id="7c5640fa-1abd-4aaa-8e91-0937c0f4cafc" class="block-color-purple">Operand can be found in one of three places</p><ul id="4bede007-d884-4d04-a92b-6a42f3079332" class="bulleted-list"><li style="list-style-type:disc">Memory</li></ul><ul id="0e5a8ac6-b690-4870-9ed4-30248397c82c" class="bulleted-list"><li style="list-style-type:disc">Register</li></ul><ul id="be2029a3-493f-4cab-b788-f395fa7dbce2" class="bulleted-list"><li style="list-style-type:disc">Part of the instruction - referred as literal/immediate operand</li></ul><h2 id="e9620951-1713-49e0-a850-87dd1eebc217" class="">LC3 Instruction Overview</h2><ul id="f053ddcc-74c9-4d4c-a42d-f4171919ae78" class="bulleted-list"><li style="list-style-type:disc">Arithmetic Instructions<ul id="f7d66a7b-1548-47e3-8263-d4a0b2072c01" class="bulleted-list"><li style="list-style-type:circle">ADD</li></ul><ul id="d73dd1a9-55cd-4c98-b6c3-3b46ba3147e0" class="bulleted-list"><li style="list-style-type:circle">OR</li></ul><ul id="55b4bd6a-9cd4-449e-b296-86895da6813e" class="bulleted-list"><li style="list-style-type:circle">NOT - only operation that requires <strong>only one source operand</strong></li></ul><ul id="e56ef660-3214-42c6-a5fa-f240c1326ac2" class="bulleted-list"><li style="list-style-type:circle">XOR</li></ul></li></ul><ul id="e0c97a5b-7302-4875-97fc-c99818c94b26" class="bulleted-list"><li style="list-style-type:disc">Data Movement Instructions<ul id="ee7e7c69-01c4-4754-96ca-f64bcf9017fc" class="bulleted-list"><li style="list-style-type:circle">LD, ST<ul id="e9eaf2b1-0787-4c6d-a2ca-bf70b767d9d4" class="bulleted-list"><li style="list-style-type:square">the location of the destination operand is overwritten with the source operand, destroying the prior value in the destination location in the process.</li></ul></li></ul><ul id="68d9466c-06d9-44f0-a4c7-bf439c91dcfd" class="bulleted-list"><li style="list-style-type:circle">LDR, LDI, LEA, TR, and STI.</li></ul><p id="951aa22e-26b6-42ca-be81-13fe549be36a" class="">
+</p><p id="b75c3380-7945-4713-8503-5e0c740405a4" class="">
+</p></li></ul><h2 id="8f7f6281-02c9-4892-9b3a-ce4213fa7f30" class="">Addressing Modes</h2><p id="fdca2a32-1e1a-4c53-9a7e-e5d7c6a5a00b" class="">Specify where the operand is located</p><p id="a5e712c7-ed8c-4e8f-8eda-bcb35a3bb965" class="block-color-purple">Five addressing mods</p><ul id="33d494ae-4dc7-4197-832a-6da80be8c86e" class="bulleted-list"><li style="list-style-type:disc">Immediate</li></ul><ul id="0de406e4-9f3c-4f44-82f4-7b2ed4a0985d" class="bulleted-list"><li style="list-style-type:disc">Register</li></ul><ul id="1d676268-cfd9-4ca4-aa6e-874e1edf36cc" class="bulleted-list"><li style="list-style-type:disc">PC-relative<ul id="e8f6c2de-54ea-40ec-bcd9-a5487c92f110" class="bulleted-list"><li style="list-style-type:circle">LD, ST</li></ul><ul id="4edaa866-eaf6-4caf-bcb2-19aa1b478bde" class="bulleted-list"><li style="list-style-type:circle">Instruction specify an offset relative to PC</li></ul><ul id="150281a6-a268-45d6-9da0-ca9168140814" class="bulleted-list"><li style="list-style-type:circle">The memory address is computed by sign-extending [8:0]</li></ul></li></ul><ul id="bb35db30-35ec-428a-bce3-a96c459b7cd4" class="bulleted-list"><li style="list-style-type:disc">Indirect<ul id="a22b09a0-07d1-4635-b647-b9f8ac0b6053" class="bulleted-list"><li style="list-style-type:circle">LDI, STI</li></ul><ul id="49b47659-accc-4a7a-bff1-8fabbba7b66b" class="bulleted-list"><li style="list-style-type:circle"><strong>Instead of the address being the address of the operand, it contains the address of the operand to be loaded or stored. </strong></li></ul><ul id="0f059f5e-8f82-47d6-ab74-f3518d4f4eb7" class="bulleted-list"><li style="list-style-type:circle">LD example: PC + Offset → Get content at that address with MDR → Use the content at that address <strong>as the address</strong> → Get data at the new address</li></ul></li></ul><ul id="b847397a-f3ee-4f6a-b468-4a5992d835a8" class="bulleted-list"><li style="list-style-type:disc">Base + Offset<ul id="d774b257-8264-45eb-a902-9ca580f1c6bc" class="bulleted-list"><li style="list-style-type:circle">LDR, STR</li></ul><ul id="e3d311fa-f628-4aa7-8e0d-b0b569fa9eb6" class="bulleted-list"><li style="list-style-type:circle">the address of the operand is obtained by adding a sign-extended 6-bit offset to a base register. (Unline LD or ST where address is calculated by PC + offset, the address here is calculated by base register + offset)</li></ul><ul id="7755c308-c5d2-4835-a740-f9d4e81af23e" class="bulleted-list"><li style="list-style-type:circle">Base+offset addressing mode also allows the address of the operand to be anywhere in the computer&#x27;s memory.</li></ul></li></ul><p id="90cfbefd-dd1b-4df8-91b2-45420f1e62f2" class="">
+</p><h2 id="28510d18-3b05-4580-98aa-af0e9ad42fd2" class="">Executing Instruction</h2><p id="792ea23d-cbe4-4e98-88a3-2a9083183f3a" class="">Each instruction execution has three &quot;stages&quot;, called <strong>macrostates</strong></p><p id="3a101d94-9fc9-4607-a10b-adfab7497273" class="">Each macrostate is made of one or more microstates (1 per clock cycle)</p><p id="ba5ec0d7-877c-4d0d-a40f-c3ce8fd2f646" class="">The microstates are the states in the microcontroller&#x27;s state machine!</p><p id="e1959cf9-60d2-430c-9d04-6959b61053e6" class="">Macrostates:</p><p id="5cbffc1e-d639-46df-ac38-651eca8f72a1" class="block-color-purple"><strong>Fetch</strong></p><ul id="47d2e218-b18a-4a65-baf8-8ae108f10ba6" class="bulleted-list"><li style="list-style-type:disc">Use PC value (address of next instruction) to read the next instruction from memory</li></ul><ul id="df1971e6-60e3-41a6-aafd-b8be6267482a" class="bulleted-list"><li style="list-style-type:disc">Load this value into the IR so that it can be decoded and executed later</li></ul><ul id="065a0c56-26c4-4d71-a99a-e0ee9e27ce3a" class="bulleted-list"><li style="list-style-type:disc">Increment the value of PC – it must always point to the next instruction to be run</li></ul><p id="67cf4b6e-ee3f-489d-bb35-605753331759" class="block-color-purple"><strong>Decode</strong></p><ul id="8d2259b0-8f0c-453e-843d-7f0f888793d4" class="bulleted-list"><li style="list-style-type:disc">Now that the IR contains the instruction, the FSM can read the opcode.</li></ul><ul id="9986afbe-0d2b-4d6c-a3e2-cda7a32ec5e3" class="bulleted-list"><li style="list-style-type:disc">If the instruction is BR (branch), the FSM will also check the condition codes to ensure that the branching condition is met.</li></ul><ul id="da897e06-a871-419f-84f8-0a02d369674a" class="bulleted-list"><li style="list-style-type:disc">The FSM will change to a specific state depending on the opcode. This takes a clock cycle in the LC-3, but some computers can combine DECODE with the last cycle of FETCH.</li></ul><p id="3023498e-5c45-44a3-8ab3-35bfd4d91ecb" class="block-color-purple"><strong>EXECUTE</strong></p><ul id="af285531-e61f-4ff3-9cb9-bb49a8f62342" class="bulleted-list"><li style="list-style-type:disc">Each instruction causes the EXECUTE phase to act differently.</li></ul><ul id="0c4f7d61-4ebe-4864-913a-c721990a2403" class="bulleted-list"><li style="list-style-type:disc">The EXECUTE macrostate takes a variable number of clock cycles; some instructions like ADD are quick, while others like LDI take longer</li></ul><h2 id="9d25c5c6-d04e-4c04-b6cc-2edb4a6ca625" class="">Control Instructions</h2><p id="128b62fe-a976-4ff7-a5c1-da84f3ea73eb" class="">Usually, PC is incremented in the FETCH phase of each instruction, and the next instruction would be the instruction located in the next sequential memory location.</p><p id="98ae3f1a-dc1f-4d81-88ad-27ad173c214d" class="">Control instructions <strong>change the sequence of the instructions that are executed</strong></p><p id="99ebd282-1706-4b8d-b5ac-4e335fecddee" class="block-color-purple"><strong>5 opcodes that enable the sequential flow to be broken:</strong></p><ul id="eb24c3e8-1876-4a45-9c88-d86989f16d72" class="bulleted-list"><li style="list-style-type:disc">conditional branch</li></ul><ul id="199fc9bf-8600-4c5c-bd46-37a8f2a300b9" class="bulleted-list"><li style="list-style-type:disc">unconditional jump</li></ul><ul id="26186362-708f-4c48-89a4-ad4212b5158f" class="bulleted-list"><li style="list-style-type:disc">subroutine(function) call</li></ul><ul id="8d4d0fe3-1877-4e8a-8d63-01fde994d4d2" class="bulleted-list"><li style="list-style-type:disc">TRAP</li></ul><ul id="7d729315-b2f3-4926-963a-cdc83affe220" class="bulleted-list"><li style="list-style-type:disc">return from interrupt</li></ul><h2 id="0aefbf53-df6a-4f00-96b0-c3ea93a2eb0d" class="">Memory(LC 3)</h2><p id="cdd766b3-3900-42a9-a5fa-2337e7f71577" class="block-color-purple">Read Memory</p><p id="6265e97a-b27e-466a-946f-6b4fbe3c8ecf" class="">Memory is accessed by loading the <strong>memory address register (MAR) </strong>with the address of the location to be accessed.</p><p id="c906ee82-91b2-4e8e-a783-46710995739f" class="block-color-purple">Load Memory</p><p id="8a2790c6-5ca4-4e6e-983c-ebaa1ec2086e" class="">control signals read the memory input(MAR), and the result of that read is delivered by the memory to the <strong>memory data register (MDR)</strong></p><p id="8fe60693-8e4e-4d70-9379-ff7627520a90" class="block-color-purple">Store in Memory</p><p id="c0ce374c-968d-4da9-a146-585d0a5a22fe" class="">If a store is being performed, the data to be stored is <strong>first loaded into the MDR</strong>. Then the control signals specify that <strong>WE is asserted</strong> in order to store into that memory location.</p><p id="d8f927a2-89f9-43b8-8f26-72bc0b51908a" class="">
+</p><p id="b8480d41-f758-40f0-bd5b-3fe965ab7fcb" class="">
+</p><p id="982543b3-ba02-4f46-bda8-100c1b0d837e" class="">
+</p><p id="ffb11c5b-a7d0-4b29-9a54-22ea17fc3a09" class="">
+</p></div></article></body></html>

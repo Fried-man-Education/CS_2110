@@ -1,0 +1,675 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Bonus Questions</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="df289347-3b59-49cb-b5ab-c02938397455" class="page sans"><header><h1 class="page-title">Bonus Questions</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-orange">Quiz 3 Material</span></td></tr></tbody></table></header><div class="page-body"><p id="4ffda0d9-b6f2-4f49-ae20-11f71b8bfadc" class="">Example: what are the values in registers R0-R4 after the following code executes?</p><figure id="958071ce-7a6e-4ce7-b0a6-4e27650187d7" class="image"><a href="https://lh3.googleusercontent.com/SbHMLGlU_7u-zMCa4hvzoGVkk7XDTEQszsDySVcOFUsZUBCJUHjvd09pg-TUGwnTdb6CgXu0iujT8g7kONUMZCf2Htjq_2u9WaR7BDfPeLo3QqLkoUGcjEJii9FeYFwiC3Uv8jTC=s1600"><img src="https://lh3.googleusercontent.com/SbHMLGlU_7u-zMCa4hvzoGVkk7XDTEQszsDySVcOFUsZUBCJUHjvd09pg-TUGwnTdb6CgXu0iujT8g7kONUMZCf2Htjq_2u9WaR7BDfPeLo3QqLkoUGcjEJii9FeYFwiC3Uv8jTC=s1600"/></a></figure><ul id="7fbece5b-ef18-4c40-bc30-d9a6e71456db" class="bulleted-list"><li style="list-style-type:disc"><strong>R0: PC + PCOffset9 = x3001 + x0005 = x3006</strong></li></ul><ul id="e6ad74a4-0bc4-4548-97d7-2a549d13e1ff" class="bulleted-list"><li style="list-style-type:disc"><strong>R1: Mem[PC + PCOffset9] = Mem[x3006] = x4002</strong></li></ul><ul id="4a212f96-4efb-4e36-832d-c9d33d66bf8a" class="bulleted-list"><li style="list-style-type:disc"><strong>R2: Mem[Mem[PC + PCOffset9]] = Mem[Mem[x3006] = Mem[x4002] = x0003</strong></li></ul><ul id="15bc1bb5-79e0-4fbb-9e34-117747050b6f" class="bulleted-list"><li style="list-style-type:disc"><strong>R3: Mem[BaseR + Offset6] = Mem[x3006 + x1] = Mem[x3007] = x4001</strong></li></ul><ul id="208f6b56-998b-4756-931e-7e65eb970fee" class="bulleted-list"><li style="list-style-type:disc"><strong>R4: Mem[BaseR + Offset6] = Mem[x4002 - x1] = x0002</strong></li></ul><p id="42760ea2-ef97-4dfe-acb9-25c1ab3c18db" class="">PC + PCOffset = Label Address</p><p id="eef23620-3f7e-49e9-a51f-89f2fdce376a" class=""><strong>Explanation</strong></p><p id="2eab383f-ac42-4797-9337-acf463b9b230" class="">Going line by line:</p><div id="8fc5d76d-a08e-4c8b-b0f7-904b30291b41" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Address</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>PC</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesDate"><path d="M3.29688 14.4561H12.7031C14.1797 14.4561 14.9453 13.6904 14.9453 12.2344V3.91504C14.9453 2.45215 14.1797 1.69336 12.7031 1.69336H3.29688C1.82031 1.69336 1.05469 2.45215 1.05469 3.91504V12.2344C1.05469 13.6973 1.82031 14.4561 3.29688 14.4561ZM3.27637 13.1162C2.70898 13.1162 2.39453 12.8154 2.39453 12.2207V5.9043C2.39453 5.30273 2.70898 5.00879 3.27637 5.00879H12.71C13.2842 5.00879 13.6055 5.30273 13.6055 5.9043V12.2207C13.6055 12.8154 13.2842 13.1162 12.71 13.1162H3.27637ZM6.68066 7.38086H7.08398C7.33008 7.38086 7.41211 7.30566 7.41211 7.05957V6.66309C7.41211 6.41699 7.33008 6.3418 7.08398 6.3418H6.68066C6.44141 6.3418 6.35938 6.41699 6.35938 6.66309V7.05957C6.35938 7.30566 6.44141 7.38086 6.68066 7.38086ZM8.92285 7.38086H9.31934C9.56543 7.38086 9.64746 7.30566 9.64746 7.05957V6.66309C9.64746 6.41699 9.56543 6.3418 9.31934 6.3418H8.92285C8.67676 6.3418 8.59473 6.41699 8.59473 6.66309V7.05957C8.59473 7.30566 8.67676 7.38086 8.92285 7.38086ZM11.1582 7.38086H11.5547C11.8008 7.38086 11.8828 7.30566 11.8828 7.05957V6.66309C11.8828 6.41699 11.8008 6.3418 11.5547 6.3418H11.1582C10.9121 6.3418 10.8301 6.41699 10.8301 6.66309V7.05957C10.8301 7.30566 10.9121 7.38086 11.1582 7.38086ZM4.44531 9.58203H4.84863C5.09473 9.58203 5.17676 9.50684 5.17676 9.26074V8.86426C5.17676 8.61816 5.09473 8.54297 4.84863 8.54297H4.44531C4.20605 8.54297 4.12402 8.61816 4.12402 8.86426V9.26074C4.12402 9.50684 4.20605 9.58203 4.44531 9.58203ZM6.68066 9.58203H7.08398C7.33008 9.58203 7.41211 9.50684 7.41211 9.26074V8.86426C7.41211 8.61816 7.33008 8.54297 7.08398 8.54297H6.68066C6.44141 8.54297 6.35938 8.61816 6.35938 8.86426V9.26074C6.35938 9.50684 6.44141 9.58203 6.68066 9.58203ZM8.92285 9.58203H9.31934C9.56543 9.58203 9.64746 9.50684 9.64746 9.26074V8.86426C9.64746 8.61816 9.56543 8.54297 9.31934 8.54297H8.92285C8.67676 8.54297 8.59473 8.61816 8.59473 8.86426V9.26074C8.59473 9.50684 8.67676 9.58203 8.92285 9.58203ZM11.1582 9.58203H11.5547C11.8008 9.58203 11.8828 9.50684 11.8828 9.26074V8.86426C11.8828 8.61816 11.8008 8.54297 11.5547 8.54297H11.1582C10.9121 8.54297 10.8301 8.61816 10.8301 8.86426V9.26074C10.8301 9.50684 10.9121 9.58203 11.1582 9.58203ZM4.44531 11.7832H4.84863C5.09473 11.7832 5.17676 11.708 5.17676 11.4619V11.0654C5.17676 10.8193 5.09473 10.7441 4.84863 10.7441H4.44531C4.20605 10.7441 4.12402 10.8193 4.12402 11.0654V11.4619C4.12402 11.708 4.20605 11.7832 4.44531 11.7832ZM6.68066 11.7832H7.08398C7.33008 11.7832 7.41211 11.708 7.41211 11.4619V11.0654C7.41211 10.8193 7.33008 10.7441 7.08398 10.7441H6.68066C6.44141 10.7441 6.35938 10.8193 6.35938 11.0654V11.4619C6.35938 11.708 6.44141 11.7832 6.68066 11.7832ZM8.92285 11.7832H9.31934C9.56543 11.7832 9.64746 11.708 9.64746 11.4619V11.0654C9.64746 10.8193 9.56543 10.7441 9.31934 10.7441H8.92285C8.67676 10.7441 8.59473 10.8193 8.59473 11.0654V11.4619C8.59473 11.708 8.67676 11.7832 8.92285 11.7832Z"></path></svg></span>Label</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>Instruction/Value</th></tr></thead><tbody><tr id="03e49680-670e-47ce-881d-581b13137cb3"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3000%2003e49680670e47ce881d581b13137cb3.html">x3000</a></td><td class="cell-HHTS">x3001</td><td class="cell-C;rc"></td><td class="cell-`bpL">LEA R0, A</td></tr><tr id="397be64b-8f95-426b-84e8-f8b71ecaf144"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3001%20397be64b8f95426b84e8f8b71ecaf144.html">x3001</a></td><td class="cell-HHTS">x3002</td><td class="cell-C;rc"></td><td class="cell-`bpL">LD R1, A</td></tr><tr id="839cd178-9911-48d9-9ba7-1dd7e6cc4e6e"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3002%20839cd178991148d99ba71dd7e6cc4e6e.html">x3002</a></td><td class="cell-HHTS">x3003</td><td class="cell-C;rc"></td><td class="cell-`bpL">LDI R2, A</td></tr><tr id="99df9c31-dbd3-4e8e-8477-090687c9abbf"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3003%2099df9c31dbd34e8e8477090687c9abbf.html">x3003</a></td><td class="cell-HHTS">x3004</td><td class="cell-C;rc"></td><td class="cell-`bpL">LDR R3, R0, 1</td></tr><tr id="9e34f104-2f1c-4c45-b509-78087f5ef0ab"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3004%209e34f1042f1c4c45b50978087f5ef0ab.html">x3004</a></td><td class="cell-HHTS">x3005</td><td class="cell-C;rc"></td><td class="cell-`bpL">LDR R4, R1, -1</td></tr><tr id="40abf3b3-d3a3-462a-b612-8ca6c3579c72"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3005%2040abf3b3d3a3462ab6128ca6c3579c72.html">x3005</a></td><td class="cell-HHTS">x3006</td><td class="cell-C;rc"></td><td class="cell-`bpL">HALT</td></tr><tr id="abd2d485-4606-4a7b-a759-61444880851a"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3006%20abd2d48546064a7ba75961444880851a.html">x3006</a></td><td class="cell-HHTS">x3007</td><td class="cell-C;rc"><time>@April 1, 2022</time></td><td class="cell-`bpL">A .fill x4002  = <strong>x4002</strong></td></tr><tr id="8b50c900-894e-4a82-840f-3fbe883a5ebd"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3007%208b50c900894e4a82840f3fbe883a5ebd.html">x3007</a></td><td class="cell-HHTS">x3008</td><td class="cell-C;rc"></td><td class="cell-`bpL">B .fill x4001 = x4001</td></tr><tr id="cc2ff9a7-392f-45bf-8f74-ff7d1e06028d"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x3008%20cc2ff9a7392f45bf8f74ff7d1e06028d.html">x3008</a></td><td class="cell-HHTS">x3009</td><td class="cell-C;rc"></td><td class="cell-`bpL"></td></tr><tr id="c77d7ee2-e900-416e-86bd-54e02559dc38"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/%E2%80%A6%20c77d7ee2e900416e86bd54e02559dc38.html">…..</a></td><td class="cell-HHTS"></td><td class="cell-C;rc"></td><td class="cell-`bpL"></td></tr><tr id="7104a262-e54e-436c-9a28-6ab605105c00"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x4000%207104a262e54e436c9a286ab605105c00.html">x4000</a></td><td class="cell-HHTS">x4001</td><td class="cell-C;rc"></td><td class="cell-`bpL">1</td></tr><tr id="d625bb15-7168-44f2-88d0-56c8c6f817af"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x4001%20d625bb15716844f288d056c8c6f817af.html">x4001</a></td><td class="cell-HHTS">x4002</td><td class="cell-C;rc"></td><td class="cell-`bpL">2</td></tr><tr id="b0194eb1-48cb-440f-9630-e99ff365566f"><td class="cell-title"><a href="Bonus%20Questions%20df2893473b5949cbb5abc02938397455/Untitled%20Database%208fc5d76da08e4c8bb0f7904b30291b41/x4002%20b0194eb148cb440f9630e99ff365566f.html">x4002</a></td><td class="cell-HHTS">x4003</td><td class="cell-C;rc"></td><td class="cell-`bpL">3</td></tr></tbody></table></div><p id="1be40486-bee8-492f-bb17-44508f68786c" class=""><strong>Laying out Address spaces:</strong></p><ul id="22748fdb-1fa0-4564-ad85-556ed337073d" class="bulleted-list"><li style="list-style-type:disc">.orig x3000 establishes the block of code to be put in @ x3000. This instruction does not use up memory x3000<p id="d5828201-ffd8-41e9-b325-bbc6d671ecbe" class="">LEA, R0, A @ x3000</p><p id="f4b4fdab-3747-4e5a-bb45-6f8d472fc237" class="">LD R1, A @ x3001</p><p id="5b088b95-20c1-42a7-8314-f79f6548aea8" class="">LDI R2, A @x3002</p><p id="7c391c9a-9a8f-429c-8000-d7c04d4b1877" class="">LDR R3, R0, 1 @x3003</p><p id="59e1a169-17af-405e-ac28-96e6404b4777" class="">LDR R4, R1, -2 @x3004</p><p id="b1899db4-3aee-4746-8d2b-ed07d1bc15d6" class="">HALT @x3005 (pls correct if this is wrong lol)</p></li></ul><p id="9eadeb5f-d402-4765-ab52-71e55543d4e8" class="">
+</p><p id="5a1bf41b-645a-4c23-b645-2b6294300223" class="">And the initialization of labels will take up subsequent memory spaces as well so:</p><p id="9f4eb64c-6b2d-4317-84eb-a6547b56b9c3" class="">A .fill x4002 @ NOT x4002 but x3006</p><p id="cf0757c9-4189-4e66-9ca0-1e202a131690" class="">B .fill x4001 @ NOT x4001 but x3007</p><p id="00f1a466-ac72-41c2-8c63-1feb2e6d2555" class="">
+</p><p id="10b48509-5e89-4ba8-af12-756562201083" class="">This block of code is marked by .end (which again does not take memory space)<div class="indented"><p id="4a1d3ca8-1cd6-48dd-b6bd-1df16447bba5" class="">.orig x4000 starts new block of code at x4000<div class="indented"><p id="2eb52c8e-424c-472d-bfdf-d250389fccce" class="">.fill 1 @x4000</p><p id="aafdb789-2643-492b-b225-4f020cef4417" class="">.fill 2 @x4001</p><p id="97ee6e13-e1d1-454b-b3fa-48a959fce3d7" class="">.fill 3 @x4002</p></div></p><p id="922a7877-267c-4807-8215-07a1915d4ec2" class="">.end</p></div></p><p id="9f42ea85-a18a-4f1a-b8ff-20c996507804" class=""><strong>Back to the actual assembly instructions:</strong></p><ul id="501f8d94-95d9-4fc3-8c5b-9fd6067b1fa6" class="bulleted-list"><li style="list-style-type:disc"><strong>R0:</strong></li></ul><ul id="7426f714-f274-45dc-b37e-7e326c7d5422" class="bulleted-list"><li style="list-style-type:disc">LEA takes the literal address at label A and puts it into R0. Which would be <strong>x3006.</strong></li></ul><ul id="28d2840e-6208-4b44-ba45-64a9282313c5" class="bulleted-list"><li style="list-style-type:disc">What&#x27;s written in the study guide is the bare-bones definition of the instruction LEA as the label A is interpreted into the PC offset.</li></ul><ul id="889a986d-b63c-4f28-b9b1-fa2318be7343" class="bulleted-list"><li style="list-style-type:disc">This is done by taking the address of A and subtracting the PC from it.</li></ul><ul id="4f05b197-d3a2-42e9-8caf-cd6400dcdb0e" class="bulleted-list"><li style="list-style-type:disc">This would be x3006 - x3001 (since at line x3000 the PC contains the next instruction which is x3001) = x0005.</li></ul><ul id="4bb181f7-4076-46d8-9deb-cf1f65ff6747" class="bulleted-list"><li style="list-style-type:disc"><strong>R1:</strong><ul id="5d1b7a5c-c08d-4644-8895-c93fa0790185" class="bulleted-list"><li style="list-style-type:circle">This instruction takes place at LD R1, A @ x3001</li></ul><ul id="1f8e6fa5-b966-4f61-b411-1f384c1d717d" class="bulleted-list"><li style="list-style-type:circle">Remember, LD takes the address at label A, accesses the memory/value associated with it, and stores it into R1.<ul id="9f2678a9-17f5-486e-98a3-0af9ec70ad0a" class="bulleted-list"><li style="list-style-type:square">Do not mistake this for LEA or LDI.</li></ul></li></ul><ul id="58b62160-5a0e-44a6-b41c-ce52bb168355" class="bulleted-list"><li style="list-style-type:circle">Label A is translated into its PC + PCOffset9:<ul id="4ccf60de-eec4-47bb-a88e-e22cad9d3ad0" class="bulleted-list"><li style="list-style-type:square">Label A is at x3006</li></ul><ul id="15abbf7c-ea89-40db-9a09-ee48d56ef53f" class="bulleted-list"><li style="list-style-type:square">PC is x3002 (since we are at address x3001)</li></ul><ul id="43929e21-ee3b-4ad2-b232-58bf18b74be2" class="bulleted-list"><li style="list-style-type:square">X3006 - x3002 = x0004</li></ul></li></ul><ul id="ea3941c4-d67e-4288-a374-6b2af3ba49a0" class="bulleted-list"><li style="list-style-type:circle"><strong>Mem[PC + PCOffset9] = Mem[x3002 + x0004] = Mem[x3006] = x4002</strong></li></ul><ul id="8cca14fb-83e2-448c-a28b-cc120f86be47" class="bulleted-list"><li style="list-style-type:circle">Mem[x3006] is the value AT x3006 so x4002.</li></ul></li></ul><ul id="073749d5-6a30-4e37-8655-5474eecfc3ce" class="bulleted-list"><li style="list-style-type:disc"><strong>R2:</strong><ul id="225e9980-c93c-4711-bf39-e9bec5a72480" class="bulleted-list"><li style="list-style-type:circle">Takes place at x3002 LDI R2, A</li></ul><ul id="654eade9-0858-4d45-852a-32cbe948c774" class="bulleted-list"><li style="list-style-type:circle">Note: LDI takes VALUE @ label -&gt; reads it as a memory address -&gt; accesses value AT that new “memory address” -&gt; puts value into register</li></ul><ul id="87b203ae-21e7-4a16-9e33-f22a0deb84dd" class="bulleted-list"><li style="list-style-type:circle">So, to translate the instruction.</li></ul><ul id="350b127d-8a8c-477e-9475-3663a3ef186d" class="bulleted-list"><li style="list-style-type:circle">Label A holds value x4002.<ul id="c78cbc0d-9bc0-49de-8248-c57f1950f06a" class="bulleted-list"><li style="list-style-type:square">Read said value as address</li></ul><ul id="235132f2-4f66-44bb-a547-3e69df7290cc" class="bulleted-list"><li style="list-style-type:square">Access value at this address so Mem[x4002] = x0003</li></ul><ul id="34d13706-b4cd-41bd-a6d1-bdecc6da4a4a" class="bulleted-list"><li style="list-style-type:square">Put into register R2: R2 = x0003</li></ul></li></ul><ul id="0dc432c1-5cfb-4d12-912f-c69352b1656a" class="bulleted-list"><li style="list-style-type:circle">To translate into the literal answer:<ul id="6d19985d-1d70-43e4-9606-70ebe7ae19b0" class="bulleted-list"><li style="list-style-type:square">PC = x3003 (x3002 + 1)</li></ul><ul id="6a6abf58-5767-4e61-9815-fd89dbb3e48a" class="bulleted-list"><li style="list-style-type:square">Label A @ x3006</li></ul><ul id="65e56714-bdb2-4775-8f3c-27aaa9449aca" class="bulleted-list"><li style="list-style-type:square">X3006 - x3003 = x0003</li></ul></li></ul><ul id="7aa334f6-04b1-4c18-84cc-ca8bb3f79de1" class="bulleted-list"><li style="list-style-type:circle"><strong>Mem[fileMem[PC + PCOffset9]] = Mem[Mem[x3003 + x0003]] = Mem[x3006] = x0003</strong></li></ul></li></ul><ul id="bd3df806-cedc-4549-92fa-27300d0806f7" class="bulleted-list"><li style="list-style-type:disc"><strong>R3:</strong><ul id="2fd38b88-d3b4-4d9e-a6f4-ddc070cee67c" class="bulleted-list"><li style="list-style-type:circle">LDR, R3, R0, 1</li></ul><ul id="198ee23c-1b4a-4d63-88d2-ef2891531c88" class="bulleted-list"><li style="list-style-type:circle">Address: x3003</li></ul><ul id="7c497a5b-687b-4194-ac31-e24838a80d79" class="bulleted-list"><li style="list-style-type:circle">PC: x3004</li></ul><ul id="2bfe3956-e11b-47da-8870-d44629a83459" class="bulleted-list"><li style="list-style-type:circle">LDR:<ul id="8a5100a9-f2b2-4637-9b85-a8903669bab2" class="bulleted-list"><li style="list-style-type:square">Taking the value inside the source register (R0) = x3006</li></ul><ul id="9c54bb62-78ba-426b-bb9b-c08841b9b55a" class="bulleted-list"><li style="list-style-type:square">Reads value as an address</li></ul><ul id="889d9d00-7f52-4d87-8b4e-b2a184f27c81" class="bulleted-list"><li style="list-style-type:square">Adds the base offset to said address: x3006 + 1 = x3007</li></ul><ul id="cd1cef08-9f78-4131-a0b7-f4f48ac1d8e4" class="bulleted-list"><li style="list-style-type:square">Accesses the value at that new address: Mem[x3007] = x4001</li></ul><ul id="13e1cafb-4195-4f73-a1db-4298231f8337" class="bulleted-list"><li style="list-style-type:square">Puts it into R3</li></ul></li></ul><ul id="7fd4c8bf-d1f7-4fb7-ae15-1cbfe9dd67a8" class="bulleted-list"><li style="list-style-type:circle"><strong>Mem[BaseR + Offset6] = Mem[x3006 + x1] = Mem[x3007] = x4001</strong></li></ul></li></ul><ul id="0c830912-14da-46b8-a27e-39d498d55cce" class="bulleted-list"><li style="list-style-type:disc"><strong>R4:</strong><ul id="d7410a0b-97e1-45a9-a240-8667e2204d3f" class="bulleted-list"><li style="list-style-type:circle">LDR R4, R1, -1</li></ul><ul id="c14eccd7-aa74-4c95-9a83-1b9eaa986e55" class="bulleted-list"><li style="list-style-type:circle">Address: x3004</li></ul><ul id="3a1ca8ef-be0e-4634-b481-2cfc213a4104" class="bulleted-list"><li style="list-style-type:circle">PC: x3005</li></ul><ul id="2c712e2c-fbdc-4d25-936c-6eba9af67b02" class="bulleted-list"><li style="list-style-type:circle">Same as R3 example<ul id="b77fee7d-f1d0-4088-bffd-4bdebee5f341" class="bulleted-list"><li style="list-style-type:square">Value inside SR (R1) = x4002</li></ul><ul id="763e2192-d793-4c37-90fb-48878c32a512" class="bulleted-list"><li style="list-style-type:square">Read said value as address</li></ul><ul id="ab368eeb-25db-4874-872c-7310c7f7a1bd" class="bulleted-list"><li style="list-style-type:square">Adds base offset to said address: x4002 -1 = x4001</li></ul><ul id="19939489-a94c-4799-a099-537ba987375b" class="bulleted-list"><li style="list-style-type:square">Accesses value at new address: Mem[x4001] = 1</li></ul><ul id="dc97b5ce-4de3-4f12-a87f-70f365fd03d9" class="bulleted-list"><li style="list-style-type:square">Puts it into R4</li></ul></li></ul><ul id="c11cf2fd-0a68-4f97-991a-976a4f5a157d" class="bulleted-list"><li style="list-style-type:circle"><strong>Mem[BaseR + Offset6] = Mem[x4002 - x1] = Mem[x4001] = 2</strong></li></ul></li></ul><p id="811c419b-2582-4926-914c-27eace89cba3" class="">
+</p><p id="1bc4dad4-9ae2-46ed-bcd0-6cb1880c5065" class="">
+</p><p id="0bb512b3-1a6a-4e9a-b3fa-7942cb5fb4ed" class="">
+</p><hr id="53dc0878-a49e-409e-901a-4c38794f679a"/><p id="b7cc70bf-7d28-4b25-b4fc-da92d17cd562" class="">
+</p></div></article></body></html>

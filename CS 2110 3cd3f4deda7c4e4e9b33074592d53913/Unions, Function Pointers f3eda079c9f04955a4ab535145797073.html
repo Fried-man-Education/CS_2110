@@ -1,0 +1,766 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Unions, Function Pointers</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f3eda079-c9f0-4955-a4ab-535145797073" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🛖</span></div><h1 class="page-title">Unions, Function Pointers</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="766facb0-8f8f-4231-8a0e-37c0ac5a047d" class="block-color-purple_background">Unions</h1><p id="dd87cf30-a31a-4101-aafe-77b557adc54b" class="">Union is a user-defined datatype. It is a collection of variables of different data types in the same memory location. </p><pre id="e5db2bf7-1592-4029-9165-c38b020b6cc2" class="code"><code>union {
+	int myint;
+	char mychar;
+	char mystr[20];
+} myun;
+</code></pre><p id="1c067483-455f-4967-bc31-a79a5ea5f263" class=""><em>Looks like a struct, and the access is the same as a struct
+The difference is that all the members have an offset of zero</em></p><p id="4d2fe322-145a-4710-9353-f45d582bf068" class=""><strong>Unions may:</strong></p><ul id="5f790de1-8124-4e97-b1d8-f82eeeed3558" class="bulleted-list"><li style="list-style-type:disc">Be copied or assigned</li></ul><ul id="baccd203-2add-486b-8538-c7c3b7a56e95" class="bulleted-list"><li style="list-style-type:disc">have their address taken with &amp;</li></ul><ul id="14ce710b-e5be-46d6-a971-a60aaa15dc03" class="bulleted-list"><li style="list-style-type:disc">have their members accessed</li></ul><ul id="a0eb94c0-f9c0-40fb-aa6f-2efc83f71475" class="bulleted-list"><li style="list-style-type:disc">be passed as arguments to functions</li></ul><ul id="6da58805-a5ce-4b0b-ab91-b9d64f015520" class="bulleted-list"><li style="list-style-type:disc">be returned from functions</li></ul><ul id="374b3e9e-770e-4043-aff9-547a60ca5966" class="bulleted-list"><li style="list-style-type:disc">be initialized (but only the first member)</li></ul><p id="411aaa41-ee1c-4828-a7c9-7e18e7be1fdd" class=""><strong>Unions may not:</strong></p><ul id="236b28e3-3310-4717-a929-1dc8acd53b05" class="bulleted-list"><li style="list-style-type:disc">Be compared</li></ul><ul id="1a185f44-a35f-4f4f-a966-c101a43468af" class="block-color-pink_background toggle"><li><details open=""><summary>Structure vs Union</summary><figure id="9593afc1-3ac0-47f1-99df-8f5944193038" class="image"><a href="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-12-01_at_13.26.40.png"><img style="width:1174px" src="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-12-01_at_13.26.40.png"/></a></figure><p id="8e28d10d-862b-4ae9-b572-6d1ddbfff46b" class="">
+</p></details></li></ul><h2 id="9e485b2c-0437-46e2-aaa3-27129b3bf254" class="block-color-pink_background">Unions in memory with example above</h2><figure id="75ca7767-ef53-4bca-8199-6962dc3aa948" class="image"><a href="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_13.20.52.png"><img style="width:432px" src="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_13.20.52.png"/></a></figure><pre id="38b4187c-6481-47e4-8bbd-218dbd5d8906" class="code"><code>union {
+	int myint;
+	char mychar;
+	char mystr[20];
+} myun;
+
+&amp;myun.myint == &amp;myun.mychar == &amp;myun.mystr[0]
+sizeof(myun) == sizeof(&quot;Largest member&quot;)</code></pre><figure id="a8917cec-5b90-4d09-8987-2ec71a7a7d8f" class="image"><a href="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_13.25.26.png"><img style="width:960px" src="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_13.25.26.png"/></a></figure><h2 id="9b86f9e8-e171-411b-91e7-fb4385ba3686" class="block-color-pink_background">Uses for Union</h2><ul id="4e0af7eb-946f-4794-adcd-51874bb29111" class="bulleted-list"><li style="list-style-type:disc">Convert between the binary representations of different types; this can be
+useful for embedded programming when writing to registers<ul id="b896253d-5a3a-4453-9387-802fd5a54d3b" class="bulleted-list"><li style="list-style-type:circle">Note: this converts between the binary representations, not the values</li></ul><ul id="a7d7c393-c800-4155-9ccd-39726e34587f" class="bulleted-list"><li style="list-style-type:circle">For instance, using this to convert 5 to a float would not result in 5.0</li></ul></li></ul><ul id="50cf811a-fe3a-41df-a26f-d637f0b543dd" class="bulleted-list"><li style="list-style-type:disc">Can be used to implement pseudo-polymorphism<ul id="859a6991-df37-4e20-8510-4c7d1c3bf473" class="bulleted-list"><li style="list-style-type:circle">Use a union to hold the values that are different across the different subclasses</li></ul><ul id="c980b273-a9de-490d-874c-ced76c535f44" class="bulleted-list"><li style="list-style-type:circle">Have some other variable that determines which union field is valid</li></ul></li></ul><ul id="bf3af6ad-2cf7-448d-93d3-ab105e189fd5" class="bulleted-list"><li style="list-style-type:disc">Used to conserve memory when you only need one field</li></ul><h2 id="0f52be46-f63b-4f05-9ae4-d9d63660c7d3" class="block-color-pink_background">raison d&#x27;être</h2><p id="384d5204-a883-4c7a-b975-bfabd5773d64" class="">Union is often used in implementing polymorphism found in OOP</p><p id="6f01dec4-ab0f-4c52-af85-c2817223358c" class="">Store information about aletes</p><ul id="a902857f-3cb0-431e-9542-6b2b034aeb0e" class="toggle"><li><details open=""><summary>Information:</summary><figure id="20bafc8d-8c60-4ec2-8035-19ac74373afb" class="image"><a href="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_13.27.29.png"><img style="width:848px" src="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_13.27.29.png"/></a></figure></details></li></ul><pre id="b2c5ee45-41bb-4d10-8d42-4d7f420c9281" class="code"><code>struct player {
+	char name[20];
+	char jerseynum[4];
+	char team[20];
+	int player_type;
+	union sport {
+		struct football {...} footbstats;
+		struct baseball {...} basebstats;
+		struct baseketball {...} baskbstats;
+		} thesport;
+} theplayer;
+theplayer.thesport.footbstats.tds = 3;</code></pre><p id="39e12c9a-111d-41e5-97a7-069d1fded508" class="">
+</p><h1 id="4b8950b4-844f-4f93-9015-479f084734df" class="block-color-purple_background">Function Pointers</h1><pre id="3da0f3e9-3c96-4064-8612-a7646b9a01a2" class="code"><code>int fi(void) 
+/* Function that returns an int*/
+int *fpi(void) 
+/* Function that returns a pointer to an int*/
+int (*pfi) (void) 
+/* pfi is a pointer to a function returning int*/
+pfi = fi; 
+/*Legal assigment*/
+/*Funciton name without () is the memory address*/
+pfi = fi(); 
+/*NO! BAD!*/
+/*fi() is a pointer to an int*/</code></pre><p id="0a3fc3ff-202d-4ccd-adaf-afe7fad6203d" class="">
+</p><h2 id="5c124fc9-523e-4049-8315-56591f2820a9" class="block-color-pink_background">QSort()</h2><ul id="bb5ab637-8073-4a15-bdd7-d0593aaec27a" class="toggle"><li><details open=""><summary>Properties</summary><pre id="34768c0d-e900-45d6-8b44-0827f4e71a3f" class="code"><code>NAME
+	qsort - sort an array
+ANSI_SYNOPSIS
+	#include &lt;stdlib.h&gt;
+	void qsort(void *base, size_t nmemb, size_t size, 
+		int(* compare)(const void *, const void *));
+RETURNS
+	qsort does not return a result.
+PORTABILITY
+	qsort is required by ANSI(without specifying the sorting algorithm)
+SOURCE
+	src/newlib/libc/stdlib/qsort/c</code></pre></details></li></ul><ul id="b1d2614d-0bcd-4944-9637-8020886dc01f" class="toggle"><li><details open=""><summary>Description</summary><p id="c068fb0b-018c-4fca-a592-cf74b7616c6d" class="">qort sorts an array (beginning at base) of nmemb objects.</p><p id="74684f07-9816-4c95-92b6-60e71733ab26" class="">size describes the size of each element of the array.</p><p id="2a6dfe57-6a5d-4ce0-bdaf-033106cffc10" class="">
+</p><p id="44f85e28-f616-470a-a179-885791b54444" class="">You must supply a pointer to a comparison function,  using</p><p id="bc225773-8c3e-45c9-beae-a42885cc4a5b" class="">the argument is shown as compare.   (This  permits sorting</p><p id="47236d4c-f2c4-44f7-960f-deadf6d2c9a4" class="">objects of  unknown  properties.)  Define the comparison</p><p id="8fd3c11b-4326-42f8-b56a-c74093ab7e83" class="">function to accept two arguments, each a pointer to an</p><p id="88a86813-04ca-4ffb-874c-a37b38dc0880" class="">element of the array starting at base.  The  result  of</p><p id="6186ce4e-6f46-48b8-a699-763e83f7ace9" class="">(*&lt;[compar)&gt;&gt;  must  be negative if the first argument is</p><p id="a763d23c-c59a-41c6-9712-0c89b720f929" class="">less than the second, zero if the two arguments match, and</p><p id="41ca1ff8-6eaf-4d57-8b93-1c34959a54b0" class="">positive if the first argument is greater than the second</p><p id="49247b91-f82c-4b6b-a67d-d6518976f8ac" class="">(where ``less than&#x27;&#x27; and ``greater than&#x27;&#x27; refer to what-</p><p id="a9d3f0cd-8e4b-4531-8ea3-dd082aa6b981" class="">ever arbitrary ordering is appropriate).</p><p id="d8b21874-6602-4d78-afa6-a78d752b64d0" class="">
+</p><p id="4fa05bc7-3815-464c-81b7-11d8027e21f3" class="">The array is sorted in place; that is when qsort returns,</p><p id="aa9c8c07-7fba-438a-b292-03b273c0ad62" class="">the array elements beginning at base have been reordered.</p></details></li></ul><ul id="ee3ea287-6adf-451c-9394-f4276df34edc" class="toggle"><li><details open=""><summary>Declaration</summary><pre id="8e27418e-f86b-447d-a18c-15109c98cae7" class="code"><code>#include &lt;stdlib.h&gt;
+void qsort(
+	void * base,
+	size_t nmemb,
+	size_t size,
+	int (* compar) (const void *, const void *)
+)
+/*the result of &quot;compar&quot; must be negative if the firs argument is less than the second, 
+	zero if the two arguments match, and positive if the first argument is greater than the second
+	(where &quot;less than&quot; and &quot;greater than&quot; refer to whatever arbitrary ordering is appropriate)*/</code></pre></details></li></ul><ul id="00ff0e22-90b7-4e7d-92c0-32c66590a0a4" class="toggle"><li><details open=""><summary>Demo</summary><pre id="d1a0b686-cc6f-400e-b104-c3d2d4726a82" class="code"><code>#include &lt;studio.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAX 100
+int compar_ints(const void *pa, const void *pb) {
+	return *((int *) pa) - *((int *) pb);
+}
+int compar_strings(const void *ppa, const void *ppb) {
+	return strcmp(*((char **)ppa) , *((char **) ppb)); 
+}</code></pre><pre id="e4ba53bb-d0fd-41ca-8537-16782010090d" class="code"><code>#define MAX 100
+int main (int argc, char **argv) {
+	char *strings[] = {&quot;dec&quot;, &quot;sum&quot;, &quot;IBM&quot;, &quot;apple&quot;, &quot;hp&quot;, &quot;ti&quot;, &quot;univac&quot;};
+	int i, s;
+	int a[MAX];
+	if (argc == 2 &amp;&amp; *(argv[1] == &#x27;a&#x27;)) {
+		s = sizeof(strings) / sizeof(strings[0]);
+		qsort(strings, s, sizeof(strings[0]), compar_strings);
+		for (i = 0; i &lt; s; i++) {
+			printf(&quot; %s&quot;, strings[i]);
+		}
+		print(&quot;\n&quot;);
+	}
+	else {
+		for (i = 0; i &lt; MAX; i++) {
+			a[i] = rand() % 100;
+			print(&quot; %d&quot;, a[i]);
+		}
+		printf(&quot;\n\n&quot;);
+		qsort(a, MAX, sizeof(int), compar_ints);
+		for (i = 0; i &lt; MAX; i++) {
+			printf(&quot; %d&quot;, a[i]);
+		}
+	}
+	return 0;
+}</code></pre></details></li></ul><h1 id="eca4744c-3d02-427f-9131-a9a43778a2f8" class="block-color-purple_background">Question</h1><ul id="b5e170da-8f07-469c-be96-5d2358d84a31" class="block-color-blue_background toggle"><li><details open=""><summary>In-class question 1</summary><figure id="d5858f20-0f52-48e9-b2ad-2134dca6e434" class="image"><a href="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_14.01.44.png"><img style="width:1158px" src="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_14.01.44.png"/></a></figure><p id="a09125a1-8c31-495a-9bcf-da7d5e8f5383" class="">
+</p></details></li></ul><ul id="0e560b06-984b-4d46-a9e1-1cbcc81154bb" class="block-color-blue_background toggle"><li><details open=""><summary>In-class question 2</summary><figure id="d088c360-0f79-48d9-ac5e-243fa1453f46" class="image"><a href="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_14.02.31.png"><img style="width:1446px" src="Unions,%20Function%20Pointers%20f3eda079c9f04955a4ab535145797073/Screen_Shot_2021-11-29_at_14.02.31.png"/></a></figure><p id="f31fd675-ac65-4cc1-b4dc-ad12498f576d" class="">
+</p></details></li></ul><p id="ec4ec221-6a12-4a78-ab96-cd419d714c55" class="">
+</p></div></article></body></html>

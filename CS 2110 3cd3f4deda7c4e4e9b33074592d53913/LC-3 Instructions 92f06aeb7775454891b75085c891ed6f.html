@@ -1,0 +1,696 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>LC-3 Instructions</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="92f06aeb-7775-4548-91b7-5085c891ed6f" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🤫</span></div><h1 class="page-title">LC-3 Instructions</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-orange">Quiz 3 Material</span></td></tr></tbody></table></header><div class="page-body"><p id="04e4abc6-3be7-452f-9b26-1922a836117e" class="">This video saves lives:</p><p id="4950034a-3efc-44d8-8f49-36500d2d7d57" class="">
+</p><figure id="a251b239-d195-465f-9adc-ef87d37b07c2"><div class="source"><a href="https://www.youtube.com/embed/6hhNNj67w1E">https://www.youtube.com/embed/6hhNNj67w1E</a></div></figure><p id="f3fb32bb-cf7d-447e-92d9-b619171e3aaf" class="">
+</p><figure id="495c6303-2ed1-44c6-ae5c-72dd8b391358" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Untitled.png"><img style="width:1627px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Untitled.png"/></a></figure><ul id="cd05c784-f5f4-4f75-9916-b45d769cd92c" class="block-color-red_background toggle"><li><details open=""><summary>LC3 Reference Sheet</summary><figure id="083d1604-a9cd-4410-9540-83603474cdba" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_02.47.26.png"><img style="width:2002px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_02.47.26.png"/></a></figure><p id="3f09c0bb-2862-46f2-9018-22f023cda508" class="">
+</p></details></li></ul><p id="e05f33c5-d40b-4d2f-8c07-5ea5ddcf73bb" class="">
+</p><p id="cdc09ea9-2148-48ca-baa6-e5f367a981e5" class="">Every instruction starts with 4 phase:<div class="indented"><p id="67ae1a10-22e2-414d-9d38-29b04b235816" class="">Fetch</p><p id="ebfc41e4-695d-44fa-a01e-0fc823dbeb11" class="">Fetch</p><p id="c6db92a2-2930-4746-9874-81c44784bc69" class="">Fetch</p><p id="96b1fb8f-0f17-4801-bcc4-35dba3d4f21f" class="">Decode —&gt; FSM</p></div></p><p id="476c1ccf-7b3b-43a6-a544-63c31e5d7948" class="">
+</p><h2 id="70542698-027c-4eb8-9125-ba8860f668a0" class="block-color-pink_background">FSM</h2><p id="c5d3b7b8-e338-498e-b61b-ff5158570c2c" class="">FSM execute microcode</p><figure id="d69b4c5a-2f69-4bf4-84d5-901d7a893cd4" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-10-18_at_15.23.38.png"><img style="width:1594px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-10-18_at_15.23.38.png"/></a></figure><p id="f952a374-9f0e-48ca-b6a5-ca0a039b3689" class="">
+</p><h2 id="92008f69-09b2-4044-bc76-58958bd547fd" class="">Confusions:</h2><ul id="86e36984-e564-41cb-9677-549fc8eb7b28" class="block-color-red_background toggle"><li><details open=""><summary>Clock Cycle</summary><p id="668c8229-472b-4fb7-a7b5-5fa2ccf52c15" class="">You want to maximize what happens during a single clock cycle. There are 2 main obstacles that help determine what cannot happen during a single clock cycle.</p><p id="e9c7bafb-e12c-4af5-b3c5-c189e26687a4" class="">1. A register is only updated with its new value on the rising edge of the clock. If you need to use the value of the register you just set, then you must wait till the next clock cycle. An example of this would be a load instruction. If you set the value of MAR in the first clock cycle, then you must wait until the next clock cycle to read MAR. <strong>You cannot set and read from the register in the same clock cycle.</strong></p><p id="accad7d8-0f3e-42f9-8a16-b77013e0479b" class="">2. <strong>Only one value can be on the bus at any given time.</strong> If you need to set 2 different registers with <strong>different values</strong>, this will take 2 clock cycles since only one value can be on the bus. An example of this would be a store instruction. You need one clock cycle to set MDR and another to set MAR.</p></details></li></ul><ul id="7e9aa25f-3318-47f5-a80a-c5a9a395d49d" class="block-color-red_background toggle"><li><details open=""><summary>LD.CC</summary><p id="72e262f0-ee86-4e94-b8f4-335f24821068" class="">Any time you do an instruction that <strong>changes the value of a register</strong> in the register file, you need to set the condition codes because there is a possibility that we require the sign of that value to determine branching (BR) logic. <strong>The exception to this rule is for LEA</strong>. LEA will always load into a register a binary string that represents an address. It doesn&#x27;t make sense for an address to be signed, so we do not set a condition code for it. That also means you should not complete Branching logic based on LEA! It&#x27;s just an address in memory. Instead, it would make more sense to load the data at that address since that could be a more meaningful value. We have made this note in the LC-3InstructionsDetail.pdf</p><p id="4796f6c2-252c-49c0-929d-b215f3ff1973" class="">For the remainder of instructions that do set condition codes, since there is a possibility that they could store a meaningful number/result of math/ value (ie: not an address) into a register that means we need to set the cc&#x27;s. We might not BR based on the CC each time we do one of these operations, but since that possibility does exist, we have to include setting CC in these instructions microcodes.</p><p id="8b833293-fd7e-43cf-8f64-fdebc972dd03" class="">EDIT: please note that when we change a value in memory (ie: perform a store) we do not set condition codes. This is because memory is not a register</p></details></li></ul><h1 id="1a73a781-625e-454f-ba1a-690e1cb0061b" class="block-color-purple_background">Fetch</h1><ul id="b57de0fd-c55c-4480-a414-47ce699fa4d9" class="toggle"><li><details open=""><summary><strong>IR &lt;= Mem[(PC)]</strong></summary><p id="b57abc0f-fd99-48c9-95c3-23a527322db8" class="">Control Instructions</p><ol type="1" id="6e6307ff-ce14-4712-9c57-2daa9633430b" class="numbered-list" start="1"><li>Clock Cycle 1:<ol type="a" id="44f3eefb-8fed-4a17-9591-92989486bf4f" class="numbered-list" start="1"><li>PCMUX selects PC.MUX + 1</li></ol><ol type="a" id="04c6dedd-83c6-435a-b0e3-2c305a1f9460" class="numbered-list" start="2"><li>LD.PC</li></ol><ol type="a" id="9d41bedd-dad5-42d3-b0e4-d9b47b5d8f19" class="numbered-list" start="3"><li>Gate.PC - allow data to flow from PC to bus</li></ol><ol type="a" id="62c4fac4-92b1-49f5-82eb-f12b2372f4b4" class="numbered-list" start="4"><li>LD.MAR - Load the data to memory</li></ol></li></ol><ol type="1" id="f23c135b-e3b0-4b84-9796-5fde0e5e4064" class="numbered-list" start="2"><li>Clock Cycle 2:<ol type="a" id="8f214714-1c1b-49db-b7cf-e57a1e546d7a" class="numbered-list" start="1"><li>MEM.EN/R - Memory read data</li></ol><ol type="a" id="593a26e2-6389-421f-b6ac-22210dc6db67" class="numbered-list" start="2"><li>(MDRMUX select memory - take data from memory and send to the bus)</li></ol><ol type="a" id="cd632c09-dced-46b1-88c2-44c308e2e564" class="numbered-list" start="3"><li>LD.MDR - Write data into the MDR</li></ol></li></ol><ol type="1" id="33e1d371-b2e0-45e7-bed6-bf136e6ec78b" class="numbered-list" start="3"><li>Clock Cycle 3:<ol type="a" id="e75927ff-7bbd-43b8-9f60-376003f87f7d" class="numbered-list" start="1"><li>Gate.MDR - Write data to the main bus</li></ol><ol type="a" id="3b624f64-d1fa-4390-8135-9dd4047b26a2" class="numbered-list" start="2"><li>Load.IR - Read data to the IR</li></ol></li></ol></details></li></ul><h1 id="4d6d9210-0a52-46da-9a9f-5eeecdf4f1fe" class="block-color-red_background">OPERATE:</h1><h2 id="dd941b7d-aa32-48bc-974e-a5c6f5f815f3" class="block-color-purple_background">Add</h2><ul id="93022d3b-d7e0-43cf-b771-adaac8ae23df" class="toggle"><li><details open=""><summary>Definitions</summary><figure id="c0dd2677-1083-4f8a-b079-d641976b4997" class="image"><a href="https://lh3.googleusercontent.com/V_Pic8bzkHjMGU56sUTPaoWsMemddPmI0uuYQYLTJPT4Py1hW0-hX2IZpN7vXgmXB6Czv0uqDLivCw5RN4RvisIujDWORmJnux3DxSyKnfti4I5q2AzloE_Ky33nJ6k_vRV7blNd=s0"><img src="https://lh3.googleusercontent.com/V_Pic8bzkHjMGU56sUTPaoWsMemddPmI0uuYQYLTJPT4Py1hW0-hX2IZpN7vXgmXB6Czv0uqDLivCw5RN4RvisIujDWORmJnux3DxSyKnfti4I5q2AzloE_Ky33nJ6k_vRV7blNd=s0"/></a></figure></details></li></ul><ul id="33891b5e-760a-49ed-9621-4023e2122428" class="toggle"><li><details open=""><summary><strong>DR = (SR1) + (SR2)</strong></summary><p id="6daaac1f-e740-4cb7-8ab5-71de21fbcf5a" class="">Control Instruction</p><p id="5a292b33-e9b2-4397-8261-258f6c0f973b" class="">One clock cycle</p><ol type="1" id="79e2a57d-6a8b-4c2c-ac78-029e23210975" class="numbered-list" start="1"><li>(SR1MUX select IR[8:6])</li></ol><ol type="1" id="1ab28fd9-3b7d-4d30-ac4d-3d13b6e0ed9e" class="numbered-list" start="2"><li>SR2MUX selects OUT</li></ol><ol type="1" id="ea581691-666a-46db-852e-0941d4826f2d" class="numbered-list" start="3"><li>ALUK select add - add SR1 and SR2 - 00</li></ol><ol type="1" id="d381bdc9-8efc-4b42-8c2a-c7bf2686a509" class="numbered-list" start="4"><li>GateALU - send added data to the bus</li></ol><ol type="1" id="0c6e21cb-977b-43b2-b593-b4e27d7eb565" class="numbered-list" start="5"><li>LD.REG - write the data to the destination register</li></ol><ol type="1" id="8b62b61d-71f2-4efe-80ec-ae0a959c8f1c" class="numbered-list" start="6"><li>LD.CC</li></ol></details></li></ul><ul id="542cfeaf-9e17-41a5-a410-2bf64f759bed" class="toggle"><li><details open=""><summary><strong>DR = (SR1) + SEXT[IR[4:0]]</strong></summary><p id="ff5a6b30-b6af-4cb6-a332-c4d75dc625e8" class="">Control Instruction</p><p id="ab5e7b0e-c92f-4d6b-abe0-010336eef983" class="">One clock cycle</p><ol type="1" id="14c80504-9abd-4068-ba6a-2af50ed490f0" class="numbered-list" start="1"><li>SR1MUX select IR[8:6] - 1</li></ol><ol type="1" id="7165036a-10de-47fa-a273-1eacee9c81a5" class="numbered-list" start="2"><li>SR2MUX selects SEXT[IR[4:0]] - Sign extended SR2</li></ol><ol type="1" id="0911b5d8-6924-4623-900f-5abad3ec3ec1" class="numbered-list" start="3"><li>ALUK select add - add SR1 and SR2</li></ol><ol type="1" id="c9c42b87-2989-4ae8-b270-06ba1f2f0d3f" class="numbered-list" start="4"><li>GateALU - send added data to the bus - 1</li></ol><ol type="1" id="d58b4a6b-2945-49e7-ba8c-2e15ebffecb1" class="numbered-list" start="5"><li>LD.CC - 1</li></ol><ol type="1" id="e504ebb9-0702-45c0-9bad-1cacae07d49f" class="numbered-list" start="6"><li>LD.REG - write the data to the destination register - 1</li></ol></details></li></ul><h2 id="6ff16348-2f26-43f3-b4a1-bfa46d73599e" class="block-color-purple_background">AND</h2><ul id="29d291fe-aa3f-4401-994a-701675c4de16" class="toggle"><li><details open=""><summary>Definitions</summary><figure id="016d88bd-588c-47a9-b9f9-5f1de81cc5e1" class="image"><a href="https://lh6.googleusercontent.com/O0RncND8YY5vkx4gPf38o3Of3C6TGsCfh8L_HjiwrhhOLNS0Z3fhGNB-yhpEmhl435jA-SpHYqS3NMlXignxBJUmzGcfi3mLEI7vkotZg7vqBfIKvP3s48S-dICbxby-zBx888s0=s0"><img src="https://lh6.googleusercontent.com/O0RncND8YY5vkx4gPf38o3Of3C6TGsCfh8L_HjiwrhhOLNS0Z3fhGNB-yhpEmhl435jA-SpHYqS3NMlXignxBJUmzGcfi3mLEI7vkotZg7vqBfIKvP3s48S-dICbxby-zBx888s0=s0"/></a></figure></details></li></ul><ul id="4b490b9c-250f-44c9-af4d-8e341ca7a17d" class="toggle"><li><details open=""><summary><strong>DR = (SR1).(SR2)</strong></summary><p id="3be8b1c2-85ab-493c-85b0-9c0b1925e51f" class="">One clock cycle</p><ol type="1" id="5bef8576-eaec-4b26-9044-e603d131f462" class="numbered-list" start="1"><li>(SR1MUX select IR[8:6]) - 1</li></ol><ol type="1" id="788dcb45-1af4-407a-bfc1-dc26eba3966d" class="numbered-list" start="2"><li>SR2MUX select SR2 OUT</li></ol><ol type="1" id="e01fb9b2-8845-4396-9a0f-882515e4b761" class="numbered-list" start="3"><li>ALUK select AND - 01</li></ol><ol type="1" id="01b6e5ae-3d72-4b17-aa48-a76ae2992cf0" class="numbered-list" start="4"><li>Gate.ALU - 1</li></ol><ol type="1" id="e0592ead-1496-4353-94a1-f94da769ad9d" class="numbered-list" start="5"><li>LD.CC - 1</li></ol><ol type="1" id="5b208319-cbc8-42b6-aaee-f75bc99fb982" class="numbered-list" start="6"><li>LD.REG - 1</li></ol></details></li></ul><h2 id="6007e395-9f77-4069-abec-678385056e2b" class="block-color-purple_background">NOT</h2><ul id="51f03655-4dce-4a3a-9d69-dcc91a0c1d43" class="toggle"><li><details open=""><summary>Definitions</summary><figure id="86257969-8bd9-4da8-940d-37dee20507f2" class="image"><a href="https://lh3.googleusercontent.com/HH7mjnm8yIeWOhHE4xGfxYRduDstMsmhoIZbbJa8F3_Ffm_Gr0cIslyamIM_ThJclaEa7UzDbJEQoj55-xeG3mM_iJ0kPczVEDX4ZD3yKNTM7S4-v71Y7ajVsobLqq2wnRoLgl1d=s0"><img src="https://lh3.googleusercontent.com/HH7mjnm8yIeWOhHE4xGfxYRduDstMsmhoIZbbJa8F3_Ffm_Gr0cIslyamIM_ThJclaEa7UzDbJEQoj55-xeG3mM_iJ0kPczVEDX4ZD3yKNTM7S4-v71Y7ajVsobLqq2wnRoLgl1d=s0"/></a></figure></details></li></ul><ul id="1dacc438-94af-4902-8e04-0fd7cfd186c7" class="toggle"><li><details open=""><summary>DR &lt;= (SR1’)</summary><p id="10ef29c2-b100-4f8f-841e-da57bdf6cd46" class="">One clock cycle</p><ol type="1" id="3c8b0fd1-fc3f-403b-a3ee-db4fbcad6a0d" class="numbered-list" start="1"><li>SR1MUX select IR[8:6] - 1</li></ol><ol type="1" id="7ac5f031-e12f-44a5-929b-f604d3384bd9" class="numbered-list" start="2"><li>ALUK Select NOT</li></ol><ol type="1" id="c6123d1d-ab04-48be-81ae-c0789a3b6d45" class="numbered-list" start="3"><li>Gate.ALU - 10</li></ol><ol type="1" id="d05ec2d4-adbd-40de-98d0-95cda5a6e6a3" class="block-color-yellow_background numbered-list" start="4"><li>LD.CC  - 1</li></ol><ol type="1" id="99687ddd-2f8c-4fc7-a991-31c470a82e2a" class="numbered-list" start="5"><li>LD.REG - 1</li></ol></details></li></ul><h1 id="7c6deabd-5ccc-463f-b46d-8c12407ac2ad" class="block-color-red_background">LOADS:</h1><h2 id="13880a80-e9e7-4656-baf2-cc2ac3f9ca22" class="block-color-purple_background">LEA(LOAD EFFECTIVE ADDRESS)</h2><ul id="89228c37-9bfe-43e6-ab2d-329c5a4939dd" class="toggle"><li><details open=""><summary>Definitions</summary><p id="f59fbc0c-c607-4376-bd40-7373f288b510" class="block-color-yellow_background"><em>Puts the effective address (PC+offset) itself into a register (no memory access!)</em></p><figure id="b607cb35-edcc-4b17-ab6a-c6a1abb3153b" class="image"><a href="https://lh4.googleusercontent.com/coeIAMRagc1NXhE28V8ZbPxXnHNrse7OYL-3MI9wFTpr4IAPXOuV4uEmd-HKc47W8Y1YSHxMcdUVmt_4aGC0-nw8B2rYiTPiOe-mow3Plf5UYQ19y3BOL9sbSpv_FjnT4U2hVhuI=s0"><img src="https://lh4.googleusercontent.com/coeIAMRagc1NXhE28V8ZbPxXnHNrse7OYL-3MI9wFTpr4IAPXOuV4uEmd-HKc47W8Y1YSHxMcdUVmt_4aGC0-nw8B2rYiTPiOe-mow3Plf5UYQ19y3BOL9sbSpv_FjnT4U2hVhuI=s0"/></a></figure></details></li></ul><ul id="5e1e568d-2d50-4726-b0cd-5abf74f10cf6" class="toggle"><li><details open=""><summary>DR &lt;= (PC) + SEXT(IR[8:0])</summary><p id="68b0609f-3134-4760-83e1-ac95c756939c" class="">One clock cycle</p><ol type="1" id="cfac4567-3207-4f60-a5d6-fb85d48ddbe7" class="numbered-list" start="1"><li>ADDR1MUX Select PC - 0</li></ol><ol type="1" id="c9cfe2a5-80c9-4303-86b7-76a1c89d15ec" class="numbered-list" start="2"><li>ADDR2MUX Select SEXT(PCoffset9/IR[8:0]) - 10</li></ol><ol type="1" id="d7d63424-efeb-4a82-9eb6-0c85303288bc" class="numbered-list" start="3"><li>MARMUX select ADDER - ADD also send data to MARMUX.gate instead of PC - 1</li></ol><ol type="1" id="dcccf1aa-347c-47d6-98ef-b8074cb7914e" class="numbered-list" start="4"><li>Gate.MARMUX - Send data to the main bus - 1</li></ol><ol type="1" id="44ef20e2-4d8d-47ce-8ecd-9f64c8d0d2c2" class="numbered-list" start="5"><li>LD.REG - Take data from bus and load to destination register - 1</li></ol></details></li></ul><ul id="b79f0a21-1978-450f-bb1e-42c82f0eb67e" class="toggle"><li><details open=""><summary>Binary Encoding Example</summary><figure id="626ddbbe-d11a-4b3c-b6c9-21633ccbfce0" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-10-18_at_14.50.47.png"><img style="width:1262px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-10-18_at_14.50.47.png"/></a></figure><p id="b9e9d61e-4632-4f2d-9efe-a4cf8f9e30b3" class="">
+</p></details></li></ul><h2 id="af55ba71-54c2-42c1-a62f-b314cbc0c675" class="block-color-purple_background">LD(LOAD)</h2><ul id="bfd9181f-316e-4f76-b98f-e6ba4c1e9d82" class="toggle"><li><details open=""><summary>Definitions</summary><p id="cbe69e25-a2c2-4f17-bbe1-5ed0fe4929d8" class="block-color-yellow_background">Puts the contents of some memory at the effective address (PC+offset) into a register</p><figure id="581f9170-3284-43e9-b674-ee04be688055" class="image"><a href="https://lh5.googleusercontent.com/E522d9Hee5ACMbx9P7sEzGVxVMY7qC9nq0FSnyylAZlbB1rX5OEQqH1g0JTYtlTsi0aiW4zlRuUcUJESdTXoewJo3_Oni7X8xZk96BLGZ9M9aL_vAcymTUAGgcBCU1n2T2vTcY1z=s0"><img src="https://lh5.googleusercontent.com/E522d9Hee5ACMbx9P7sEzGVxVMY7qC9nq0FSnyylAZlbB1rX5OEQqH1g0JTYtlTsi0aiW4zlRuUcUJESdTXoewJo3_Oni7X8xZk96BLGZ9M9aL_vAcymTUAGgcBCU1n2T2vTcY1z=s0"/></a></figure><p id="abf6799f-54b3-4dfb-963c-ae86cc8851a2" class="">
+</p><figure id="63165fc7-5baa-448a-b506-9603aa16d573" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.17.44.png"><img style="width:2348px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.17.44.png"/></a></figure><p id="940fcd92-81ef-4553-998d-6f92feb491cc" class="">
+</p></details></li></ul><ul id="9676d1c9-ffe0-42a1-b8f9-0fa39aae98d1" class="toggle"><li><details open=""><summary>DR &lt;= Mem[(PC) + SEXT(IR[8:0])]</summary><ol type="1" id="fd1b7a37-2b85-4893-ac83-0fd83b8506eb" class="numbered-list" start="1"><li>ClockCycle 1<ol type="a" id="b335a90b-a5c8-4317-9466-24c2425c18ae" class="numbered-list" start="1"><li>ADDR1MUX select PC - 0</li></ol><ol type="a" id="af2a5369-c251-43eb-9e7c-cc3b2c86a096" class="numbered-list" start="2"><li>ADDR2MUX select SEXT(PCoffset9) - 10</li></ol><ol type="a" id="f1cdb265-3228-450a-8e43-50b2a5f6ea07" class="numbered-list" start="3"><li>MARMUX select ADDER - 1</li></ol><ol type="a" id="e2511f3c-129f-4d20-80fc-7292ab598c4b" class="numbered-list" start="4"><li>Gate.MARMUX - 1</li></ol><ol type="a" id="58bb60c6-3d15-488f-abd8-96ce159e7d3c" class="numbered-list" start="5"><li>LD.MAR - 1</li></ol></li></ol><ol type="1" id="6289cd73-735c-443a-98f0-022967dab214" class="numbered-list" start="2"><li>Clock Cycle 2<ol type="a" id="4bed12ed-ecf5-43c9-8435-32fc23cd56d3" class="numbered-list" start="1"><li>MEM.EN - 1</li></ol><ol type="a" id="eaa8e66a-39a1-4970-9414-596722c4f2d5" class="numbered-list" start="2"><li>LD.MDR (MDRMUX selects Memory) - 1</li></ol></li></ol><ol type="1" id="d66c0122-4c15-464d-a213-a4f458cf1948" class="numbered-list" start="3"><li>Clock Cycle 3<ol type="a" id="1e997989-8f80-4ce0-a2fc-c9aea13cbd9d" class="numbered-list" start="1"><li>Gate.MDR</li></ol><ol type="a" id="19933f2f-874f-4705-b566-3dabbef173a4" class="numbered-list" start="2"><li>LD.REG</li></ol><ol type="a" id="3d7c8c9b-e2a2-4466-b114-834555cf381b" class="numbered-list" start="3"><li>LD.CC</li></ol></li></ol><ul id="faefe267-1668-471f-acae-f3c469eb6b6a" class="toggle"><li><details open=""><summary>Binary Encoding Example</summary><figure id="f26159e9-c5bf-4212-9878-fa3220927969"><div class="source"><a href="https://www.notion.soundefined"></a></div></figure></details></li></ul></details></li></ul><h2 id="5e52bc3f-8f46-4909-ac70-2cdee894fcb3" class="block-color-purple_background">LDI(LOAD INDIRECT)</h2><ul id="a289303d-1e56-4077-ac76-eca98cd8cf36" class="toggle"><li><details open=""><summary>Definitions</summary><p id="ad252988-75f7-45b6-988f-c0302ac60ab3" class="block-color-yellow_background"><strong>Goes to the effective address (PC+offset) and gets a value. Treats that value as another memory address, and gets data from there, into a register (hits memory twice)</strong></p><figure id="752040a4-7c5f-4c0e-a0a2-395112eb2802" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_02.52.45.png"><img style="width:1164px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_02.52.45.png"/></a></figure><hr id="ff083b5e-5093-4c05-9518-f580d7cd12b1"/><hr id="62007fda-51e1-4a84-a962-2fc83e3fbbde"/><figure id="bb161532-9d70-41f9-8694-a6c199b8f25f" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Untitled%201.png"><img style="width:932px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Untitled%201.png"/></a></figure><hr id="854fd869-d5c8-49df-86f1-f225d167414e"/><figure id="6ac4b97c-df73-496d-8473-bff464f6b519" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Untitled%202.png"><img style="width:953px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Untitled%202.png"/></a></figure></details></li></ul><p id="071c4060-2c63-4b3d-b589-88c2b546ce65" class="">
+</p><ul id="307f5247-0d54-4204-8e58-7b861c6fc2f7" class="toggle"><li><details open=""><summary><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mi>R</mi><mo>&lt;</mo><mo>=</mo><mi>M</mi><mi>e</mi><mi>m</mi><mo stretchy="false">[</mo><mi>M</mi><mi>e</mi><mi>m</mi><mo stretchy="false">(</mo><mi>P</mi><mi>C</mi><mo stretchy="false">)</mo><mo>+</mo><mi>S</mi><mi>E</mi><mi>X</mi><mi>T</mi><mo stretchy="false">(</mo><mi>P</mi><mi>C</mi><mi>o</mi><mi>f</mi><mi>f</mi><mi>s</mi><mi>e</mi><mi>t</mi><mn>9</mn><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">DR &lt;= Mem[Mem(PC)+SEXT(PCoffset9)]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">e</span><span class="mord mathnormal">m</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">e</span><span class="mord mathnormal">m</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em;">PC</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">SEXT</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em;">PC</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.10764em;">ff</span><span class="mord mathnormal">se</span><span class="mord mathnormal">t</span><span class="mord">9</span><span class="mclose">)]</span></span></span></span></span><span>﻿</span></span></summary><ol type="1" id="6f3e35f8-0a62-44a2-a327-5e9f9d91590c" class="numbered-list" start="1"><li>Clock cycle 1<ol type="a" id="588146f0-0b07-4fa7-9ce2-5e97324c5dbc" class="numbered-list" start="1"><li>ADDR1MUX Select PC - 0</li></ol><ol type="a" id="b62eb701-7b68-4eba-b9a3-4b12d2bd0ba6" class="numbered-list" start="2"><li>ADDR2MUX Select SEXT(PCoffset9) - 10</li></ol><ol type="a" id="77e9b1b8-741e-4d57-bd2f-3e2188ab71fe" class="numbered-list" start="3"><li>MARMUX selects ADDER - 1</li></ol><ol type="a" id="2b6024c9-3e2b-4895-a51b-49f82862169a" class="numbered-list" start="4"><li>Gate.MARMUX - 1</li></ol><ol type="a" id="6c1dd38d-ebe6-4ce8-b38e-c027d223be67" class="numbered-list" start="5"><li>LD.MAR - 1</li></ol></li></ol><ol type="1" id="76ad1c40-77c6-4914-8329-1fb3ca00be28" class="numbered-list" start="2"><li>Clock Cycle 2<ol type="a" id="88df1222-6d0e-4601-920c-6b873eda3e24" class="numbered-list" start="1"><li>MEN.EN - 1</li></ol><ol type="a" id="bab78f46-cb09-464a-91a0-c94656d795fc" class="numbered-list" start="2"><li>LD.MDR(MDRMUX select memory) - 1</li></ol></li></ol><ol type="1" id="bc1faa92-2917-47de-bfa4-2edefce0ac44" class="numbered-list" start="3"><li>Clock Cycle <ol type="a" id="b48d84eb-8219-4d5a-b50b-6451c77a742f" class="numbered-list" start="1"><li>Gate.MDR - 1</li></ol><ol type="a" id="2a0ddede-1d95-4e7c-a31d-0628ec422449" class="numbered-list" start="2"><li>LD.MAR - 1</li></ol></li></ol><ol type="1" id="8500b32a-c815-4d35-a20b-9d4baf2011a0" class="numbered-list" start="4"><li>Clock Cycle 4<ol type="a" id="7b18b29f-7f90-4468-b17a-2573666ca52d" class="numbered-list" start="1"><li>MEN.EN - 1</li></ol><ol type="a" id="faca4770-7ffd-46a4-9410-d0adeb8d6648" class="numbered-list" start="2"><li>LD.MDR(MDRMUX select memory) - 1</li></ol></li></ol><ol type="1" id="83f0561b-44dd-4ec5-ae8f-f265681abb51" class="numbered-list" start="5"><li>Clock Cycle 5<ol type="a" id="e7398320-5612-4910-a8cd-5bda55992502" class="numbered-list" start="1"><li>Gate.MDR - 1</li></ol><ol type="a" id="cdb963de-0992-4109-ac25-87eee50eac4b" class="numbered-list" start="2"><li>LD.CC - 1</li></ol><ol type="a" id="844fb98d-48ce-4b54-977b-2ec734fb6a69" class="numbered-list" start="3"><li>LD.REG - 1</li></ol></li></ol></details></li></ul><ul id="0615f2cc-fd94-499f-b2fa-b5aa5c14f82b" class="toggle"><li><details open=""><summary>Binary Encoding Example</summary><figure id="3a2853cc-d2fe-467f-9424-5673680dcae2" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-10-18_at_14.37.20.png"><img style="width:1300px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-10-18_at_14.37.20.png"/></a></figure><p id="dbea4b92-09a5-496f-be32-2b99360ba384" class="">
+</p></details></li></ul><h2 id="b5d3e879-eeb9-4826-9d75-3d9aef58e681" class="block-color-purple_background">LDR(LOAD BASE + OFFSET)</h2><ul id="7c05259e-1d9e-40cb-b65c-e9f3a6eac105" class="toggle"><li><details open=""><summary>Definitions</summary><p id="0c2d9689-37ed-47e7-9863-30fdbbb9534d" class="block-color-yellow_background"><strong>Puts the contents of the effective address (base register+offset) into a register.</strong></p><figure id="6641d1bc-19e6-4659-8dcd-ddd2081b7d75" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.08.05.png"><img style="width:1170px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.08.05.png"/></a></figure></details></li></ul><ul id="69f436b9-6475-4bec-aebd-676fad19a278" class="toggle"><li><details open=""><summary>DR &lt; = Mem[IR[8:6] + SEXT(IR[5:0])]</summary><ol type="1" id="e15e97f9-d358-4c63-976c-fab5139cf727" class="numbered-list" start="1"><li>Clock Cycle 1<ol type="a" id="7f9bebef-c926-472f-850f-e5952ec1eda1" class="numbered-list" start="1"><li>ADDR1MUX selects SR1OUT - 1</li></ol><ol type="a" id="7b42c96f-336e-4679-ba13-113ea872036d" class="numbered-list" start="2"><li>ADDR2MUX selects SEXT(IR[5:0]) - 01</li></ol><ol type="a" id="69d97bc1-2fd5-4de8-8663-a1b2b4a06e82" class="numbered-list" start="3"><li>MARMUX selects ADDER - 1</li></ol><ol type="a" id="cbc7adf6-63ec-47e5-9a24-5d9f28d4374e" class="numbered-list" start="4"><li>Gate.MARMUX - 1</li></ol><ol type="a" id="58654960-ed7c-4f2f-bfa7-6fe0d36fab3c" class="numbered-list" start="5"><li>LD.MAR - 1</li></ol></li></ol><ol type="1" id="71456e74-deab-44e3-ba4f-b9d8467484ac" class="numbered-list" start="2"><li>Clock Cycle 2<ol type="a" id="f83db3fd-f448-49c7-a7ad-2b78da8f9e63" class="numbered-list" start="1"><li>MEN.EN - 1</li></ol><ol type="a" id="b664bc0f-0ee6-472e-8f26-84e089f52a48" class="numbered-list" start="2"><li>LD.MDR(MDR.MUX select Memory) - 1</li></ol></li></ol><ol type="1" id="7f595727-f901-4e53-876e-c1e3d1ed1028" class="numbered-list" start="3"><li>Clock Cycle 3<ol type="a" id="44b7ab01-c69a-4ad8-85db-29150bcb7ee1" class="numbered-list" start="1"><li>Gate.MDR - 1</li></ol><ol type="a" id="79e9cd08-b04b-41c3-9c8e-f448c33e4960" class="numbered-list" start="2"><li>LD.CC - 1</li></ol><ol type="a" id="f3e2e309-7a27-40c5-8a8c-f267de410b9d" class="numbered-list" start="3"><li>LD.REG - 1</li></ol></li></ol><p id="399d52d5-cece-405a-946f-2cf804fad430" class="">
+</p><p id="78a2f93b-ddbf-4598-80c3-17e7d30c76a6" class="">
+</p></details></li></ul><h1 id="bda85f0c-bdd6-4d3f-ae3f-3c133a927506" class="block-color-red_background">STORES:</h1><h2 id="5d391fd4-07bd-4a21-a9af-3c4946431282" class="block-color-purple_background">ST(STORE)</h2><ul id="850e5397-d71d-4561-b631-9fc88e4d5162" class="toggle"><li><details open=""><summary>Definitions</summary><p id="ad13b5f5-3b69-4e8f-8d7d-917ce4d58337" class="block-color-yellow_background">Puts the contents of a register into memory at the effective address (PC+offset).</p><figure id="6f6a0c64-99ac-4f5a-a43e-2bb0b53b775b" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.13.43.png"><img style="width:1200px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.13.43.png"/></a></figure></details></li></ul><ul id="0671d18e-a1dd-44cb-ade9-ef5219cf7207" class="toggle"><li><details open=""><summary>Mem[(PC) + SEXT(IR[8:0])] &lt; = SR</summary><ol type="1" id="2cee7b67-d333-42da-8cb5-c578f9390d1a" class="numbered-list" start="1"><li>Clock Cycle 1<ol type="a" id="bb235eed-f03c-454f-9236-70fcfeabdd5c" class="numbered-list" start="1"><li>ADDR1MUX select PC - 0</li></ol><ol type="a" id="9b23dce2-83c5-463e-a84e-bbed5d67304e" class="numbered-list" start="2"><li>ADDR2MUX select SEXT(IR[8:0]) - 10</li></ol><ol type="a" id="6814a099-c081-4dcc-a40e-ae716cf74112" class="numbered-list" start="3"><li>MARMUX select ADDER - 1</li></ol><ol type="a" id="1ae22df1-6804-45f2-899a-6d3b7b4e5c78" class="numbered-list" start="4"><li>Gate.MARMUX - 1</li></ol><ol type="a" id="e1f70ee9-3c71-42ee-aa0b-99c37107d2b4" class="numbered-list" start="5"><li>LD.MAR - 1</li></ol></li></ol><ol type="1" id="f7c70428-3391-461e-9348-f0624d312cb2" class="numbered-list" start="2"><li>Clock Cycle 2<ol type="a" id="21a6c80a-9c7d-48c9-8cd4-ed7a4ad16436" class="block-color-yellow_background numbered-list" start="1"><li>SR1 - 0</li></ol><ol type="a" id="aa2c307d-a0fa-4cda-bde7-c0051e977f64" class="numbered-list" start="2"><li>ALUK selects PASS - 11</li></ol><ol type="a" id="83828a85-94dc-4624-8592-5a9254ee9b77" class="numbered-list" start="3"><li>Gate.ALU —&gt; Pass to bus and send it to MDR - 1</li></ol><ol type="a" id="d010636a-965d-441d-969d-316acc295f4b" class="numbered-list" start="4"><li>LD.MDR(MDRMUX select BUS) —&gt; Take the source register from BUS - 1</li></ol></li></ol><ol type="1" id="840f3ec3-7793-4986-a961-acdf6a43f439" class="numbered-list" start="3"><li>Clock Cycle 3<ol type="a" id="91e884ac-ed88-43aa-8571-ab67cd48c4c9" class="numbered-list" start="1"><li>MEM.EN - 1</li></ol><ol type="a" id="3198daa7-b4fd-44b4-b507-8b6a917fa36e" class="block-color-yellow_background numbered-list" start="2"><li>R.W - 1</li></ol></li></ol><p id="e6a24726-c057-4795-8623-0e2362f7de3c" class="">
+</p></details></li></ul><ul id="48d720ff-154f-4d57-a088-ee7fc7876391" class="toggle"><li><details open=""><summary>Binary Encoding Example</summary><p id="0a5142de-3094-49d3-9cc2-20bfd3224abb" class="">
+</p></details></li></ul><h2 id="ac290771-6a8c-4467-89fa-4b0bfda79ef9" class="block-color-purple_background">STR(STORE BASE + OFFSET)</h2><ul id="6f97c10b-ece8-4089-b3cb-bc8210efa6dd" class="toggle"><li><details open=""><summary>Definitions</summary><p id="11b73e61-3a1d-42f0-956c-6af8e65bb232" class="block-color-yellow_background">Puts the contents of a register into memory at the effective address (base register+offset)</p><figure id="81a16e0b-666e-4d22-9cc8-8f1b0ee62a71" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.41.21.png"><img style="width:1176px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.41.21.png"/></a></figure></details></li></ul><ul id="5bf42f82-b25c-4c21-be94-db6f353f3129" class="toggle"><li><details open=""><summary>Mem[(IR[8:6]) + SEXT(offset6)] &lt; = SR</summary><ol type="1" id="fe1dbb94-a1d0-4b8a-ac51-f9e0c7afd4ab" class="numbered-list" start="1"><li>Clock Cycle 1<ol type="a" id="41cc7d51-70b0-43f7-bc6a-18ff5462dd92" class="numbered-list" start="1"><li>(SR1MUX select IR(8:6))</li></ol><ol type="a" id="736a4043-242a-4aba-984b-b4777d4a3bbe" class="numbered-list" start="2"><li>ADDR1MUX select BaseR - 1</li></ol><ol type="a" id="d731501f-b8f4-47c2-9eeb-360ff51c04f1" class="numbered-list" start="3"><li>ADDR2MUX select SEXT(offset6) - 01</li></ol><ol type="a" id="79a19abc-6797-4f28-8fb0-e42c435ac42d" class="numbered-list" start="4"><li>MARMUX select ADDER - 1</li></ol><ol type="a" id="a05081c6-fa91-43d5-948b-a2e481cefe3b" class="numbered-list" start="5"><li>Gate.MARMUX - 1</li></ol><ol type="a" id="31ce423d-a1a0-4283-b4f3-628f596ccc6b" class="numbered-list" start="6"><li>LD.MAR - 1</li></ol></li></ol><ol type="1" id="c3f593d1-d65d-4857-8d5c-b200e87d626f" class="numbered-list" start="2"><li>Clock Cycle 2<ol type="a" id="433e281d-fce1-475c-a264-ba56e74ba0ef" class="numbered-list" start="1"><li>Gate.ALUK - 1</li></ol><ol type="a" id="e3e74f10-adcd-4d5f-8b26-79215f2ad52d" class="numbered-list" start="2"><li>ALUK select PASS - 11</li></ol><ol type="a" id="43d33460-58b9-4af1-9a5d-6cca9269b045" class="numbered-list" start="3"><li>LD.MDR - 1</li></ol></li></ol><ol type="1" id="b0fff49d-c212-4926-a794-ac474ad26591" class="numbered-list" start="3"><li>Clock Cycle 3<ol type="a" id="698de53f-4d71-4f20-9d05-042bb60b8963" class="numbered-list" start="1"><li>MEM.EN - 1</li></ol><ol type="a" id="c336a179-14e7-428a-b4d8-c83264fb0d23" class="numbered-list" start="2"><li>R.W. - 1</li></ol></li></ol></details></li></ul><ul id="269659d0-2c7c-464a-bba3-934d9f4811da" class="toggle"><li><details open=""><summary>Binary Encoding Example</summary><figure id="37a50ec9-3230-478e-8f13-003e7ffaaa21" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-10-18_at_14.48.20.png"><img style="width:1258px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-10-18_at_14.48.20.png"/></a></figure><p id="53764a81-9ea8-4573-8db9-fad3c4328a69" class="">
+</p></details></li></ul><h2 id="749d4e95-8099-4fc0-803b-ff7ff83694b2" class="block-color-purple_background">STI(STORE INDIRECT)</h2><ul id="557f20ae-1e65-4231-98a7-0a9a89aaa54a" class="toggle"><li><details open=""><summary>Definitions</summary><p id="9f9071ed-fae4-47bc-bd19-286824092aa2" class="block-color-yellow_background">Puts the contents of a register into a memory location whose address is stored in memory at the effective address (PC+offset). (Hits memory twice!)</p><figure id="d6d88651-26a6-4521-abef-459403e0809f" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.41.08.png"><img style="width:1188px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.41.08.png"/></a></figure></details></li></ul><ul id="b7fd56a1-ebcd-4bf0-9d91-dd9546bc28b5" class="toggle"><li><details open=""><summary>Mem[Mem[(PC) + SEXT(IR[8:0])]] &lt; = SR</summary><ol type="1" id="95f63767-ed6b-4013-bef7-7f75cf22be99" class="numbered-list" start="1"><li>Clock Cycle 1<ol type="a" id="ff7d8f16-40a7-4253-9303-4410e390f496" class="numbered-list" start="1"><li>ADDR1MUX select PC - 1</li></ol><ol type="a" id="9606acee-e1af-460a-8ce4-e52538a7d1f0" class="numbered-list" start="2"><li>ADDR2MUX select SEXT(IR[8:0]) - 10</li></ol><ol type="a" id="2d8ec5dd-b057-4ad3-a5d9-22d42b2adfe5" class="numbered-list" start="3"><li>MARMUX select ADDER - 1</li></ol><ol type="a" id="f7ca97ea-4297-4fae-8745-94d6d8d1332e" class="numbered-list" start="4"><li>Gate.MARMUX - 1</li></ol><ol type="a" id="faba78f5-7f93-41b4-9498-18c94bd41269" class="numbered-list" start="5"><li>LD.MAR - 1</li></ol></li></ol><ol type="1" id="1a06095f-fcb8-48c6-b748-953cb5d309b6" class="numbered-list" start="2"><li>Clock Cycle 2<ol type="a" id="b80de662-c08c-4e88-ad13-680fb84e8edf" class="numbered-list" start="1"><li>MEM.ER - 1</li></ol><ol type="a" id="867e3994-6cad-4e5a-842b-0b02b56fdc75" class="numbered-list" start="2"><li>LD.MDR (MDRMUX select Memory) - 1</li></ol></li></ol><ol type="1" id="f230583a-3894-4a32-93ce-74834aacbfa2" class="numbered-list" start="3"><li>Clock Cycle 3<ol type="a" id="3333be71-23b8-44d2-b70e-94e6422be753" class="numbered-list" start="1"><li>GATE.MDR - 1</li></ol><ol type="a" id="a1c2385e-43ab-41e4-af7e-0f81e323c9a0" class="numbered-list" start="2"><li>LD.MAR - 1</li></ol></li></ol><ol type="1" id="76f635cd-031f-40a6-9c43-3a7d438fde83" class="numbered-list" start="4"><li>Clock Cycle 4<ol type="a" id="a92dfa04-eab5-4e9e-9866-de6db8fa0b9e" class="numbered-list" start="1"><li>Gate.ALUK - 1</li></ol><ol type="a" id="b82b27a5-6fb0-45b5-9e4b-6c0e71252149" class="numbered-list" start="2"><li>ALUK select PASS - 11</li></ol><ol type="a" id="d3606121-17f9-4717-b31b-4a97743d52b3" class="numbered-list" start="3"><li>LD.MDR - 1</li></ol></li></ol><ol type="1" id="3e0289ae-b019-49e0-b488-e327a9156d32" class="numbered-list" start="5"><li>Clock Cycle 5<ol type="a" id="2627dcf1-cad5-456d-ad78-24ad7898c63a" class="numbered-list" start="1"><li>MEM.EN - 1</li></ol><ol type="a" id="d9cd85a6-95ba-40e5-aae1-7082105ea885" class="numbered-list" start="2"><li>R.W. - 1</li></ol></li></ol></details></li></ul><h1 id="105f3781-ad11-42a7-93d2-05f86c5abaf1" class="block-color-red_background">CONTROL:</h1><h2 id="bc88e63e-0bfa-4e4d-ad15-30acf5695418" class="block-color-purple_background">JMP(JUMP)</h2><ul id="e4b35b0a-53bb-4ac8-af71-c5cb0d17b4d8" class="toggle"><li><details open=""><summary>Definition</summary><figure id="44ff0578-b298-4e51-9ca8-0d3a607f0555" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.42.12.png"><img style="width:1158px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.42.12.png"/></a></figure><p id="0ec1bf84-7a86-483f-ab4f-bb9652a1b64c" class="">
+</p><p id="54d9b07e-15d7-4e17-8927-e1d35712922c" class="">
+</p></details></li></ul><ul id="d8635653-37ef-432a-b980-c964de8c5680" class="toggle"><li><details open=""><summary>PC &lt; = (BaseR)</summary><ol type="1" id="4ca8b968-4311-40f3-9d03-e249ee9589ff" class="numbered-list" start="1"><li>(SR1MUX select IR[8:6])</li></ol><ol type="1" id="1bc02eb3-f4e6-49d9-9bf0-49d817a49996" class="numbered-list" start="2"><li>(ADDR1MUX select SR1OUT)</li></ol><ol type="1" id="0b2ac194-596c-4e12-a8b5-7556aa6d1045" class="numbered-list" start="3"><li>ADDR2MUX select ZERO<ol type="a" id="8e3a8bb9-e47e-453a-bfb7-1ec9cb982bd4" class="numbered-list" start="1"><li>PCMUX select ADDER —&gt; Add SR1 with 0(Changes nothing) and send to PC</li></ol></li></ol><ol type="1" id="602de711-1746-49fc-9f6b-7681c936d3be" class="numbered-list" start="4"><li>LD.PC</li></ol></details></li></ul><p id="fdec2a29-dddc-4f3a-a15e-a9a8cd8579eb" class="">
+</p><h2 id="11705cd1-3d81-46f4-9478-e5b76b748977" class="block-color-purple_background">BR(CONDITIONAL BRANCH)</h2><ul id="3e138e07-2dd9-4cfe-ad3a-a98f4381ed74" class="toggle"><li><details open=""><summary>Definitions</summary><p id="66179869-01a1-4054-b23f-dc860c7170c5" class="">nzp are conditional branch instructions, determine whether the change the instruction flow. </p><p id="f2ee487d-27a2-4a95-b0c5-76ad6550e8ff" class="">During the EXECUTE phase, the processor examines the condition codes whose corresponding bits in the instruction are 1. </p><p id="45faab8f-1a34-47db-9678-4e17749250af" class="">If any of nzp are 0, the corresponding condition codes are not examined.</p><p id="7e2d7553-b4e1-417a-9493-043ad246ca19" class="">If any of the condition codes that are examined are in state 1, then the PC is loaded with the address obtained in the EVALUATE ADDRESS phase</p><ul id="8bc4ffc5-0296-4b40-8ccb-3e0c789dae0d" class="toggle"><li><details open=""><summary>Example</summary><p id="2e03f000-534a-493f-bd9d-a930a0b13527" class="">PC = x4027</p><p id="ecc82d0c-2b70-497d-848d-d611b6d09216" class="">Example: 0000 010 011011001</p><p id="2c5d381d-91bc-444a-b402-cec238bd7915" class="">Assembly: BR z x0D9</p><p id="fb7f5990-df0d-4feb-81e7-9d3debb714f8" class="">Next instruction: Instead of x4028, it would be x4028 + x0D9 = 4101</p></details></li></ul><figure id="70aa5c1b-d9ac-4045-a065-68c57d577f0e" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.45.42.png"><img style="width:1228px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.45.42.png"/></a></figure><p id="967f875c-0194-44dd-84e0-0431e2d51a96" class="">
+</p></details></li></ul><ul id="e6d640eb-79f7-433c-90e0-88f25c015142" class="toggle"><li><details open=""><summary>PC &lt; = (PC) + SEXT(IR[8:0]) iif (N.n + Z.z + P.p)</summary><ol type="1" id="c356a2f3-7876-4384-86c2-0764ffd2e74b" class="numbered-list" start="1"><li>ADDR1MUX select PC</li></ol><ol type="1" id="738259e7-72e1-4b3c-873b-d85360561fbd" class="numbered-list" start="2"><li>ADDR2MUX select SEXT(IR[8:0])</li></ol><ol type="1" id="bbf993d3-267f-4986-985e-2d43dc811fc2" class="numbered-list" start="3"><li>PCMUX select ADDER</li></ol><ol type="1" id="3391af6d-ba25-4dfa-ab08-b32262281dba" class="numbered-list" start="4"><li>LD.PC iif (N.n + Z.z + P.p)</li></ol></details></li></ul><p id="0570b824-f962-4202-8784-bd891317f03a" class="">
+</p><p id="dcf501be-178e-478d-b231-f9c0ca27bc9e" class="">
+</p><h2 id="10dd3446-d41f-4536-82fd-6ee02ea5344e" class="block-color-purple_background">JSR &amp; JSRR(JUMP TO SUBROUTINE)</h2><ul id="4ef52fbd-fcaa-4862-a7db-478a94fee3a4" class="toggle"><li><details open=""><summary>Definition</summary><p id="0806f21d-6b51-41c6-9e74-739c5306319a" class="">If JMP is located at x4000 and baseR is x6600, the program will execute the x4000(JMP) followed by the instruction at x6600</p><figure id="9fecd093-2520-406b-881c-02c2844bf0de" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.49.52.png"><img style="width:990px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-09-30_at_03.49.52.png"/></a></figure><p id="fdaaf670-609e-4d85-b7f1-8f3d211a39c5" class="">
+</p></details></li></ul><ul id="c4280f0f-7e5e-444a-9d46-7dc96d0e70af" class="toggle"><li><details open=""><summary>JSR</summary><p id="9011d035-ab4d-41d4-a3e9-644dd54011e5" class="">R7 &lt; = (PC).      PC &lt; = (PC) + SEXT(IR[10:0])</p><ol type="1" id="f9f827ba-24fb-440a-bdd3-94d2f0d80d10" class="numbered-list" start="1"><li>GatePC</li></ol><ol type="1" id="5c3c0334-118b-4261-a57d-50bfed251770" class="numbered-list" start="2"><li>DRMUX select [111]</li></ol><ol type="1" id="387c781b-0394-4c82-b821-a9a51533a69c" class="numbered-list" start="3"><li>LD.REG</li></ol><ol type="1" id="a3b66f66-adff-4d19-a6a7-7debf5d5d5c7" class="numbered-list" start="4"><li>ADDR1MUX select PC</li></ol><ol type="1" id="dfab6ee7-825f-4c69-ac4c-ab232d985e85" class="numbered-list" start="5"><li>ADDR2MUX select SEXT(IR[10:0])</li></ol><ol type="1" id="c3fcbd3e-5b89-460e-babd-00305f6ffe85" class="numbered-list" start="6"><li>PCMUX select ADDER</li></ol><ol type="1" id="d7d97505-a4a7-4fe1-b18c-a29de728eda4" class="numbered-list" start="7"><li>LD.PC</li></ol></details></li></ul><ul id="0fa67f22-309f-45c0-a7ff-3f4993111150" class="toggle"><li><details open=""><summary>JSRR</summary><p id="27e13515-a645-4eda-891c-776fe056602b" class="">R7 ≤ PC.    PC &lt; = (BaseR)</p><ul id="221a1868-1d74-4e5c-86e5-4630a6b7f672" class="toggle"><li><details open=""><summary>Instruction 1</summary><ol type="1" id="6aadc7e7-d138-405c-b329-594bdf1563f8" class="numbered-list" start="1"><li>GatePC</li></ol><ol type="1" id="3ccd996f-6433-4a59-97c3-17265723f3d1" class="numbered-list" start="2"><li>DRMUX select [111]</li></ol><ol type="1" id="edc7b6d1-bcf0-4485-b555-fd4715531436" class="numbered-list" start="3"><li>LD.REG</li></ol></details></li></ul><p id="ae66955d-9712-4fb6-a94d-976a7118f23b" class="">
+</p></details></li></ul><p id="0c49ebef-590c-4d92-99af-fbef64cec997" class="">
+</p><h2 id="efb178cc-934f-48bf-ba75-3346141c5357" class="block-color-purple_background">TRAP</h2><figure id="1be26d72-ae31-47a3-94d7-e5bb5abdd6f1" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-12-13_at_01.01.12.png"><img style="width:1160px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-12-13_at_01.01.12.png"/></a></figure><p id="d5bbfd9e-7123-43bb-a89e-1ef7c37e78b0" class="">Trapvector: identifies the service call that the program wishes the operating system to perform</p><ul id="ca43faa9-1e36-4286-8f38-2c3da28c99a2" class="bulleted-list"><li style="list-style-type:disc">Once the operating system is finished performing the service call, the program counter is set to the address of the instruction following the TRAP instruction.</li></ul><ul id="32af8e16-c1f4-4e57-8bd9-52abf7caca7b" class="bulleted-list"><li style="list-style-type:disc">In this way, a program can, during its execution, request services from the operating system and continue processing after each such service is performed.</li></ul><p id="8ed73887-32fe-4a0a-9f1d-9f18748f97b2" class="block-color-purple">Servical Calls:</p><ul id="e7fc7bd9-772b-430c-8400-74444f9c9f14" class="bulleted-list"><li style="list-style-type:disc">Input a character from the keyboard (<strong>trapvector = x23</strong>)</li></ul><ul id="d153f59c-ac4b-411f-a93f-b0e59df49402" class="bulleted-list"><li style="list-style-type:disc">Output a character to the monitor (<strong>trapvector = x21</strong>).</li></ul><ul id="04419969-37f3-431e-b5d4-a4742cd04c55" class="bulleted-list"><li style="list-style-type:disc">Halt the program (<strong>trapvector = x25</strong>)</li></ul><p id="6ace9ade-444e-4628-a1ba-d3d226fe6539" class="">
+</p><figure id="902a39e4-9ee6-4920-a250-ecc74c76bf1f" class="image"><a href="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-12-11_at_7.25.26_PM.png"><img style="width:1016px" src="LC-3%20Instructions%2092f06aeb7775454891b75085c891ed6f/Screen_Shot_2021-12-11_at_7.25.26_PM.png"/></a></figure><p id="3618d7e6-e735-4da4-8d38-48b58d07b0ec" class="">
+</p></div></article></body></html>

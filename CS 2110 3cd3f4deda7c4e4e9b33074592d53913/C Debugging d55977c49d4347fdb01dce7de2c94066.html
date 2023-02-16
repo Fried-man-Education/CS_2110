@@ -1,0 +1,824 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>C Debugging</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d55977c4-9d43-47fd-b01d-ce7de2c94066" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔍</span></div><h1 class="page-title">C Debugging</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="9e793ae6-9138-48ab-8c91-7fab4f0b67eb" class="block-color-teal_background">Notes</h1><h3 id="53c4918f-67e6-49cc-abc0-87a70bf09894" class="">Pass by Value and Pass by Reference When Using Pointers</h3><p id="f617684d-ed31-477e-ac9f-9ac351e07991" class="">When we pass-by-value we are passing a copy of the variable to a function. When we pass-by-reference we are passing an alias of the variable to a function. C can pass a pointer into a function but that is still pass-by-value. It is copying the value of the pointer, the address, into the function. In C++ a reference is an alias for another variable. C doesn’t have this concept, so it is always pass by value.</p><p id="5001fe2e-bc0e-4e33-b14c-cf2241200d4c" class="">Basically passing in a pointer is like telling the callee where the variable to be changed is, so the callee can then go there and actually change it. the pointer itself in the callee function is just a copy of what was passed in, so any changes made to that will directly will not be reflected in any of the caller&#x27;s variables</p><pre id="ac88e54c-fe1f-4fe0-bac8-e5c1335d54fe" class="code"><code>// pass by reference
+void swap(int *a, int *b) {
+	int t;
+
+	t = *a;
+	- a = *b;
+	- b = t;
+	}</code></pre><h3 id="3bd60490-770a-48a2-9890-ecc4fad718c2" class="">Debugging</h3><p id="a55232db-cc8b-441c-8231-bd6d130955a8" class="">gdb → GNU Debugger</p><ul id="7d645c83-1935-49d0-a887-54569f4eee87" class="bulleted-list"><li style="list-style-type:disc">Command line tool that lets you inspect and debug your
+code from within a shell/terminal</li></ul><p id="bb55f3e9-c964-4b03-b3c5-d3c82aae175b" class="">Steps</p><ul id="4260e1bc-9f6a-4c69-95d8-83fe1669adc2" class="bulleted-list"><li style="list-style-type:disc">First, we need to compile our code for gdb<ul id="e80d332e-656c-4455-93af-b2a7bff64a3d" class="bulleted-list"><li style="list-style-type:circle">gcc -g -o &lt;name-of-output-file&gt; &lt;source-file&gt;</li></ul><ul id="ca3afbc0-c5d8-4ee1-8d06-3fb6b4c2274a" class="bulleted-list"><li style="list-style-type:circle">g tells the compiler to add debug information, which
+GDB needs in order to work</li></ul><ul id="15d87580-05b2-4cf3-84f2-1d43c18148ba" class="bulleted-list"><li style="list-style-type:circle">o lets you rename your output file (the default filename
+is a.out)</li></ul><ul id="ce64f651-29f4-428a-b860-a6af16b1f058" class="bulleted-list"><li style="list-style-type:circle">The Makefile we give you does this for you automagically when you run make tests</li></ul></li></ul><ul id="a41094ff-c502-4601-b1f1-394f30c76885" class="bulleted-list"><li style="list-style-type:disc">gdb &lt;name-of-output-file&gt;<ul id="5edad09d-bc34-45c6-9f3d-f447974513f6" class="bulleted-list"><li style="list-style-type:circle">Starts gdb and loads it with &lt;name-of-output-file&gt;</li></ul></li></ul><ul id="54a47a05-0db2-49d8-8720-4d30f6ff8207" class="bulleted-list"><li style="list-style-type:disc">Alternatively, with our Makefile:<ul id="0240454a-9512-4ceb-8626-6e93f7832e6d" class="bulleted-list"><li style="list-style-type:circle">make run-gdb TEST=&lt;name of test case&gt;</li></ul><ul id="31b15071-c180-4b68-af4a-c57daf311fb2" class="bulleted-list"><li style="list-style-type:circle">make run-gdb TEST=test_catchPokemon_single</li></ul></li></ul><ul id="88d060cb-84ba-4d7f-aa88-6c3121988a6a" class="bulleted-list"><li style="list-style-type:disc">The following commands must be run from within gdb:<ul id="8f496c3c-2db9-49d9-93e8-6db262e94dd6" class="bulleted-list"><li style="list-style-type:circle">run &lt;args&gt;<ul id="bad2229c-05d4-4f3a-b72d-768cbc004e43" class="bulleted-list"><li style="list-style-type:square">Runs the program to be debugged</li></ul><ul id="82d36442-231d-423c-8da8-fe4ab9c22ada" class="bulleted-list"><li style="list-style-type:square">Whatever arguments you pass in will be passed along to the program</li></ul></li></ul></li></ul><ul id="1c510626-050a-4bd7-829e-3ee9cb30339b" class="bulleted-list"><li style="list-style-type:disc">break &lt;where&gt;<ul id="5bbb2f8b-54e9-4546-821e-c3e2a915b334" class="bulleted-list"><li style="list-style-type:circle">Sets a new breakpoint at &lt;where&gt;</li></ul><ul id="012495cf-e569-47fc-a4bf-1a09de2d615d" class="bulleted-list"><li style="list-style-type:circle">&lt;where&gt; = function-name | line-number | file:line-number</li></ul></li></ul><ul id="76be8f9a-251e-4477-9ae9-ad783befa132" class="bulleted-list"><li style="list-style-type:disc">watch &lt;what&gt;<ul id="6aa35f19-c602-40cb-a0d2-ad8ff3ee2fe8" class="bulleted-list"><li style="list-style-type:circle">Sets a new watchpoint on a variable or expression</li></ul><ul id="48bcb6e4-2b2d-4f70-9c5a-e05c90598e75" class="bulleted-list"><li style="list-style-type:circle">The program will pause when &lt;what&gt; changes</li></ul></li></ul><ul id="12a6f7af-de8a-4e48-a97e-5de4d49dd0f3" class="bulleted-list"><li style="list-style-type:disc">step<ul id="fbf22660-3d84-43b9-bb20-48a4877eebda" class="bulleted-list"><li style="list-style-type:circle">Run the next line of code, stepping into any functions</li></ul></li></ul><ul id="ace07a8a-aa8e-4b95-998a-91343bd24fa8" class="bulleted-list"><li style="list-style-type:disc">next<ul id="8f40beb4-91f1-400b-9f37-8c628b4f9d61" class="bulleted-list"><li style="list-style-type:circle">Run the next line of code, stepping over any functions</li></ul></li></ul><ul id="3097035e-312f-412b-b8c6-37ea00cd55cb" class="bulleted-list"><li style="list-style-type:disc">print &lt;what&gt;<ul id="0a41664c-a5a0-4c90-88cd-40b385a3a637" class="bulleted-list"><li style="list-style-type:circle">Prints &lt;what&gt; to the console</li></ul><ul id="715b2c86-4bd7-4884-b11d-b33350439821" class="bulleted-list"><li style="list-style-type:circle">&lt;what&gt; = variable-name | expression</li></ul></li></ul><ul id="60c7ca0c-ee56-48d5-bff4-e38e81bee6b5" class="bulleted-list"><li style="list-style-type:disc">display &lt;what&gt;<ul id="d1dec106-054c-4984-ae09-09c0dc0a0cbe" class="bulleted-list"><li style="list-style-type:circle">Prints &lt;what&gt; to the console, but every step after it
+will continue to print &lt;what&gt;</li></ul></li></ul><ul id="2ccd215f-8a07-429e-8770-8f89d2ccc9e3" class="bulleted-list"><li style="list-style-type:disc">backtrace<ul id="e929fc19-749e-440b-b401-6e4a2cd18b5d" class="bulleted-list"><li style="list-style-type:circle">Displays the call stack</li></ul><ul id="a07e0614-0f15-4b5a-9d3e-93ecf63b8963" class="bulleted-list"><li style="list-style-type:circle">Useful for debugging seg faults</li></ul></li></ul><ul id="3f90a522-0d5b-41e3-bd09-78f4c31c3150" class="bulleted-list"><li style="list-style-type:disc">finish<ul id="f6326b27-468d-4366-b1d3-9e7c3e73633a" class="bulleted-list"><li style="list-style-type:circle">Finish the current function execution (i.e. run every
+line until you return to the caller)</li></ul></li></ul><ul id="8857c05a-a1ce-41d3-bd9c-162f021e2f83" class="bulleted-list"><li style="list-style-type:disc">record<ul id="aacefc68-53ca-4fa0-8d0b-ff17371d1db6" class="bulleted-list"><li style="list-style-type:circle">Record history starting now</li></ul><ul id="edf1ab6a-7adb-4939-b2aa-28b580fea685" class="bulleted-list"><li style="list-style-type:circle">You can go back using this history using the
+reverse-stepor reverse-next commands</li></ul><ul id="1703a2f2-b516-4cd1-b5bd-f439ef2f96f7" class="bulleted-list"><li style="list-style-type:circle">You cannot go backwards unless you record history</li></ul></li></ul><ul id="90b99eba-897e-48b5-bcdf-733ee4295c64" class="toggle"><li><details open=""><summary>Example</summary><figure id="2e1cab92-84d5-4646-a276-2f5b083dd9d6" class="image"><a href="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-12-13_at_23.11.07.png"><img style="width:1684px" src="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-12-13_at_23.11.07.png"/></a></figure><figure id="5e04f18a-8228-4539-90f0-45f72ebb44d4" class="image"><a href="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-12-13_at_23.10.57.png"><img style="width:1728px" src="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-12-13_at_23.10.57.png"/></a></figure><figure id="c718c20f-698c-4f0d-90d9-980791a76111" class="image"><a href="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-12-13_at_23.11.33.png"><img style="width:1686px" src="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-12-13_at_23.11.33.png"/></a></figure><p id="150db175-771c-4f2f-af18-d93ed3fd6bed" class="">
+</p></details></li></ul><h3 id="c8af5cc4-374f-4ab9-bddb-7808d9854dfb" class="">Malloc()</h3><p id="5ce13af7-3737-43e5-8957-8ba052115c8d" class="">The C library function void *malloc(size_t size) allocates the requested memory and returns a pointer to it.</p><ul id="7f4434b1-1382-4f23-a495-3f2624211a64" class="toggle"><li><details open=""><summary>Graphical</summary><figure id="5f757011-2095-4976-8024-0c1bfd3fd47f" class="image"><a href="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-11-17_at_17.45.21.png"><img style="width:1372px" src="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-11-17_at_17.45.21.png"/></a></figure><p id="24ae0cc2-ed27-44e0-aa89-ec5f38d5306b" class="">
+</p></details></li></ul><pre id="8df0ad72-f851-4615-b1fa-a0ac04482c24" class="code code-wrap"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main () {
+   char *str;
+
+   /* Initial memory allocation */
+   str = (char *) malloc(15);
+   strcpy(str, &quot;tutorialspoint&quot;);
+   printf(&quot;String = %s,  Address = %u\n&quot;, str, str);
+
+   /* Reallocating memory */
+   str = (char *) realloc(str, 25);
+   strcat(str, &quot;.com&quot;);
+   printf(&quot;String = %s,  Address = %u\n&quot;, str, str);
+
+   free(str);
+
+   return(0);
+}
+
+//compile and run:
+String = tutorialspoint, Address = 355090448
+String = tutorialspoint.com, Address = 355090448</code></pre><p id="14b8fdee-207c-4125-a44e-29897396126a" class="">
+</p><h3 id="62089a3a-bbfc-415b-9eaa-2c1d51018410" class="">Calloc</h3><p id="90f9ff90-b9e0-4410-966b-7104bb607b10" class=""><strong>“calloc”</strong> or <strong>“contiguous allocation”</strong> method in C is used to dynamically allocate the specified number of blocks of memory of the specified type. it is very much similar to malloc() but has two different points and these are:</p><ul id="80e63827-5877-48b7-837e-090db2cdb177" class="bulleted-list"><li style="list-style-type:disc">It initializes each block with a default value ‘0’.</li></ul><ul id="67b10012-7365-4e2c-a930-4cbc2f5c2181" class="bulleted-list"><li style="list-style-type:disc">It has two parameters or arguments as compare to malloc().</li></ul><ul id="c6de590c-7de8-442c-8703-85920ee7885b" class="toggle"><li><details open=""><summary>Graphical</summary><figure id="e58f5590-09b7-4088-9bf8-3d23fe47add8" class="image"><a href="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-11-17_at_17.44.44.png"><img style="width:1372px" src="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-11-17_at_17.44.44.png"/></a></figure><p id="1b1cd687-faf3-4cd3-852d-9794c4473b3b" class="">
+</p></details></li></ul><p id="7ccbfe99-f7fd-4a4e-8952-11f263710b8c" class=""><em><strong>ptr = (float*) calloc(25, sizeof(float));</strong></em></p><p id="9dff530f-db5d-4421-a7c1-9be7f776bbe7" class=""><em>This statement allocates contiguous space in memory for 25 elements each with the size of the float.</em></p><pre id="58baa699-840c-4d58-87d7-97857cf21cc1" class="code code-wrap"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+	// This pointer will hold the
+	// base address of the block created
+	int* ptr;
+	int n, i;
+	
+	// Get the number of elements for the array
+	n = 5;
+	printf(&quot;Enter number of elements: %d\\n&quot;, n);
+	
+	// Dynamically allocate memory using calloc()
+	ptr = (int*)calloc(n, sizeof(int));
+	
+	// Check if the memory has been successfully
+	// allocated by calloc or not
+	if (ptr == NULL) {
+		printf(&quot;Memory not allocated.\\n&quot;);
+		exit(0);
+	}
+	else {
+	
+		// Memory has been successfully allocated
+		printf(&quot;Memory successfully allocated using calloc.\\n&quot;);
+	
+		// Get the elements of the array
+		for (i = 0; i &lt; n; ++i) {
+			ptr[i] = i + 1;
+		}
+	
+		// Print the elements of the array
+		printf(&quot;The elements of the array are: &quot;);
+		for (i = 0; i &lt; n; ++i) {
+			printf(&quot;%d, &quot;, ptr[i]);
+		}
+	}
+	
+	return 0;
+}</code></pre><h3 id="22af063c-7543-4ab6-b606-5a516c95a89d" class="">C realloc() method</h3><p id="f8fa2477-8408-4b03-a636-066d0fc4a008" class=""><strong>“realloc”</strong> or <strong>“re-allocation”</strong> method in C is used to dynamically change the memory allocation of a previously allocated memory. In other words, if the memory previously allocated with the help of malloc or calloc is insufficient, realloc can be used to <strong>dynamically re-allocate memory</strong>. re-allocation of memory maintains the already present value and new blocks will be initialized with the default garbage value.</p><ul id="3cc1a6ae-dd49-4a3d-9812-211362662c25" class="toggle"><li><details open=""><summary>Graphical</summary><figure id="f5e2b066-3196-48c5-9295-6f00db0e058b" class="image"><a href="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-11-17_at_17.44.10.png"><img style="width:1072px" src="C%20Debugging%20d55977c49d4347fdb01dce7de2c94066/Screen_Shot_2021-11-17_at_17.44.10.png"/></a></figure><p id="e29e9fd7-3fbd-44ea-99b5-18f0df250fef" class="">
+</p></details></li></ul><pre id="e77a1d4b-0c6c-4a7e-b190-32a550afda59" class="code code-wrap"><code>ptr = realloc(ptr, newSize);
+
+where ptr is reallocated with new size &#x27;newSize&#x27;.
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+
+	// This pointer will hold the
+	// base address of the block created
+	int* ptr;
+	int n, i;
+
+	// Get the number of elements for the array
+	n = 5;
+	printf(&quot;Enter number of elements: %d\n&quot;, n);
+
+	// Dynamically allocate memory using calloc()
+	ptr = (int*)calloc(n, sizeof(int));
+
+	// Check if the memory has been successfully
+	// allocated by malloc or not
+	if (ptr == NULL) {
+		printf(&quot;Memory not allocated.\n&quot;);
+		exit(0);
+	}
+	else {
+
+		// Memory has been successfully allocated
+		printf(&quot;Memory successfully allocated using calloc.\n&quot;);
+
+		// Get the elements of the array
+		for (i = 0; i &lt; n; ++i) {
+			ptr[i] = i + 1;
+		}
+
+		// Print the elements of the array
+		printf(&quot;The elements of the array are: &quot;);
+		for (i = 0; i &lt; n; ++i) {
+			printf(&quot;%d, &quot;, ptr[i]);
+		}
+
+		// Get the new size for the array
+		n = 10;
+		printf(&quot;\n\nEnter the new size of the array: %d\n&quot;, n);
+
+		// Dynamically re-allocate memory using realloc()
+		ptr = realloc(ptr, n * sizeof(int));
+
+		// Memory has been successfully allocated
+		printf(&quot;Memory successfully re-allocated using realloc.\n&quot;);
+
+		// Get the new elements of the array
+		for (i = 5; i &lt; n; ++i) {
+			ptr[i] = i + 1;
+		}
+
+		// Print the elements of the array
+		printf(&quot;The elements of the array are: &quot;);
+		for (i = 0; i &lt; n; ++i) {
+			printf(&quot;%d, &quot;, ptr[i]);
+		}
+
+		free(ptr);
+	}
+
+	return 0;
+}</code></pre><h1 id="f5508f87-5fe1-49ad-b37b-641885489c89" class="block-color-teal_background">Questions &amp; Answers</h1><ul id="1e1e003d-16f6-4954-bd90-d8703284c4e9" class="bulleted-list"><li style="list-style-type:disc">What are some of the things you&#x27;ve seen so far in C that will result in segmentation faults?</li></ul><ul id="e3f7e41a-788e-4d71-9bd5-b508a9b9a599" class="toggle"><li><details open=""><summary>Student Solution</summary><ul id="a7d628a4-1774-4311-8e7e-da5ff34b20a7" class="bulleted-list"><li style="list-style-type:disc">means your program has attempted to access an area of memory that it is not allowed to access</li></ul><ul id="99985476-fb5e-42de-86fa-d3368e3c6354" class="bulleted-list"><li style="list-style-type:disc">examples<ul id="b3d3ab9b-82cc-4cec-bd93-eb4d39e77af7" class="bulleted-list"><li style="list-style-type:circle">dereferencing a null pointer or pointer that contains value 0</li></ul></li></ul></details></li></ul><ul id="62a42299-4565-4b43-8f3e-93febcc7e181" class="toggle"><li><details open=""><summary>TA Solution</summary><ul id="4b67f249-bade-4931-885b-ae12903b8d17" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Dereferencing a pointer that contains the value 0 or NULL</strong></em></li></ul><ul id="71e64d16-87cb-4056-b11e-0469c674228b" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Trying to change memory you are unable to access</strong></em></li></ul><ul id="3502e4ce-8bf9-4346-ac5b-ec12ac9448af" class="bulleted-list"><li style="list-style-type:disc"><em><strong>In general: attempting to access a memory address you are not allowed access to</strong></em></li></ul></details></li></ul><ul id="770595cd-5e16-4934-b9b1-64bb5af31861" class="bulleted-list"><li style="list-style-type:disc">Practice question: a programmer that was new to C wanted to make a copy of a string named <code>str</code>. They wrote the following code:<pre id="1a50b888-86ee-42a5-8639-c2dec7496e03" class="code code-wrap"><code>char *copy;
+int len = strlen(str);
+strncpy(copy, str, len + 1);</code></pre><p id="bebf29bb-d26e-4448-b3a9-495c70f8cd72" class="">Why doesn&#x27;t the above code work? What would happen if this code was run? What are some alternative strategies the programmer could use instead?</p></li></ul><ul id="01b0fc2f-31c2-4678-8a2b-2103d2e9b862" class="toggle"><li><details open=""><summary>Student Solution</summary><ul id="6ccd98b0-21de-4d8d-ab8b-25e5aced5825" class="bulleted-list"><li style="list-style-type:disc">The code doesn’t work because ‘copy’ was not initialized to an address and hence when ‘copy’ is used in line 3 there is no defined place for the string ‘str’ to be copied to</li></ul><ul id="265c0b31-c682-4574-808c-c754529bcdfc" class="bulleted-list"><li style="list-style-type:disc">If the code was ran there would be a segmentation fault</li></ul><ul id="f81b672d-b040-458a-a966-a6711398995d" class="bulleted-list"><li style="list-style-type:disc">char copy[len+1];</li></ul><ul id="2d4f1640-291d-4da2-b690-f88c1a69a109" class="bulleted-list"><li style="list-style-type:disc">could also malloc() space for copy if keeping it on the heap is preferred</li></ul></details></li></ul><ul id="5b345fb5-6832-4f90-bfd9-2862489f228d" class="toggle"><li><details open=""><summary>TA Solution</summary><ul id="443634c5-8f4a-4ae2-aa97-65d7994b758d" class="bulleted-list"><li style="list-style-type:disc"><em><strong>The code doesn’t work because ‘copy’ was not initialized to an address and hence when ‘copy’ is used in line 3 there is no defined place for the string ‘str’ to be copied to</strong></em></li></ul><ul id="d401ec7b-9d52-49df-b88b-488d5402dac9" class="bulleted-list"><li style="list-style-type:disc"><em><strong>If the code was ran there would be a segmentation fault</strong></em></li></ul><ul id="9388cebd-85dd-4a2a-aa88-e4c337e37029" class="bulleted-list"><li style="list-style-type:disc"><em><strong>char copy[len+1];</strong></em></li></ul><ul id="3046696d-b46b-4504-9d0f-494e08ad62d6" class="bulleted-list"><li style="list-style-type:disc"><em><strong>could also malloc() space for copy if keeping it on the heap is preferred</strong></em></li></ul></details></li></ul><ul id="c8b1206d-5a51-4dd5-b9ab-94eb34a901d8" class="bulleted-list"><li style="list-style-type:disc">Practice question: the same programmer realizes that no space is being allocated for the string. They try to write this instead:<pre id="cf88085d-de6c-4653-9d9f-27fe59ad82c4" class="code code-wrap"><code>char *copy = &quot;&quot;;
+int len = strlen(str);
+strncpy(copy, str, len + 1);</code></pre><p id="a9e11ab0-412c-4639-a720-da62c2567fcc" class="">Even though <code>copy</code> is no longer <code>NULL</code> or some other garbage memory address like it was beforehand, the code still segfaults! Why doesn&#x27;t the above code work? What are some alternative strategies the programmer could use instead to approach this problem?</p></li></ul><ul id="2223193a-3d07-4748-a4a6-854b531f92d6" class="toggle"><li><details open=""><summary>Student Solution</summary><ul id="146d6d67-0c1b-43b8-8a9a-2d0cdbf9c063" class="bulleted-list"><li style="list-style-type:disc">Initializing *copy with a string literal. String literals are read only and cannot be modified. this piece of code is attempting to modify read only memory, which is causing a segfault</li></ul><ul id="5d3f6f09-8cb8-41c4-80b3-e8ae38d78103" class="bulleted-list"><li style="list-style-type:disc">To fix this use array notation: char copy[len+1]; (or malloc() like above)</li></ul></details></li></ul><ul id="e7dee673-5bd3-4f12-b842-4234d60d91f6" class="toggle"><li><details open=""><summary>TA Solution</summary><ul id="6eb5507b-1fe4-4e5a-9dc6-ff1e1296c174" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Initializing *copy with a string literal. String literals are read only and cannot be modified. this piece of code is attempting to modify read only memory, which is causing a segfault</strong></em></li></ul><ul id="9d1d8821-0f09-4293-8358-c13d8d0da39d" class="bulleted-list"><li style="list-style-type:disc"><em><strong>To fix this use array notation: char copy[len+1]; (or malloc() like above)</strong></em></li></ul></details></li></ul></div></article></body></html>

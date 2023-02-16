@@ -1,0 +1,673 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>IEEE-754 Floating Point Representations</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b9dc864f-de81-4af1-ad6b-52ac29aac107" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🏞️</span></div><h1 class="page-title">IEEE-754 Floating Point Representations</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-blue">Quiz 1 Material</span></td></tr></tbody></table></header><div class="page-body"><h1 id="4fee6d85-d9f5-4352-a959-5ae6b204f6cf" class="block-color-teal_background">Notes</h1><p id="5b0f4174-4961-4803-8d4e-9f535ca1bbdd" class=""><a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">Online Converter</a></p><h2 id="7c59a832-4756-4bd6-8e23-118e0273217c" class="">IEEE-754 Double Breakdown</h2><table id="9d027b7f-bfd8-4589-9a12-5c876da62193" class="simple-table"><tbody><tr id="5cf5f714-8abc-4e55-b5cc-ce889fd2e2e8"><td id="^_}P" class="">63 (1 bit)</td><td id="HdO&gt;" class="">62...52 (8 bits)</td><td id="hI&gt;_" class="">51...0 (23 bits)</td></tr><tr id="b61d7a50-7d63-4c70-9f04-046643c93662"><td id="^_}P" class="">0</td><td id="HdO&gt;" class="">00000000</td><td id="hI&gt;_" class="">00000000000000000000000</td></tr><tr id="86f66968-7f84-4dfe-82c2-e892b9ecf761"><td id="^_}P" class="">sign</td><td id="HdO&gt;" class="">exponent</td><td id="hI&gt;_" class="">mantissa (significant)</td></tr></tbody></table><p id="0a8d93e1-1a31-484b-81f1-8c2a16a181a2" class="">Formula: (-1)^<strong>S</strong> * 1.<strong>M</strong> * 2^(<strong>E</strong>-1023)</p><ul id="9bc0344c-c26e-415a-81d1-0334896eebb1" class="bulleted-list"><li style="list-style-type:disc">Sign: (-1)^<strong>S</strong></li></ul><ul id="28b57362-91a3-4406-8109-f03f20505041" class="bulleted-list"><li style="list-style-type:disc">1 is understood: 1.</li></ul><ul id="3d380065-9858-4fbe-908d-71c7fb50704f" class="bulleted-list"><li style="list-style-type:disc">Mantissa (w/o leading 1): .<strong>M</strong></li></ul><ul id="10e63b21-dadd-4e5e-9c2b-b30aa0a88f4d" class="bulleted-list"><li style="list-style-type:disc">Base: 2</li></ul><ul id="a66c6026-1bf3-4a33-ad2f-17f8dcea73f1" class="bulleted-list"><li style="list-style-type:disc">Exponent: <strong>E</strong>-1023</li></ul><figure id="fe8bb9b1-a169-4271-86ca-80fc036b737b" class="image"><a href="IEEE-754%20Floating%20Point%20Representations%20b9dc864fde814af1ad6b52ac29aac107/Screen_Shot_2021-12-11_at_15.49.56.png"><img style="width:1818px" src="IEEE-754%20Floating%20Point%20Representations%20b9dc864fde814af1ad6b52ac29aac107/Screen_Shot_2021-12-11_at_15.49.56.png"/></a></figure><h3 id="19b443b6-deb1-480b-95b5-804d33c7e9b6" class="">Edge Cases</h3><table id="750ea082-7b9e-4058-b050-ecbdde8afbef" class="simple-table"><tbody><tr id="6e6f7171-4d0b-4eda-a676-93a2b9febbe9"><td id="PfiM" class=""></td><td id="pdlw" class="" style="width:120.99147033691406px">E == 0</td><td id="yPzM" class="">0 &lt; E &lt; 2047</td><td id="uCJd" class="">E == 2047</td></tr><tr id="2a914e7e-84e1-4d5d-8ca0-61f8e2b4bcb5"><td id="PfiM" class="">M == 0</td><td id="pdlw" class="" style="width:120.99147033691406px">0</td><td id="yPzM" class="">Powers of Two</td><td id="uCJd" class=""><strong>∞</strong></td></tr><tr id="c028455c-229d-4f4d-a1fe-0f2d85ba5784"><td id="PfiM" class="">M ≠ 0</td><td id="pdlw" class="" style="width:120.99147033691406px">Non-normalized typically underflow</td><td id="yPzM" class="">Ordinary Old Numbers</td><td id="uCJd" class="">Not A Number</td></tr></tbody></table><h2 id="3cb9ba18-dbf8-4e25-ba20-7d78ed28030c" class="">Properties</h2><ul id="e34ef4c8-2943-4234-9cf8-117033d001b9" class="bulleted-list"><li style="list-style-type:disc">Same basic idea as scientific notation</li></ul><ul id="a1ea49c6-014b-457e-9b94-89d84a5259f8" class="bulleted-list"><li style="list-style-type:disc">Precise representation at the bit level</li></ul><ul id="b01ca481-a898-4825-aa10-26ba877ae07d" class="bulleted-list"><li style="list-style-type:disc">Precise behavior of arithmetic operations</li></ul><ul id="a056b74d-ec86-4855-a8f8-8e0ad5392b97" class="bulleted-list"><li style="list-style-type:disc">Efficiency (Space &amp; Time)</li></ul><ul id="48f676c8-fa10-44ba-aa4c-49a16176e43e" class="bulleted-list"><li style="list-style-type:disc">Special values: not-a-number, +/-infinity, etc.</li></ul><ul id="f792f4b2-d556-47bd-8595-36ba3373ec60" class="bulleted-list"><li style="list-style-type:disc">Correct rounding</li></ul><ul id="90837944-781b-4fc0-9eab-aeb3f6c6ac88" class="bulleted-list"><li style="list-style-type:disc">Sortable without FP hardware</li></ul><ul id="506cbfb4-327a-4352-8793-8bd5e3daee49" class="bulleted-list"><li style="list-style-type:disc">Edge case for tiny numbers: E==0 is special, so 2-126 is smallest exponent; we use underflow case for anything smaller, like 2-127; note E==0 is computed as E==1</li></ul><ul id="d5f0a0e7-7456-48f3-8387-6d1f73aabd4d" class="bulleted-list"><li style="list-style-type:disc">the 32-bit form the exponent is biased by 127</li></ul><h2 id="63e8ee84-4b63-44df-8e59-b247cf32501a" class="">NaN Properties</h2><ul id="615a92d1-12aa-450b-a739-5f4bfb84ba7e" class="bulleted-list"><li style="list-style-type:disc">Suppose A is a floating point number set to NaN</li></ul><ul id="41660705-77cb-4500-82b8-8a74b96ee413" class="bulleted-list"><li style="list-style-type:disc">A != B is <em>true</em>, when B is another floating point number, NaN, infinity, or anything</li></ul><ul id="4e4792cf-0d25-4e70-ac9d-9395771df07f" class="bulleted-list"><li style="list-style-type:disc">Interestingly A != A is true as well</li></ul><ul id="35593dac-9665-4bf0-9ce3-bca6cd0d1fba" class="bulleted-list"><li style="list-style-type:disc">Also, if A or B is NaN, the following are always false:<ul id="f7690c8c-e0da-492d-bf4a-7384bb77300a" class="bulleted-list"><li style="list-style-type:circle">A &lt; B, A &gt; B, A == B</li></ul></li></ul><h2 id="c85e5369-4e31-419b-bb36-7028b87623e2" class="">Converting variable types</h2><ul id="4da5c42b-1bf4-406e-8bd8-f6f2b9d5e2ae" class="bulleted-list"><li style="list-style-type:disc">In CS 1331 we noted:<pre id="be20e9a0-0f1e-4f48-a178-48c13ffe6073" class="code"><code>float f;
+int i;
+f = i;
+i = (int)f;</code></pre></li></ul><ul id="c377fda1-8755-45f5-bb39-fea4f098717a" class="bulleted-list"><li style="list-style-type:disc">What does this imply?<ol type="1" id="06f08e32-e17b-4002-aedc-c8b939b07eee" class="numbered-list" start="1"><li>Converting floats to ints we may lose information</li></ol><ol type="1" id="f09bae85-e738-4eee-8f6b-b05f45c5f928" class="numbered-list" start="2"><li>Converting ints to floats we may lose information</li></ol><ol type="1" id="25e259c9-5a3e-45bf-9cbc-0d5bcea9fc29" class="numbered-list" start="3"><li>Converting either way we may lose information</li></ol></li></ul><h2 id="53666ec0-20ab-4f66-a0e2-b1923007bbf2" class="">Comparing Two FP Numbers</h2><ul id="fbd5dff6-561d-4909-871d-86d2746ca8a4" class="bulleted-list"><li style="list-style-type:disc">The layout of the representation allows certain operations (like &gt; ) to be performed with no conversion</li></ul><ul id="32187800-6f62-4d04-8622-422df601c9a6" class="bulleted-list"><li style="list-style-type:disc">If either is NaN, the comparison is defined as “unordered” (all comparisons to it except != are false)</li></ul><ul id="ebe7fa71-a903-43e5-9ee8-83e33270fef8" class="bulleted-list"><li style="list-style-type:disc">If either is -0.0, replace with +0.0</li></ul><ul id="9a49a999-5eb5-4185-abdc-e2f58c5c605c" class="bulleted-list"><li style="list-style-type:disc">If the signs (high bit) are different, the positive number is bigger</li></ul><ul id="fcffda0e-a7bf-4fb4-8fa9-cb3e7df0a61c" class="bulleted-list"><li style="list-style-type:disc">Compare the rest of the bits as integers</li></ul><ul id="fce90013-0dcb-414e-a6c0-e89fbb834d91" class="bulleted-list"><li style="list-style-type:disc">If the signs are both negative reverse the comparison</li></ul><ul id="c5abd00f-323c-49fc-a719-d12d0914ac2e" class="bulleted-list"><li style="list-style-type:disc">Example:<p id="66af8d82-c7fa-4e24-8d1b-fd491772474c" class="">A 0 10111000 11<strong>0</strong>01010 11001010 1100101</p><p id="b4b50fe2-db6d-42b4-bdec-7649af232ab8" class="">B 0 10111000 11<strong>1</strong>01010 11001010 1100101</p><p id="436e4d91-4db4-42e1-bdf1-76516391b23d" class="">|B| &gt; |A|</p><ul id="818979ba-064b-48e4-b4c0-caae5f5b7da8" class="bulleted-list"><li style="list-style-type:circle">Treat as 31-bit unsigned whole numbers<ul id="b9ef4251-b5f5-47cc-9e8d-343ea5a3b3e3" class="bulleted-list"><li style="list-style-type:square">without the sign bits (bit 31)</li></ul></li></ul><ul id="4e2d042f-c25c-44b7-b8bc-cfa15d216a14" class="bulleted-list"><li style="list-style-type:circle">And compare the two magnitudes bit by bit, left to right - until you find different values</li></ul><ul id="6f8984b4-e2c1-4ef8-99f1-613898e2a80c" class="bulleted-list"><li style="list-style-type:circle">Both are positive, so B&gt;A</li></ul></li></ul><h1 id="0187c5b7-f661-4408-af04-740060ef21d5" class="block-color-teal_background">Questions &amp; Answers</h1><p id="2bc7f2c0-c406-453b-95f3-a715b536d00a" class=""><strong>What’s the formula for finding what value a regular floating point number represents in terms of its sign, exponent, and mantissa?</strong></p><p id="875c09aa-3889-4f89-85c7-7469148a5a62" class=""><strong>How is the exponent represented? What are the range of possible values for the exponent?</strong></p><ul id="6ff3ff98-fd13-4e26-8eb6-394cc5c07726" class="bulleted-list"><li style="list-style-type:disc"><strong>Challenge conceptual question: why do we not use a 2&#x27;s complement number for the exponent part?</strong></li></ul><h2 id="565ca461-8cf3-40c6-a826-778e08d99382" class=""><strong>Edge cases</strong></h2><ul id="85e576bf-a36c-4c47-9529-47cd338c8dcc" class="bulleted-list"><li style="list-style-type:disc"><strong>Given the sign, exponent bits, and mantissa, how can you tell when a floating point number is the following:</strong><ul id="44c456a9-4751-4599-9d85-4a5d534a4fe2" class="bulleted-list"><li style="list-style-type:circle"><strong>Infinity/negative infinity</strong></li></ul><ul id="896ae46e-334e-41a2-a815-96b347cee3eb" class="bulleted-list"><li style="list-style-type:circle"><strong>Subnormal (a.k.a. denormalized)</strong></li></ul><ul id="de8b1b7a-7657-4cf8-8db7-b3c3a0400db6" class="bulleted-list"><li style="list-style-type:circle"><strong>0.0 or -0.0</strong></li></ul><ul id="cf1a7d7a-da16-4a2c-b880-0716b0e17aba" class="bulleted-list"><li style="list-style-type:circle"><strong>Power of 2</strong></li></ul><ul id="03b9f683-5cb0-4eef-9d49-b19048da0400" class="bulleted-list"><li style="list-style-type:circle"><strong>NaN</strong></li></ul><ul id="33192cb6-0b0a-4878-8734-27cbdadec4d6" class="bulleted-list"><li style="list-style-type:circle"><strong>A regular number (none of the above)</strong></li></ul></li></ul><ul id="d14ea616-44d2-4354-b08a-753033026575" class="bulleted-list"><li style="list-style-type:disc"><strong>What does &quot;normalization&quot; mean in the context of IEEE-754?</strong></li></ul><ul id="24b30c9b-d380-49f5-9fa6-ca11277bca4f" class="bulleted-list"><li style="list-style-type:disc"><strong>What is a subnormal number? How is the formula for computing the value of a subnormal number different from the usual formula?</strong></li></ul><p id="ff74857e-1f29-4760-8223-639a4c87ae44" class=""><strong>What are the different values that an IEEE-754 floating point number could represent if:</strong></p><ul id="6785a592-8123-4567-81ca-9d1e609274e2" class="bulleted-list"><li style="list-style-type:disc"><strong>It had a mantissa of </strong><strong><mark class="highlight-gray_background">00000000000000000000000</mark></strong><strong>?</strong></li></ul><ul id="4cb38680-057b-4540-b0f7-6b3229315c30" class="bulleted-list"><li style="list-style-type:disc"><strong>It had an exponent of </strong><strong><mark class="highlight-gray_background">00000000</mark></strong><strong>?</strong></li></ul><ul id="056cb059-1db2-433c-b8b8-02c051651b04" class="bulleted-list"><li style="list-style-type:disc"><strong>It had an exponent of </strong><strong><mark class="highlight-gray_background">11111111</mark></strong><strong>?</strong></li></ul><p id="ca379727-7bdd-4186-b76b-a7d8c2a0364d" class="">
+</p></div></article></body></html>

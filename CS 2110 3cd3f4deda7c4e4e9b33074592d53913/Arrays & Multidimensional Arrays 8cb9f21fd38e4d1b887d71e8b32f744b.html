@@ -1,0 +1,732 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Arrays &amp; Multidimensional Arrays</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8cb9f21f-d38e-4d1b-887d-71e8b32f744b" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🗃️</span></div><h1 class="page-title">Arrays &amp; Multidimensional Arrays</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Type</th><td><span class="selected-value select-value-color-gray">Quiz 4 Material</span></td></tr></tbody></table></header><div class="page-body"><h2 id="f2b05474-05d0-4f5f-be45-9cb846b33472" class="block-color-pink_background">Marginally Indexed Arrays</h2><pre id="e9325069-57e6-4736-a6eb-ca278a8b276c" class="code"><code>char *month_name(int n) {
+	static char *name[] = {
+		&quot;Illegal month&quot;,
+		&quot;January&quot;, &quot;February&quot;, &quot;March&quot;,
+		&quot;April&quot;, &quot;May&quot;, &quot;June&quot;,
+		&quot;July&quot;, &quot;August&quot;, &quot;September&quot;,
+		&quot;Octoober&quot;, &quot;November&quot;, &quot;December&quot;
+	}
+	return (n &lt; 1 || n &gt; 12) ? name[0] : name[n];
+}</code></pre><p id="01a6ec70-c91c-4f66-910e-ab2ddd9321e5" class="">name is stored in a static area memory since static keyword is used. Th</p><figure id="eab0f085-5677-4c2e-8506-56212ef0d6a5" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.44.36.png"><img style="width:1340px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.44.36.png"/></a></figure><p id="4799234d-ef21-4c9c-b7e2-d2ba13b99531" class="">
+</p><p id="e6e1239e-d650-4cee-bc25-b4f5d8c36140" class="">
+</p><h2 id="f4cb0e49-8adb-42d1-bf93-673e49689419" class="block-color-pink_background">Multi-Dimensional Array</h2><figure id="39b5a267-c668-435a-b6b6-37756a78c0ec" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.49.41.png"><img style="width:1618px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.49.41.png"/></a></figure><figure id="f332fa27-e57c-4ef8-902b-573a2d30ad15" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.49.54.png"><img style="width:1726px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.49.54.png"/></a></figure><ul id="32ecf350-656e-4785-bc70-99eaf3dc66db" class="block-color-pink_background toggle"><li><details open=""><summary>Visualization of Indexing into an Array</summary><figure id="7fa32ed5-d870-4633-9c18-5c67c391b5e9" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.52.35.png"><img style="width:1806px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.52.35.png"/></a></figure><p id="5b61c7b4-ff94-4571-a329-24cae725ed93" class="">
+</p></details></li></ul><pre id="d75db86b-6365-4e4c-b737-1e3a024f4ab1" class="code"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main() {
+	int a[5][7];
+	printf(&quot;sizeof a = %d\n&quot;, sizeof a); //140
+	printf(&quot;sizeof a[3] = %d\n&quot;, sizeof a[3]); //28
+	printf(&quot;sizeof a[3][4] = %d\n&quot;, sizeof a[3][4]); //4
+	return EXIT_SUCCESS;
+}
+//The type of a[3][4] is int(int size is 4)
+//The type of a[3] is array[7] of int
+//The type of a is array[5] of array[7] of int </code></pre><ul id="853d40c1-3b9e-4072-881f-7c9e1f5cc0a4" class="block-color-pink_background toggle"><li><details open=""><summary>One Dimensional Array</summary><pre id="922eb0a5-8a7a-485c-a3f1-39ffc2ce1f33" class="code"><code>//One dimensional array
+int ia[6];
+//Address of the beginning of array:
+ia = &amp;ia[0];</code></pre></details></li></ul><ul id="fe523842-7d1a-462d-836c-291cbcee635f" class="block-color-pink_background toggle"><li><details open=""><summary>Two Dimensional Array</summary><pre id="824ed84f-0d2f-40d3-bfe9-009086a98fa8" class="code"><code>//Two Dimensional Array
+int ia[3][6];
+//Address of th beginning of array:
+ia = &amp;ia[0][0];
+//Address of row 0
+ia[0] = &amp;ia[0][0];
+//Address of row 1:
+ia[1] = &amp;ia[1][0];
+//Address of row 2:
+ia[2] = &amp;ia[2][0]; </code></pre></details></li></ul><h3 id="1a4bd601-c5d2-4308-81eb-e7965661bc09" class="">Element Access</h3><ol type="1" id="f5a0d520-0b34-480d-82c9-8118fa4bb98e" class="numbered-list" start="1"><li>skip over required number of rows:<p id="344a2734-00bb-42e5-bbb6-944f59af4ef7" class="">row_index * sizeof(row)</p></li></ol><ol type="1" id="4d73c4fe-1690-4ae5-8c5f-61bde08f76fe" class="numbered-list" start="2"><li>plus the address of array gives the address of first element
+of desired row<p id="49ae18e8-d4b6-4b89-a5a9-d305ff02e8b3" class="">column_index * sizeof(arr_type)</p></li></ol><h2 id="787e27de-5408-4b02-8ecb-da6e32dedd42" class="block-color-pink_background">Pointer Calculations on our own</h2><p id="7a4b3195-0490-42a9-bd59-2c8e982dc836" class="">Compute array memory address: Cast the pointer to (char *)</p><p id="e36af74d-94d1-419e-9737-95395d3dba41" class="">The multiplier applied to arithmetic on that pointer will then
+be sizeof(char) == 1</p><p id="4480d987-bfbe-4fcc-bd7a-0ffc7ff87e24" class="">To access element (r, c) in arr:</p><pre id="52af1bdb-7bee-4881-8e69-1ee0b7beb4d5" class="code"><code>int arr[5][10];
+int offset = (r * 10 + c) * sizeof(int);
+int *p = (int *)((char *) arr + offset);
+//p points to the address of arr[r][c];
+//NOT HOW YOU ACTUALLY WRIT IN C</code></pre><h3 id="9a7a5468-48a7-4e2c-b241-89588d5c39b0" class="">Multidimensional Array Parameters</h3><p id="0cc5790c-cc98-4045-a456-6e10cc66051e" class="">Since declaration of 1D arrays don&#x27;t need to be told the size, we never need the first dimension to declare any array.</p><p id="76ae3e32-b9b7-4046-802b-e28507282038" class=""><em>See in-class quiz q3 for more explanation</em></p><pre id="dd81e986-f595-4a08-b662-397cfd7ca97c" class="code"><code>void tester(int arr[][4][5], int len)
+{ ... }
+int main()
+{
+		//one-dimensional array delcaration, e.g. double q[]
+    int ia[3][4][5]; 
+		//
+    int ib[8][4][5];
+    int *ic;
+	  //ic = ia; // warning: incompatible type
+    ic = &amp;ia[0][0][0];[
+    tester(ia, 3);(
+    tester(ib, 8);(
+    tester((int (*)[4][5])ic, 3;
+}</code></pre><p id="d388dacc-d347-4b8a-a518-2d0a18ad75ed" class="">
+</p><h2 id="bd4c1c40-2533-4d2d-bb79-63a8e020037e" class="block-color-pink_background">3D array</h2><figure id="63debe2f-6cae-4cb3-ba0a-a591ae20313f" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_02.18.18.png"><img style="width:1586px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_02.18.18.png"/></a></figure><p id="c685ce98-3241-412e-9fbd-c62b8bc84c3c" class="">offset = (i * rows * columns) + (j * columns) + k</p><p id="73dd4fc1-7c4e-4362-9931-4f920ff708cc" class="">a[i][j][k] == (*(*(a + i) + j) + k)</p><p id="ae7ae5cd-db9d-4db0-b529-a4afc3ce102a" class="">
+</p><p id="81df65ba-acbb-4980-8b8c-3062243d8680" class="">
+</p><p id="600c15de-5b8a-4f50-a323-db4a402336b8" class="">
+</p><p id="c651c9f1-1d58-4e94-b927-53e346141a7d" class="">
+</p><p id="58bc4f22-4e8a-4fee-a0c0-99734eced2f1" class="">
+</p><p id="732ca082-e14b-4a89-a67d-ab9caa4053bb" class="">
+</p><ul id="92513fae-3c28-41d2-8af3-dc9c19c057c6" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz question 1</summary><figure id="d3c2b397-8907-4545-b00f-0a0edf267d78" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.44.55.png"><img style="width:854px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_01.44.55.png"/></a></figure><ul id="fbc2235c-d373-44e9-803b-9459fee741de" class="toggle"><li><details open=""><summary>Answer</summary><p id="e1e8e1bf-3b9d-4edc-9d82-4ce0252e51e1" class="">D. </p></details></li></ul></details></li></ul><ul id="4b3bb2f2-e368-4783-ab5f-4fdbd0135d1e" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz question 2</summary><figure id="331e24f8-3803-4027-a685-946f77ba8a34" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_02.05.05.png"><img style="width:878px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_02.05.05.png"/></a></figure><ul id="d7b68e20-3e12-41a2-a03a-a943891af4b5" class="toggle"><li><details open=""><summary>Answer</summary><figure id="d2d451f3-e24e-44d9-968b-8e86ac87074d" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_02.06.12.png"><img style="width:2214px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_02.06.12.png"/></a></figure><p id="2d92138a-96f6-47f8-9449-79c2ff90acbe" class="">a is a marginally indexed array</p><p id="92df583a-af1f-4133-bb17-09d636db8888" class="">b is a 2-D array</p></details></li></ul></details></li></ul><ul id="e0b93e9e-6e9f-48a9-aece-f8ee8ed97c99" class="block-color-blue_background toggle"><li><details open=""><summary>In-class quiz question 3</summary><figure id="ac426486-491f-449e-aa4d-1d00ea5a730f" class="image"><a href="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_02.16.54.png"><img style="width:860px" src="Arrays%20&amp;%20Multidimensional%20Arrays%208cb9f21fd38e4d1b887d71e8b32f744b/Screen_Shot_2021-12-01_at_02.16.54.png"/></a></figure><ul id="9aa0dd9b-7e7b-4666-82d1-426710b42e0b" class="toggle"><li><details open=""><summary>Answer</summary><p id="f6d13fe0-3417-483c-900e-ab63394dd6c3" class="">C</p></details></li></ul></details></li></ul><p id="f60f7cbf-5eae-4679-aee8-fc01274c806f" class="">
+</p></div></article></body></html>
